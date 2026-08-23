@@ -25,803 +25,579 @@
 </style>
 <style>
   :root{
-    --bg: #F2F5EE;
-    --surface: #FFFFFF;
-    --surface-2: #E9EEE2;
-    --ink: #1B3A34;
-    --ink-soft: #4B5F58;
-    --line: #D7DFCD;
-    --gold: #A8761F;
-    --gold-soft: #F5E7CA;
-    --coral: #B8462A;
-    --coral-soft: #F7E1D8;
-    --alert: #9E2B18;
-    --alert-soft: #FBDED7;
-    --night-bg: #1B2444;
-    --night-ink: #EDEFFA;
-    --shadow: 0 1px 2px rgba(27,58,52,0.06), 0 6px 20px rgba(27,58,52,0.08);
+    --bg:#F2F5EE; --surface:#FFFFFF; --surface-2:#E9EEE2;
+    --ink:#1B3A34; --ink-soft:#4B5F58; --line:#D7DFCD;
+    --gold:#A8761F; --gold-soft:#F5E7CA;
+    --coral:#B8462A; --coral-soft:#F7E1D8;
+    --alert:#9E2B18; --alert-soft:#FBDED7;
+    --night-bg:#1B2444; --night-ink:#EDEFFA;
+    --shadow:0 1px 2px rgba(27,58,52,.06), 0 6px 20px rgba(27,58,52,.08);
   }
-
-  @media (prefers-color-scheme: dark){
+  @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
-      --bg: #12180F;
-      --surface: #1B2317;
-      --surface-2: #212B1C;
-      --ink: #EDEFE6;
-      --ink-soft: #B7C2AE;
-      --line: #33402C;
-      --gold: #E8B84B;
-      --gold-soft: #3A2F16;
-      --coral: #FF9271;
-      --coral-soft: #3A231C;
-      --alert: #FF8D74;
-      --alert-soft: #3D1E17;
-      --night-bg: #0F1430;
-      --night-ink: #E7E9FA;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+      --bg:#12180F; --surface:#1B2317; --surface-2:#212B1C;
+      --ink:#EDEFE6; --ink-soft:#B7C2AE; --line:#33402C;
+      --gold:#E8B84B; --gold-soft:#3A2F16;
+      --coral:#FF9271; --coral-soft:#3A231C;
+      --alert:#FF8D74; --alert-soft:#3D1E17;
+      --night-bg:#0F1430; --night-ink:#E7E9FA;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
     }
   }
   :root[data-theme="dark"]{
-    --bg: #12180F;
-    --surface: #1B2317;
-    --surface-2: #212B1C;
-    --ink: #EDEFE6;
-    --ink-soft: #B7C2AE;
-    --line: #33402C;
-    --gold: #E8B84B;
-    --gold-soft: #3A2F16;
-    --coral: #FF9271;
-    --coral-soft: #3A231C;
-    --alert: #FF8D74;
-    --alert-soft: #3D1E17;
-    --night-bg: #0F1430;
-    --night-ink: #E7E9FA;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    --bg:#12180F; --surface:#1B2317; --surface-2:#212B1C;
+    --ink:#EDEFE6; --ink-soft:#B7C2AE; --line:#33402C;
+    --gold:#E8B84B; --gold-soft:#3A2F16;
+    --coral:#FF9271; --coral-soft:#3A231C;
+    --alert:#FF8D74; --alert-soft:#3D1E17;
+    --night-bg:#0F1430; --night-ink:#E7E9FA;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   }
-
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Public Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;}
   a{color:inherit;}
 
-  header.hero{
-    padding:44px 20px 28px;
-    max-width:780px;
-    margin:0 auto;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:12.5px;
-    letter-spacing:0.09em;
-    text-transform:uppercase;
-    color:var(--gold);
-    font-weight:600;
-  }
-  h1{
-    font-family:'Fraunces', Georgia, serif;
-    font-weight:600;
-    font-size:clamp(30px,6vw,44px);
-    margin:8px 0 10px;
-    text-wrap:balance;
-    letter-spacing:-0.01em;
-  }
-  .sub{
-    color:var(--ink-soft);
-    font-size:16px;
-    max-width:58ch;
-  }
+  .wrap{max-width:790px;margin:0 auto;padding:0 20px;}
 
-  .facts{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
-    border-radius:14px;
-    overflow:hidden;
-    margin-top:22px;
-  }
-  .fact{ background:var(--surface); padding:14px 16px; }
-  .fact .k{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.07em;
-    color:var(--ink-soft);
-  }
-  .fact .v{ font-weight:600; font-size:14.5px; margin-top:3px; }
+  header.hero{padding:38px 20px 26px;max-width:790px;margin:0 auto;}
+  .toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+  .eyebrow{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:600;
+    font-size:clamp(29px,6vw,43px);margin:8px 0 10px;text-wrap:balance;letter-spacing:-.01em;}
+  .sub{color:var(--ink-soft);font-size:16px;max-width:58ch;}
 
-  nav.daynav{
-    position:sticky;
-    top:0;
-    z-index:20;
-    background:var(--bg);
-    border-bottom:1px solid var(--line);
-    padding:10px 20px;
-  }
-  .daynav-inner{
-    max-width:780px;
-    margin:0 auto;
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    scrollbar-width:none;
-  }
+  .langtoggle{display:flex;gap:0;border:1px solid var(--line);border-radius:999px;
+    overflow:hidden;background:var(--surface);flex:0 0 auto;}
+  .langtoggle button{background:transparent;border:0;cursor:pointer;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;font-weight:600;
+    letter-spacing:.05em;padding:7px 13px;color:var(--ink-soft);}
+  .langtoggle button[aria-pressed="true"]{background:var(--gold);color:#fff;}
+  :root[data-theme="dark"] .langtoggle button[aria-pressed="true"],
+  .langtoggle button[aria-pressed="true"]{color:#fff;}
+  .langtoggle button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;margin-top:22px;}
+  .fact{background:var(--surface);padding:14px 16px;}
+  .fact .k{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;
+    text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);}
+  .fact .v{font-weight:600;font-size:14.5px;margin-top:3px;}
+
+  nav.daynav{position:sticky;top:0;z-index:20;background:var(--bg);
+    border-bottom:1px solid var(--line);padding:10px 20px;}
+  .daynav-inner{max-width:790px;margin:0 auto;display:flex;gap:8px;
+    overflow-x:auto;scrollbar-width:none;}
   .daynav-inner::-webkit-scrollbar{display:none;}
-  .daynav a{
-    flex:0 0 auto;
-    text-decoration:none;
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:12.5px;
-    font-weight:600;
-    color:var(--ink-soft);
-    background:var(--surface);
-    border:1px solid var(--line);
-    padding:6px 12px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .daynav a:hover, .daynav a:focus-visible{ color:var(--ink); border-color:var(--gold); outline:none; }
+  .daynav a{flex:0 0 auto;text-decoration:none;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;font-weight:600;
+    color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);
+    padding:6px 12px;border-radius:999px;white-space:nowrap;}
+  .daynav a:hover,.daynav a:focus-visible{color:var(--ink);border-color:var(--gold);outline:none;}
 
-  section.notebox{ max-width:780px; margin:28px auto 0; padding:0 20px; }
-  .callout{
-    background:var(--alert-soft);
-    border:1px solid var(--alert);
-    border-radius:14px;
-    padding:18px 20px;
-  }
-  .callout h2{
-    font-family:'Fraunces', Georgia, serif;
-    font-size:17px;
-    margin:0 0 4px;
-    color:var(--ink);
-  }
-  .callout .csub{ font-size:13px; color:var(--ink-soft); margin:0 0 12px; }
-  .callout ul{ margin:0; padding-left:20px; }
-  .callout li{ margin-bottom:9px; font-size:14.5px; color:var(--ink); }
-  .callout li:last-child{ margin-bottom:0; }
+  .callout{background:var(--alert-soft);border:1px solid var(--alert);
+    border-radius:14px;padding:18px 20px;margin-top:28px;}
+  .callout h2{font-family:'Fraunces',Georgia,serif;font-size:17px;margin:0 0 4px;color:var(--ink);}
+  .callout .csub{font-size:13px;color:var(--ink-soft);margin:0 0 12px;}
+  .callout ul{margin:0;padding-left:20px;}
+  .callout li{margin-bottom:9px;font-size:14.5px;color:var(--ink);}
+  .callout li:last-child{margin-bottom:0;}
 
-  .day{ max-width:780px; margin:36px auto 0; padding:0 20px; scroll-margin-top:64px; }
-  .day-card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    overflow:hidden;
-  }
-  .day-head{
-    padding:22px 24px 18px;
-    border-bottom:1px solid var(--line);
-    display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .day-head.night{ background:var(--night-bg); color:var(--night-ink); border-bottom-color:transparent; }
-  .day-num{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:12.5px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    opacity:0.75;
-  }
-  .day-title{
-    font-family:'Fraunces', Georgia, serif;
-    font-weight:600;
-    font-size:23px;
-    margin:4px 0 0;
-    text-wrap:balance;
-  }
-  .day-tag{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:11.5px;
-    font-weight:600;
-    padding:5px 10px;
-    border-radius:999px;
-    background:var(--coral-soft);
-    color:var(--coral);
-    white-space:nowrap;
-  }
-  .day-head.night .day-tag{ background:rgba(255,255,255,0.16); color:var(--night-ink); }
+  .day{margin-top:34px;scroll-margin-top:64px;}
+  .day-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow);overflow:hidden;}
+  .day-head{padding:22px 24px 18px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .day-head.night{background:var(--night-bg);color:var(--night-ink);border-bottom-color:transparent;}
+  .day-num{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;
+    letter-spacing:.08em;text-transform:uppercase;opacity:.75;}
+  .day-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:23px;
+    margin:4px 0 0;text-wrap:balance;}
+  .day-tag{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11.5px;font-weight:600;
+    padding:5px 10px;border-radius:999px;background:var(--coral-soft);color:var(--coral);white-space:nowrap;}
+  .day-head.night .day-tag{background:rgba(255,255,255,.16);color:var(--night-ink);}
 
-  .timeline{ padding:20px 24px 24px; }
-  .item{
-    display:grid;
-    grid-template-columns:66px 1fr;
-    gap:14px;
-    padding:13px 0;
-    border-bottom:1px dashed var(--line);
-  }
-  .item:last-child{ border-bottom:none; }
-  .item .time{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:13px;
-    font-weight:600;
-    color:var(--gold);
-    padding-top:1px;
-    font-variant-numeric:tabular-nums;
-  }
-  .item .body{ font-size:14.5px; color:var(--ink); }
-  .item .body b{ font-weight:600; }
-  .item .body .note{ color:var(--ink-soft); font-size:13.5px; display:block; margin-top:3px; }
-  .item.star .body b:first-child{ color:var(--coral); }
+  .timeline{padding:20px 24px 24px;}
+  .item{display:grid;grid-template-columns:66px 1fr;gap:14px;padding:13px 0;
+    border-bottom:1px dashed var(--line);}
+  .item:last-child{border-bottom:none;}
+  .item .time{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:13px;font-weight:600;
+    color:var(--gold);padding-top:1px;font-variant-numeric:tabular-nums;}
+  .item .body{font-size:14.5px;}
+  .item .body b{font-weight:600;}
+  .item .body .note{color:var(--ink-soft);font-size:13.5px;display:block;margin-top:3px;}
+  .item.star .body>b:first-child{color:var(--coral);}
 
-  .food{
-    margin:4px 0 4px 80px;
-    background:var(--surface-2);
-    border-left:3px solid var(--coral);
-    border-radius:0 10px 10px 0;
-    padding:10px 14px;
-    font-size:13.5px;
-  }
-  .food .flabel{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:var(--coral);
-    font-weight:600;
-    display:block;
-    margin-bottom:3px;
-  }
-  .food .fname{ font-weight:600; }
-  .food .frating{ color:var(--ink-soft); }
+  .food{margin:4px 0 4px 80px;background:var(--surface-2);border-left:3px solid var(--coral);
+    border-radius:0 10px 10px 0;padding:10px 14px;font-size:13.5px;}
+  .food .flabel{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;
+    text-transform:uppercase;letter-spacing:.06em;color:var(--coral);font-weight:600;
+    display:block;margin-bottom:3px;}
+  .food .fname{font-weight:600;}
+  .food .frating{color:var(--ink-soft);}
 
-  .day-foot{
-    padding:15px 24px 20px;
-    font-size:13px;
-    color:var(--ink-soft);
-    border-top:1px solid var(--line);
-  }
-  .day-foot b{ color:var(--ink); }
+  .day-foot{padding:15px 24px 20px;font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);}
+  .day-foot b{color:var(--ink);}
 
-  .tickets{ max-width:780px; margin:44px auto 0; padding:0 20px; }
-  .tickets h2{
-    font-family:'Fraunces', Georgia, serif;
-    font-size:22px;
-    margin:0 0 4px;
-  }
-  .tickets p.lead{ color:var(--ink-soft); font-size:14px; margin:0 0 16px; }
-  .tablewrap{
-    overflow-x:auto;
-    border:1px solid var(--line);
-    border-radius:14px;
-    background:var(--surface);
-  }
-  table{ border-collapse:collapse; width:100%; min-width:520px; font-size:13.5px; }
-  th, td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-    color:var(--ink-soft);
-    font-weight:600;
-    background:var(--surface-2);
-  }
-  tbody tr:last-child td{ border-bottom:none; }
-  td.d{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums; }
-  .pri{
-    font-family:'IBM Plex Mono', ui-monospace, monospace;
-    font-size:10.5px;
-    font-weight:600;
-    padding:3px 8px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .pri.must{ background:var(--alert-soft); color:var(--alert); }
-  .pri.opt{ background:var(--surface-2); color:var(--ink-soft); }
-  .pri.free{ background:var(--gold-soft); color:var(--gold); }
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:4px 24px 22px;}
+  .plan{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface-2);}
+  .plan.safe{border-color:var(--gold);}
+  .plan h4{margin:0 0 3px;font-family:'Fraunces',Georgia,serif;font-size:15.5px;}
+  .plan .cond{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;
+    text-transform:uppercase;letter-spacing:.05em;color:var(--gold);font-weight:600;margin-bottom:8px;}
+  .plan ul{margin:0;padding-left:17px;font-size:13px;}
+  .plan li{margin-bottom:5px;}
+  @media (max-width:560px){.plans{grid-template-columns:1fr;}}
 
-  footer{
-    max-width:780px;
-    margin:44px auto 0;
-    padding:24px 20px 60px;
-    border-top:1px solid var(--line);
-    font-size:13px;
-    color:var(--ink-soft);
-  }
-  footer a{ color:var(--ink-soft); }
-  footer ul{ padding-left:18px; margin:10px 0 0; }
-  footer li{ margin-bottom:5px; }
+  section.block{margin-top:44px;}
+  section.block h2{font-family:'Fraunces',Georgia,serif;font-size:22px;margin:0 0 4px;}
+  section.block p.lead{color:var(--ink-soft);font-size:14px;margin:0 0 16px;}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px;}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--ink-soft);font-weight:600;background:var(--surface-2);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.d{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:600;white-space:nowrap;
+    font-variant-numeric:tabular-nums;}
+  td.rate{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .pri{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;font-weight:600;
+    padding:3px 8px;border-radius:999px;white-space:nowrap;display:inline-block;}
+  .pri.must{background:var(--alert-soft);color:var(--alert);}
+  .pri.opt{background:var(--surface-2);color:var(--ink-soft);}
+  .pri.free{background:var(--gold-soft);color:var(--gold);}
+
+  footer{margin-top:44px;padding:24px 0 60px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--ink-soft);}
+  footer a{color:var(--ink-soft);}
+  footer ul{padding-left:18px;margin:10px 0 0;}
+  footer li{margin-bottom:5px;}
 
   @media (max-width:480px){
-    .item{ grid-template-columns:56px 1fr; gap:10px; }
-    .food{ margin-left:66px; }
+    .item{grid-template-columns:56px 1fr;gap:10px;}
+    .food{margin-left:66px;}
   }
 </style>
 </head>
 <body>
 <header class="hero">
-  <div class="eyebrow">Lịch trình du lịch · 5 ngày 4 đêm</div>
-  <h1>Singapore, 28/8 → 1/9</h1>
-  <p class="sub">Từ lúc nhận phòng 15:00 thứ Sáu đến chuyến bay 13:00 thứ Ba — trọn ngày Mandai với gấu trúc và safari đêm, Universal Studios mở màn bằng Minion Land, Harry Potter ở Sentosa, và ngày cuối tách sân bay T1/T3.</p>
-  <div class="facts">
-    <div class="fact"><div class="k">Khách sạn</div><div class="v">Grand Pacific, 101 Victoria St</div></div>
-    <div class="fact"><div class="k">Số người</div><div class="v">2 người</div></div>
-    <div class="fact"><div class="k">Về trước 22:00</div><div class="v">Ngày 28/8 &amp; 30/8</div></div>
-    <div class="fact"><div class="k">Bay về</div><div class="v">1/9, 13:00 — T1 &amp; T3</div></div>
+  <div class="toprow">
+    <div>
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="h1"></h1>
+    </div>
+    <div class="langtoggle" role="group" aria-label="Language">
+      <button type="button" data-lang="vi" aria-pressed="true">VI</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
   </div>
+  <p class="sub" id="sub"></p>
+  <div class="facts" id="facts"></div>
 </header>
 
-<nav class="daynav">
-  <div class="daynav-inner">
-    <a href="#luuy">Cần biết</a>
-    <a href="#d1">28/8 · Marina Bay</a>
-    <a href="#d2">29/8 · Mandai</a>
-    <a href="#d3">30/8 · Gardens</a>
-    <a href="#d4">31/8 · USS</a>
-    <a href="#d5">1/9 · Changi</a>
-    <a href="#ve">Vé cần mua</a>
-  </div>
-</nav>
+<nav class="daynav"><div class="daynav-inner" id="daynav"></div></nav>
 
-<section class="notebox" id="luuy">
-  <div class="callout">
-    <h2>Bốn điều cần biết trước khi đi</h2>
-    <p class="csub">Đã kiểm tra lại trên trang chính thức, cập nhật 23/8/2026.</p>
-    <ul>
-      <li><b>Harry Potter có thật ở Singapore</b> — nhưng không nằm trong Universal Studios. Đó là triển lãm <b>"Harry Potter: Visions of Magic"</b> tại WEAVE, tầng B1 Forum, Resorts World Sentosa — ngay cạnh USS. Mở 11:00–22:00 hằng ngày, vào cửa cuối 20:00, tham quan khoảng 60 phút, vé ~S$40–49 và đã kèm voucher ăn uống S$10. Đã đưa vào tối 31/8.</li>
-      <li><b>Hai trò ở USS đóng cửa đúng dịp bạn đi:</b> WaterWorld đóng đến hết 31/8, và TRANSFORMERS The Ride đóng 23/8–4/9. Pantages Theater cũng đóng từ 30/8. Lịch dưới đây đã bỏ cả ba, đừng mất công xếp hàng.</li>
-      <li><b>Singapore Night Festival 2026 đang diễn ra</b> — 21/8 đến 5/9, 19:30–23:00, phần lớn miễn phí, và địa bàn chính là khu Bras Basah.Bugis tức ngay cửa khách sạn bạn. Đã xếp vào tối 30/8 vì đi bộ về phòng chỉ mất vài phút, rất dễ giữ mốc 22:00.</li>
-      <li><b>Gấu trúc:</b> Kai Kai và Jia Jia vẫn ở khu Pavilion Capital Giant Panda Forest, River Wonders. Khu này từng đóng vài ngày trong mùa giao phối hồi tháng 4/2025, nên kiểm tra lại mandai.com trước ngày đi 1–2 hôm.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- DAY 1 -->
-<div class="day" id="d1">
-  <div class="day-card">
-    <div class="day-head">
-      <div>
-        <div class="day-num">Ngày 1 · Thứ Sáu 28/8</div>
-        <h2 class="day-title">Marina Bay lên đèn</h2>
-      </div>
-      <div class="day-tag">Về trước 22:00</div>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="time">15:00</div>
-        <div class="body"><b>Đã nhận phòng tại Grand Pacific</b> — cất đồ, nghỉ 20 phút, đổi giày đi bộ.</div>
-      </div>
-      <div class="item">
-        <div class="time">15:30</div>
-        <div class="body"><b>Đi bộ đến City Hall MRT</b>, đi tuyến EWL một trạm tới <b>Raffles Place</b>, ra Exit H hướng Fullerton.<span class="note">Khoảng 20 phút cả đi bộ lẫn tàu.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">16:00</div>
-        <div class="body"><b>Merlion Park</b> — chụp ảnh với Merlion và Marina Bay Sands ở hậu cảnh.</div>
-      </div>
-      <div class="item">
-        <div class="time">16:40</div>
-        <div class="body"><b>Đi bộ ven vịnh</b> qua Jubilee Bridge → Esplanade → Helix Bridge. Vừa đi vừa ngắm, không cần vội.</div>
-      </div>
-      <div class="item">
-        <div class="time">17:20</div>
-        <div class="body"><b>Marina Bay Sands &amp; ArtScience Museum</b> — ngắm và chụp bên ngoài, chưa cần vào trong.</div>
-      </div>
-      <div class="item">
-        <div class="time">18:00</div>
-        <div class="body"><b>Supertree Grove, Gardens by the Bay</b> — khu ngoài trời miễn phí. Hai nhà kính để dành sáng 30/8.</div>
-      </div>
-      <div class="item">
-        <div class="time">18:30</div>
-        <div class="body"><b>Ăn tối</b> trên đường về phía Marina Bay Sands.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Bình dân · hawker ngoài trời</span>
-        <span class="fname">Satay by the Bay</span> — trong Gardens by the Bay. <span class="frating">Satay nướng, char kway teow, giá hawker, ngồi ngoài trời mát.</span>
-      </div>
-      <div class="food">
-        <span class="flabel">Bình dân · view vịnh</span>
-        <span class="fname">Makansutra Gluttons Bay</span> — cạnh Esplanade. <span class="frating">Khu hawker ngoài trời nhìn thẳng ra Marina Bay, tiện đúng tuyến đi bộ.</span>
-      </div>
-      <div class="item star">
-        <div class="time">20:00</div>
-        <div class="body"><b>Spectra</b> — show ánh sáng và nước tại Event Plaza, MBS. Miễn phí, khoảng 15 phút. Đứng đối diện mặt nước.</div>
-      </div>
-      <div class="item star">
-        <div class="time">20:45</div>
-        <div class="body"><b>Garden Rhapsody</b> — Supertree Grove sáng đèn theo nhạc, miễn phí, 15 phút. Đi bộ từ MBS sang khoảng 15 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">21:10</div>
-        <div class="body"><b>Bayfront → Promenade → Bras Basah</b>, đi bộ về khách sạn.<span class="note">Về phòng khoảng 21:35 — dư thời gian trước mốc 22:00.</span></div>
-      </div>
-    </div>
-    <div class="day-foot">Xếp Spectra trước Garden Rhapsody sau (thay vì ngược lại) để kết thúc ngay tại Gardens, đi thẳng ra Bayfront MRT về nhà — <b>tiết kiệm được khoảng 25 phút</b> so với đi vòng lại.</div>
-  </div>
+<div class="wrap">
+  <div class="callout" id="luuy"></div>
+  <div id="days"></div>
+  <section class="block" id="an"></section>
+  <section class="block" id="ve"></section>
+  <footer id="footer"></footer>
 </div>
 
-<!-- DAY 2 -->
-<div class="day" id="d2">
-  <div class="day-card">
-    <div class="day-head night">
-      <div>
-        <div class="day-num">Ngày 2 · Thứ Bảy 29/8</div>
-        <h2 class="day-title">Trọn ngày Mandai: Zoo, gấu trúc, safari đêm</h2>
-      </div>
-      <div class="day-tag">Ngày dài nhất — về ~23:15</div>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="time">06:50</div>
-        <div class="body"><b>Rời khách sạn</b>, đi bộ đến City Hall MRT. Mang theo bữa sáng ăn trên tàu.</div>
-      </div>
-      <div class="item">
-        <div class="time">07:05</div>
-        <div class="body"><b>City Hall → Khatib</b> bằng tuyến NSL, đi thẳng không đổi tàu, khoảng 35 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">07:45</div>
-        <div class="body"><b>Khatib → Mandai</b> bằng shuttle Mandai Khatib, khoảng 20–25 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">08:30</div>
-        <div class="body"><b>Singapore Zoo mở cửa</b> — vào thẳng Treetops Trail, Orangutan Island, Fragile Forest.<span class="note">Buổi sáng là lúc động vật hoạt động nhất, đây là khung giờ đáng giá nhất trong Zoo.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">10:15</div>
-        <div class="body"><b>Wild Africa &amp; Elephant Trail</b> — dùng tram nội khu khi thấy mỏi chân, không cố đi bộ hết.</div>
-      </div>
-      <div class="item">
-        <div class="time">12:00</div>
-        <div class="body"><b>Show "Into the Wild"</b> tại Shaw Amphitheatre — đến trước 10 phút.<span class="note">Lịch diễn có thể đổi, xem lại bảng giờ ngay cổng vào khi tới nơi.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">12:35</div>
-        <div class="body"><b>Ăn trưa</b> — cần nhanh gọn để giữ lịch.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Trong Singapore Zoo</span>
-        <span class="fname">Ah Meng Restaurant</span> — <span class="frating">Buffet và món gọi lẻ, ngay giữa Zoo nên không mất thời gian di chuyển.</span>
-      </div>
-      <div class="item">
-        <div class="time">13:20</div>
-        <div class="body"><b>Đi bộ sang River Wonders</b> — hai cổng nằm sát nhau, khoảng 15 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">13:40</div>
-        <div class="body"><b>Rivers of the World</b> — đi theo lối một chiều, không quay đầu lại.</div>
-      </div>
-      <div class="item">
-        <div class="time">14:30</div>
-        <div class="body"><b>Show "Once Upon A River"</b> tại Boat Plaza — suất cố định, đến sớm 10 phút.</div>
-      </div>
-      <div class="item star">
-        <div class="time">15:05</div>
-        <div class="body"><b>Giant Panda Forest — Kai Kai &amp; Jia Jia</b>. Đây là mục ưu tiên số một của cả ngày, dành hẳn 45 phút.<span class="note">Khu này máy lạnh, cũng là chỗ nghỉ chân tốt giữa ngày dài.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">15:50</div>
-        <div class="body"><b>Amazon Flooded Forest</b> — bể cá nước ngọt lớn, cá hải tượng và rái cá khổng lồ.</div>
-      </div>
-      <div class="item">
-        <div class="time">16:20</div>
-        <div class="body"><b>Amazon River Quest</b> (tùy chọn, phụ thu ~S$5) — bỏ nếu phải chờ quá 20 phút.<span class="note">Trò này đóng bảo trì từ 31/8, nên 29/8 là dịp duy nhất trong chuyến đi.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">17:00</div>
-        <div class="body"><b>Nghỉ và ăn tối sớm</b> trong khu Mandai — ngồi lâu một chút, vì tối nay còn 3 tiếng nữa.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Trong khu Night Safari</span>
-        <span class="fname">Ulu Ulu Safari Restaurant</span> — <span class="frating">Món local, không gian nhà sàn giữa rừng. Hoặc các quầy nhanh ở Mandai Boardwalk.</span>
-      </div>
-      <div class="item star">
-        <div class="time">19:15</div>
-        <div class="body"><b>Vào cổng Night Safari</b> — kịp show "Creatures of the Night" (19:15) và màn múa lửa "Thumbuakar" (20:00).<span class="note">Cổng mở 18:00 nhưng tram và đường mòn chỉ bắt đầu 19:00.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">20:15</div>
-        <div class="body"><b>Safari Adventure Tram</b> — 40 phút xuyên 7 khu địa lý, đã bao gồm trong vé.</div>
-      </div>
-      <div class="item">
-        <div class="time">21:00</div>
-        <div class="body"><b>Leopard Trail</b> — đường mòn đi bộ đáng đi nhất, có mèo lớn và dơi.</div>
-      </div>
-      <div class="item">
-        <div class="time">22:00</div>
-        <div class="body"><b>Rời Night Safari</b> → shuttle về Khatib → NSL về City Hall → đi bộ về khách sạn.<span class="note">Về phòng khoảng 23:15.</span></div>
-      </div>
-    </div>
-    <div class="day-foot"><b>Đây là ngày nặng nhất — khoảng 16 tiếng ngoài đường.</b> Nếu thấy đuối, cắt theo thứ tự này: (1) Amazon River Quest, (2) nửa sau Singapore Zoo sau 11:00, (3) Leopard Trail buổi tối. <b>Đừng cắt Giant Panda Forest và chuyến tram Night Safari.</b> Nhớ mang thuốc chống muỗi và áo mưa mỏng.</div>
-  </div>
-</div>
+<script>
+const DATA = {
+vi:{
+  lang:"vi",
+  eyebrow:"Lịch trình du lịch · 5 ngày 4 đêm",
+  title:"Singapore, 28/8 → 1/9",
+  sub:"Từ lúc rời khách sạn 15:00 thứ Sáu đến chuyến bay 13:00 thứ Ba — trọn ngày Mandai khép lại bằng show lửa lúc 22:00, Universal Studios mở màn ở Minion Land, Harry Potter tối 31/8, và ngày cuối có hai phương án tách sân bay T1/T3.",
+  facts:[["Khách sạn","Grand Pacific, 101 Victoria St"],["Số người","2 người"],["Về trước 22:00","Ngày 28/8 & 30/8"],["Bay về","1/9, 13:00 — T1 & T3"]],
+  nav:[["#luuy","Cần biết"],["#d1","28/8 · Marina Bay"],["#d2","29/8 · Mandai"],["#d3","30/8 · Chinatown"],["#d4","31/8 · USS"],["#d5","1/9 · Changi"],["#an","Quán ăn"],["#ve","Vé"]],
+  note:{h:"Năm điều cần biết trước khi đi", sub:"Đã đối chiếu trang chính thức, cập nhật 23/8/2026.", items:[
+    "<b>Show lửa giờ tên là “Embers of Night”</b>, không còn gọi Thumbuakar. Diễn tại Entrance Courtyard, thường 21:00; riêng thứ Sáu, thứ Bảy và đêm trước ngày lễ có thêm suất 22:00. Ngày 29/8 là thứ Bảy nên bắt được suất 22:00 — lịch dưới đây xếp show này làm điểm kết ngày.",
+    "<b>Creatures of the Night bắt buộc đặt ghế online</b>, có ba suất 19:30, 20:30 và 21:30. Đặt mở đúng 2 tiếng trước giờ diễn, nên 17:30 phải vào đặt suất 19:30. Đến trước 15 phút, cổng đóng trước giờ diễn 10 phút.",
+    "<b>Harry Potter có thật ở Singapore</b> nhưng không nằm trong Universal Studios. Đó là triển lãm “Harry Potter: Visions of Magic” tại WEAVE, tầng B1 Forum, Resorts World Sentosa — ngay cạnh USS, vé riêng, tham quan 60–90 phút.",
+    "<b>Ba mục ở USS đóng cửa đúng dịp bạn đi:</b> WaterWorld đóng đến hết 31/8, TRANSFORMERS The Ride đóng 23/8–4/9, Pantages Theater đóng từ 30/8. Ngoài ra <b>USS không còn khu Madagascar</b> — chỗ đó đã được thay bằng chính Minion Land.",
+    "<b>Garden Rhapsody có hai suất 19:45 và 20:45.</b> Tháng 8 là phiên bản Quốc khánh mang tên “Songs of Singapore”. Lịch chọn suất 20:45 để ghép được với Spectra 20:00 trong cùng một tối."]},
+  days:[
+   {id:"d1",num:"Ngày 1 · Thứ Sáu 28/8",title:"Marina Bay một chiều",tag:"Về trước 22:00",
+    blocks:[
+     ["i","15:00","<b>Gửi hành lý, thay giày, rời khách sạn.</b>","Không nghỉ quá 15 phút — cả tối nay là một tuyến đi bộ liền mạch."],
+     ["i","15:15","<b>City Hall → Raffles Place</b> bằng EWL, đúng một trạm, rồi đi bộ ra hướng Fullerton.",""],
+     ["i","15:40","<b>Merlion Park</b> — góc đẹp nhất là Merlion với Marina Bay Sands ở hậu cảnh.",""],
+     ["i","16:20","<b>Jubilee Bridge → Esplanade</b>, đi bộ ven vịnh.","Tuyến một chiều, không quay lại. Mang theo nước."],
+     ["f","Bình dân · 4.1★ (4.161 đánh giá)","Makansutra Gluttons Bay","Satay, cá đuối sambal, oyster omelette, nước mía. Ăn lúc 17:05 để né giờ đông 19:00–20:00."],
+     ["i","18:00","<b>Helix Bridge → Marina Bay Sands.</b>","Chụp ảnh trên cầu khi trời còn ánh sáng."],
+     ["i","18:30","<b>MBS và ArtScience Museum nhìn từ bên ngoài.</b>","Không vào bảo tàng — vào là mất một trong hai show tối nay."],
+     ["i","19:40","<b>Đến Event Plaza chọn chỗ đứng.</b>","Đứng đối diện mặt nước."],
+     ["s","20:00","<b>Spectra</b> — show ánh sáng và nước, miễn phí, khoảng 15 phút.","Chọn suất đầu 20:00 mới ghép kịp Garden Rhapsody."],
+     ["i","20:15","<b>Đi thẳng sang Supertree Grove.</b>","Không dừng mua sắm. Quãng này có sẵn 10 phút đệm."],
+     ["s","20:45","<b>Garden Rhapsody</b> — tháng 8 diễn bản Quốc khánh “Songs of Singapore”. Miễn phí, 15 phút.",""],
+     ["i","21:00","<b>Chụp ảnh Supertree Grove sau show.</b>","Không nán quá 21:10."],
+     ["i","21:10","<b>Bayfront → Promenade → Bras Basah</b>, đi bộ về khách sạn.","Về phòng khoảng 21:40."]],
+    foot:"Cả tối là một đường thẳng Merlion → Esplanade → MBS → Gardens, không đoạn nào phải quay đầu. Đó là lý do ăn tối sớm lúc 17:05 thay vì 19:00."},
 
-<!-- DAY 3 -->
-<div class="day" id="d3">
-  <div class="day-card">
-    <div class="day-head">
-      <div>
-        <div class="day-num">Ngày 3 · Chủ Nhật 30/8</div>
-        <h2 class="day-title">Nhà kính, Chinatown &amp; lễ hội đêm</h2>
-      </div>
-      <div class="day-tag">Về trước 22:00</div>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="time">08:30</div>
-        <div class="body"><b>Rời khách sạn</b> — Bencoolen MRT, tuyến DTL đến Bayfront, khoảng 20 phút.<span class="note">Ngủ bù sau ngày Mandai, không cần dậy quá sớm.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">09:00</div>
-        <div class="body"><b>Cloud Forest</b> — thác trong nhà cao 35m, mát lạnh. Vào sớm để tránh đông.</div>
-      </div>
-      <div class="item">
-        <div class="time">10:15</div>
-        <div class="body"><b>Flower Dome</b> — chung vé với Cloud Forest, đi liền mạch sang.</div>
-      </div>
-      <div class="item">
-        <div class="time">11:20</div>
-        <div class="body"><b>Bayfront → Chinatown</b> bằng tuyến DTL, khoảng 20 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">11:45</div>
-        <div class="body"><b>Ăn trưa tại Maxwell Food Centre</b> — khu hawker nổi tiếng nhất Chinatown.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Bình dân · huyền thoại</span>
-        <span class="fname">Tian Tian Hainanese Chicken Rice</span> (#01-10/11) — <span class="frating">Cơm gà nổi tiếng thế giới sau khi được Anthony Bourdain và Gordon Ramsay giới thiệu. Hàng dài — nếu ngại chờ, sang <b>Ah Tai</b> (#01-07) do chính bếp trưởng cũ của Tian Tian mở, chất lượng tương đương.</span>
-      </div>
-      <div class="food">
-        <span class="flabel">Bình dân · món hiếm</span>
-        <span class="fname">Maxwell Fuzhou Oyster Cake</span> (#01-05) — <span class="frating">Bánh hàu chiên hình đĩa bay, một trong số ít nơi ở Singapore còn làm món này.</span>
-      </div>
-      <div class="item">
-        <div class="time">13:00</div>
-        <div class="body"><b>Buddha Tooth Relic Temple</b> và dạo phố Chinatown — Pagoda Street, chợ đường phố, mua quà lưu niệm.</div>
-      </div>
-      <div class="item">
-        <div class="time">14:45</div>
-        <div class="body"><b>Về khách sạn nghỉ</b> — MRT về Bencoolen hoặc Bugis, khoảng 20 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">15:15</div>
-        <div class="body"><b>Nghỉ ngơi và học bài</b> — khung thời gian dài, thoải mái, không bị ép giờ.</div>
-      </div>
-      <div class="item">
-        <div class="time">18:15</div>
-        <div class="body"><b>Ăn tối gần khách sạn</b> — tất cả đều trong bán kính đi bộ.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Bình dân · hơn 100 năm tuổi</span>
-        <span class="fname">Zam Zam Restaurant</span> — 697 North Bridge Rd. <span class="frating">Murtabak và briyani, quán lâu đời ở Kampong Glam, đánh giá cao trên Google Maps.</span>
-      </div>
-      <div class="food">
-        <span class="flabel">Viral TikTok · rẻ bất ngờ</span>
-        <span class="fname">A9 Dumpling</span> — Fortune Centre, Bugis. <span class="frating">15 cái sủi cảo chỉ 4 SGD.</span>
-      </div>
-      <div class="food">
-        <span class="flabel">Tầm trung · trong Bugis Junction</span>
-        <span class="fname">Oriental Kopi</span> — <span class="frating">Cà phê kiểu Malaysia và bánh mì nướng kaya bơ, ngồi máy lạnh.</span>
-      </div>
-      <div class="item star">
-        <div class="time">19:30</div>
-        <div class="body"><b>Singapore Night Festival</b> — đi bộ quanh khu Bras Basah.Bugis xem các tác phẩm ánh sáng và trình chiếu.<span class="note">Gợi ý: "Tales of Earth and Sea" chiếu lên mặt tiền National Museum, "MALAM Projection Mapping" ở The Cathay (top 5 chung kết từ 29/8), và "Stormy Straits" ở Bugis Street Art Lane. Tất cả đều miễn phí.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">21:40</div>
-        <div class="body"><b>Đi bộ về khách sạn</b> — chỉ vài phút, về phòng thoải mái trước 22:00.</div>
-      </div>
-    </div>
-    <div class="day-foot">Đây là ngày dễ điều chỉnh nhất. Lễ hội đêm nằm ngay quanh khách sạn nên có thể ra muộn, về sớm, hoặc bỏ giữa chừng tùy sức — <b>hoàn toàn không ảnh hưởng mốc 22:00</b>.</div>
-  </div>
-</div>
+   {id:"d2",num:"Ngày 2 · Thứ Bảy 29/8",title:"Mandai trọn ngày, khép lại bằng lửa",tag:"Ngày dài nhất — về ~23:25",night:true,
+    blocks:[
+     ["f","Bình dân · 4.1★ (2.993 đánh giá)","YY Kafei Dian","Kaya bun, trứng lòng đào, kopi. Beach Road, đi bộ ~9 phút từ khách sạn và mở sớm — ăn lúc 06:35, mua thêm bánh mang theo nếu cần."],
+     ["i","07:10","<b>Bras Basah → Caldecott (CCL) → Springleaf (TEL) → bus 138 → Singapore Zoo.</b>","Có mặt trước 08:30."],
+     ["s","08:30","<b>Treetops Trail → Orangutan Island → Fragile Forest.</b>","Khung giờ đáng giá nhất trong Zoo — buổi sáng động vật hoạt động rõ nhất."],
+     ["i","10:15","<b>Wild Africa → Elephant Trail.</b>","Dùng tram nội khu khi mỏi chân, đừng cố đi bộ hết."],
+     ["f","Tiện tuyến · không phải quán điểm cao","Ah Meng Restaurant (trong Zoo)","Chicken rice hoặc laksa. Chọn vì ở ngay trong Zoo — ra ngoài ăn sẽ mất 60–90 phút và hỏng cả buổi tối."],
+     ["i","12:40","<b>Great Rift Valley → Australasia → những khu còn muốn xem.</b>","Rời cổng Zoo không muộn hơn 14:40."],
+     ["i","14:40","<b>Đi bộ sang River Wonders và quét vé.</b>","Không dừng ở các khu đầu."],
+     ["i","15:00","<b>Đi thẳng một chiều đến Giant Panda Forest</b> theo biển chỉ dẫn.","Bỏ hẳn Rivers of the World, các show và thuyền Amazon River Quest — đúng ý “chỉ xem gấu trúc rồi ra”."],
+     ["s","15:25","<b>Xem gấu trúc Kai Kai và Jia Jia.</b>","Khu này máy lạnh, cũng là chỗ nghỉ chân tốt giữa ngày dài."],
+     ["i","16:00","<b>Đi thẳng ra cổng River Wonders.</b>","Không vòng sang Amazon Flooded Forest."],
+     ["f","Tiện tuyến","Mandai East / Ulu Ulu Safari Restaurant","Laksa hoặc chicken rice, ăn sớm lúc 16:25. Mang thêm snack dự phòng vì tối nay còn dài."],
+     ["s","17:30","<b>Vào đặt ghế Creatures of the Night suất 19:30.</b>","Đặt chỉ mở đúng 2 tiếng trước giờ diễn — 17:30 là thời điểm sớm nhất có thể đặt suất này. Không đặt là không xem được."],
+     ["i","19:15","<b>Vào cửa Night Safari, đi thẳng tới Amphitheatre.</b>","Phải có mặt trước 15 phút; cổng đóng trước giờ diễn 10 phút."],
+     ["s","19:30","<b>Creatures of the Night</b> — khoảng 25 phút.",""],
+     ["i","20:00","<b>Safari Adventure Tram</b> — 40 phút xuyên 7 khu địa lý, đã gồm trong vé.","Ngồi bên phải hướng chạy nếu chọn được."],
+     ["i","20:45","<b>Leopard Trail → East Lodge / Tasmanian Devil Trail.</b>","Giữ nhịp một chiều để kịp show lửa lúc 22:00."],
+     ["s","22:00","<b>Embers of Night</b> — trình diễn lửa tại Entrance Courtyard, khoảng 10 phút.","Suất 22:00 chỉ có vào thứ Sáu, thứ Bảy và đêm trước ngày lễ. 29/8 là thứ Bảy nên xem được, và vị trí ngay cổng ra nên xem xong là về luôn."],
+     ["i","22:15","<b>Shuttle M2 → Khatib → City Hall → khách sạn.</b>","Về phòng khoảng 23:25. Kiểm tra hàng chờ M2 ngay khi ra khỏi cổng."]],
+    foot:"<b>Ngày nặng nhất — gần 17 tiếng ngoài đường.</b> Nếu đuối, cắt theo thứ tự: (1) nửa sau Zoo sau 12:40, (2) East Lodge Trail buổi tối, (3) Wild Africa. <b>Không cắt gấu trúc, tram, và Embers of Night.</b> Mang thuốc chống muỗi và áo mưa mỏng."},
 
-<!-- DAY 4 -->
-<div class="day" id="d4">
-  <div class="day-card">
-    <div class="day-head">
-      <div>
-        <div class="day-num">Ngày 4 · Thứ Hai 31/8</div>
-        <h2 class="day-title">Minion Land, USS &amp; Harry Potter</h2>
-      </div>
-      <div class="day-tag">Minion là ưu tiên số 1</div>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="time">08:10</div>
-        <div class="body"><b>Rời khách sạn</b> — Bencoolen → Chinatown (DTL) → HarbourFront (NEL), khoảng 30 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">08:50</div>
-        <div class="body"><b>VivoCity → Waterfront Station</b> bằng Sentosa Express.</div>
-      </div>
-      <div class="item">
-        <div class="time">09:20</div>
-        <div class="body"><b>Đến cổng USS và xếp hàng chờ mở cửa.</b><span class="note">Có mặt sớm 40 phút là mẹo quan trọng nhất trong ngày — đám đông chưa vào, Minion Land còn vắng.</span></div>
-      </div>
-      <div class="item star">
-        <div class="time">10:00</div>
-        <div class="body"><b>MINION LAND — vào ngay khi mở cổng.</b> Chơi lần lượt: <b>Despicable Me Minion Mayhem</b> (mô phỏng chuyển động trong phòng thí nghiệm của Gru), <b>Buggie Boogie</b> (vòng xoay chỉ Singapore mới có), và <b>Silly Swirly</b>.<span class="note">Khu này mở tháng 2/2025 nên vẫn rất đông về sau trong ngày. Đi đầu tiên là cách duy nhất để chơi mà gần như không phải xếp hàng.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">11:15</div>
-        <div class="body"><b>Sci-Fi City</b> — Battlestar Galactica: HUMAN vs. CYLON, tàu lượn đôi cao nhất thế giới, chơi cả hai đường ray nếu kịp.<span class="note">TRANSFORMERS The Ride đóng cửa 23/8–4/9, không cần ghé.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">12:15</div>
-        <div class="body"><b>Ancient Egypt</b> — Revenge of the Mummy, tàu lượn trong nhà, và Treasure Hunters.</div>
-      </div>
-      <div class="item">
-        <div class="time">13:00</div>
-        <div class="body"><b>Ăn trưa trong công viên.</b></div>
-      </div>
-      <div class="food">
-        <span class="flabel">Trong Minion Land</span>
-        <span class="fname">Super Hungry Food Stand</span> — <span class="frating">Cơm cà ri karaage kiểu Nhật, burger nấm chay, và bánh phô mai cầu vồng lấy cảm hứng từ kỳ lân Fluffy. Ăn ở đây vừa tiện vừa đúng chủ đề.</span>
-      </div>
-      <div class="item">
-        <div class="time">14:00</div>
-        <div class="body"><b>Far Far Away</b> — Shrek 4-D Adventure, Enchanted Airways, Puss In Boots' Giant Journey.</div>
-      </div>
-      <div class="item">
-        <div class="time">15:15</div>
-        <div class="body"><b>The Lost World</b> — Jurassic Park Rapids Adventure (sẽ ướt, mang áo mưa mỏng), Canopy Flyer, Dino-Soarin'.<span class="note">WaterWorld đóng đến hết 31/8, bỏ qua khỏi lịch.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">16:30</div>
-        <div class="body"><b>Madagascar, New York &amp; Hollywood</b> — các khu nhẹ nhàng, nhiều góc chụp ảnh.</div>
-      </div>
-      <div class="item star">
-        <div class="time">17:00</div>
-        <div class="body"><b>Quay lại Minion Land lần hai</b> — xem show đường phố <b>"Minute of Minion Mayhem"</b> với Margo, Edith và Agnes, chụp ảnh cùng Minion, rồi mua quà ở <b>Minion Marketplace</b>.<span class="note">Cuối ngày là lúc dễ gặp nhân vật và chụp ảnh nhất. Đây là lý do nên ở lại cả ngày thay vì về sớm.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">18:00</div>
-        <div class="body"><b>Rời USS</b>, đi bộ sang khu Forum của Resorts World.</div>
-      </div>
-      <div class="item">
-        <div class="time">18:20</div>
-        <div class="body"><b>Ăn tối tại RWS</b> — dùng voucher S$10 đi kèm vé Harry Potter.<span class="note">Lưu ý: Malaysian Food Street ở RWS đã đóng cửa vĩnh viễn từ tháng 2/2025 — chọn các nhà hàng ở khu Forum hoặc FestiveWalk thay thế.</span></div>
-      </div>
-      <div class="item star">
-        <div class="time">19:30</div>
-        <div class="body"><b>Harry Potter: Visions of Magic</b> — WEAVE, tầng B1 Forum. Mười không gian nhập vai gồm Chamber of Secrets và The Trap Door, có trải nghiệm đũa phép tương tác. Khoảng 60 phút.<span class="note">Đặt vé theo khung giờ trước, đến sớm 10–15 phút.</span></div>
-      </div>
-      <div class="item">
-        <div class="time">20:45</div>
-        <div class="body"><b>Về khách sạn</b> — Waterfront → HarbourFront → Chinatown → Bencoolen.<span class="note">Về phòng khoảng 22:00. Tối nay không có mốc giờ bắt buộc; tranh thủ sắp đồ trước khi ngủ.</span></div>
-      </div>
-    </div>
-    <div class="day-foot"><b>Đặt vé USS online trước.</b> Cân nhắc Express Pass nếu đi vào ngày đông — nhưng vì Transformers và WaterWorld đều đóng, số trò cần xếp hàng ít hơn bình thường, nên vé thường có thể đã đủ. Tải app Universal Studios Singapore để xem thời gian chờ theo thời gian thực.</div>
-  </div>
-</div>
+   {id:"d3",num:"Ngày 3 · Chủ Nhật 30/8",title:"Nhà kính, Chinatown, Kampong Glam & lễ hội đêm",tag:"Về trước 22:00",
+    blocks:[
+     ["i","08:20","<b>Bencoolen → Bayfront</b> bằng DTL.","Đến cửa nhà kính trước 09:00."],
+     ["i","09:00","<b>Cloud Forest</b> — thác trong nhà cao 35m, mát lạnh.","Vào sớm để tránh đông."],
+     ["i","10:15","<b>Flower Dome</b> — chung vé với Cloud Forest, đi liền mạch sang.",""],
+     ["i","11:15","<b>Bayfront → Chinatown</b> bằng DTL.",""],
+     ["f","Bình dân · 4.4★ (23.386 đánh giá)","Maxwell Food Centre","Tian Tian chicken rice, fish soup, One Soy beancurd. Ăn lúc 11:35 — trước 12:00 hàng ngắn hơn hẳn. Ngại chờ Tian Tian thì sang Ah Tai (#01-07) do bếp trưởng cũ của họ mở."],
+     ["i","12:30","<b>Buddha Tooth Relic Temple và dạo phố Chinatown.</b>","Mặc kín vai và đầu gối khi vào chùa."],
+     ["i","14:00","<b>Chinatown → Bugis/Bencoolen → khách sạn.</b>",""],
+     ["i","14:30","<b>Nghỉ tại khách sạn, sạc điện thoại.</b>","Giữ sức sau ngày Mandai hôm qua."],
+     ["i","15:40","<b>Sultan Mosque → Haji Lane → Arab Street.</b>","Cả tuyến đi bộ ~15 phút từ khách sạn, tiện đường về."],
+     ["f","Chọn một · Zam Zam 4.2★ (9.774) hoặc Coconut Club 4.2★ (3.078)","Singapore Zam Zam &nbsp;/&nbsp; The Coconut Club Beach Road","Zam Zam: murtabak gà hoặc cừu, biryani, teh halia — rẻ và nhanh. Coconut Club: nasi lemak ayam goreng, beef rendang, chendol — đắt hơn nhưng chỉn chu, đạt Michelin Bib Gourmand 2026."],
+     ["i","19:00","<b>Đi bộ Kampong Glam → Bugis/Bras Basah.</b>","Xem luôn các tác phẩm mở sớm trên đường."],
+     ["s","19:30","<b>Singapore Night Festival</b> — tuyến Armenian Street → National Museum → Bras Basah.","Miễn phí. Trình chiếu chính bắt đầu từ 19:30. Ưu tiên các mảng projection và Night Lights."],
+     ["i","21:10","<b>Đi bộ về khách sạn.</b>","Về phòng khoảng 21:25."]],
+    foot:"Ngày dễ co giãn nhất. Lễ hội đêm nằm ngay quanh khách sạn nên ra muộn, về sớm hay bỏ giữa chừng đều được — <b>không ảnh hưởng mốc 22:00</b>."},
 
-<!-- DAY 5 -->
-<div class="day" id="d5">
-  <div class="day-card">
-    <div class="day-head">
-      <div>
-        <div class="day-num">Ngày 5 · Thứ Ba 1/9</div>
-        <h2 class="day-title">Jewel Changi &amp; tách cổng T1 / T3</h2>
-      </div>
-      <div class="day-tag">Bay 13:00</div>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="time">07:30</div>
-        <div class="body"><b>Ăn sáng và trả phòng.</b> Kiểm tra lại hộ chiếu, và <b>xác nhận terminal ghi trên vé của từng người</b>.</div>
-      </div>
-      <div class="item">
-        <div class="time">08:15</div>
-        <div class="body"><b>Bugis → Tanah Merah → Changi Airport</b> bằng tuyến EWL, khoảng 50 phút.</div>
-      </div>
-      <div class="item">
-        <div class="time">09:15</div>
-        <div class="body"><b>Jewel Changi</b> — hai người vẫn đi cùng nhau. Ngắm Rain Vortex (thác trong nhà cao nhất thế giới), Shiseido Forest Valley, mua quà phút chót.</div>
-      </div>
-      <div class="food">
-        <span class="flabel">Trong Jewel</span>
-        <span class="fname">Khu food hall tầng B2</span> — <span class="frating">Nhiều quầy nhanh, hợp lúc đang canh giờ. Nếu muốn ngồi hẳn thì có Din Tai Fung.</span>
-      </div>
-      <div class="item star">
-        <div class="time">10:15</div>
-        <div class="body"><b>Tách đoàn.</b> Người bay <b>T1</b> đi thẳng — cửa Bắc của Jewel nối trực tiếp vào sảnh đến T1 tầng 1. Người bay <b>T3</b> đi cầu nối hoặc Skytrain, mất 5–10 phút và miễn phí.</div>
-      </div>
-      <div class="item">
-        <div class="time">10:30</div>
-        <div class="body"><b>Làm thủ tục check-in và ký gửi hành lý</b> tại terminal của mỗi người.</div>
-      </div>
-      <div class="item">
-        <div class="time">11:30</div>
-        <div class="body"><b>Qua an ninh và xuất cảnh</b>, rồi đi đến cổng.</div>
-      </div>
-      <div class="item">
-        <div class="time">13:00</div>
-        <div class="body"><b>Cất cánh.</b></div>
-      </div>
-    </div>
-    <div class="day-foot">Skytrain nối T1 ↔ T3 chạy 05:00–02:00, miễn phí, chỉ 5–10 phút — nên nếu ai xong thủ tục sớm vẫn có thể quay lại gặp nhau. Giữ liên lạc điện thoại sau khi tách. <b>Lưu ý:</b> khách quá cảnh muốn vào Jewel phải qua nhập cảnh trước, nhưng hai bạn đi từ nội thành ra nên không vướng điều này.</div>
-  </div>
-</div>
+   {id:"d4",num:"Ngày 4 · Thứ Hai 31/8",title:"Minion Land, USS & Harry Potter",tag:"Minion là ưu tiên số 1",
+    blocks:[
+     ["i","08:10","<b>Bencoolen → Chinatown → HarbourFront → Waterfront</b> bằng DTL, NEL rồi Sentosa Express.","Phải xếp hàng ở cổng USS trước 09:30."],
+     ["i","09:15","<b>Xếp hàng chờ mở cổng (rope drop).</b>","Mở sẵn app Universal Studios Singapore để xem thời gian chờ theo thời gian thực."],
+     ["s","10:00","<b>MINION LAND — vào ngay khi mở cổng.</b> Minion Mayhem → Buggie Boogie → Silly Swirly.","Khu này mở tháng 2/2025 và đông dần về sau trong ngày. Vào đầu tiên là cách duy nhất chơi mà gần như không phải xếp hàng."],
+     ["i","11:15","<b>Battlestar Galactica (cả hai đường ray) → Revenge of the Mummy.</b>","TRANSFORMERS đóng 23/8–4/9, không cần ghé."],
+     ["f","Trong Minion Land","Super Hungry Food Stand","Cơm cà ri karaage kiểu Nhật, burger nấm chay, bánh phô mai cầu vồng. Ăn ngay trong khu, đúng chủ đề và không mất thời gian đi xa. Tránh bữa quá nặng vì chiều còn nhiều trò lắc."],
+     ["i","13:20","<b>Far Far Away: Enchanted Airways → Puss In Boots' Giant Journey.</b>","Dùng lối Single Rider nếu có."],
+     ["i","14:45","<b>The Lost World: Jurassic Park Rapids → Canopy Flyer → Dino-Soarin'.</b>","Sẽ ướt, mang áo mưa mỏng. WaterWorld đang đóng."],
+     ["i","16:30","<b>New York, Hollywood và Sesame Street Spaghetti Space Chase.</b>","USS không còn khu Madagascar — chính chỗ đó đã thành Minion Land."],
+     ["s","17:15","<b>Quay lại Minion Land lần hai</b> — chơi lại trò thích nhất, gặp nhân vật và mua quà ở Minion Marketplace.","Cuối ngày là lúc dễ chụp ảnh với Minion nhất. Không xếp vào hàng nào có thời gian chờ vượt quá 18:10."],
+     ["f","Tầm trung · 4.2★ (816 đánh giá)","Din Tai Fung @ WEAVE","Xiao long bao, cơm chiên trứng, mì bò. Nằm ngay giữa USS và Harry Potter nên không phải quay ngược về VivoCity. Đến sớm vì giờ đông phải xếp hàng."],
+     ["s","19:30","<b>Harry Potter: Visions of Magic</b> — WEAVE, tầng B1 Forum. Mười không gian nhập vai gồm Chamber of Secrets và The Trap Door, có trải nghiệm đũa phép tương tác.","Dành 60–90 phút. Vé riêng, không nằm trong vé USS. Đặt khung giờ trước và đến sớm 10–15 phút."],
+     ["i","21:05","<b>Waterfront → HarbourFront → Chinatown → Bencoolen → khách sạn.</b>","Về phòng khoảng 22:15. Tối nay không có mốc giờ bắt buộc — tranh thủ sắp đồ trước khi ngủ."]],
+    foot:"<b>Đặt vé USS và Harry Potter online trước, đây là hai vé tách biệt.</b> Vì TRANSFORMERS và WaterWorld đều đóng, số trò phải xếp hàng ít hơn ngày thường nên vé thường có thể đã đủ, không nhất thiết mua Express Pass."},
 
-<section class="tickets" id="ve">
-  <h2>Vé cần mua trước</h2>
-  <p class="lead">Mua online trước sẽ rẻ hơn và khỏi xếp hàng quầy. Mở lại nguồn chính thức 24–48 giờ trước ngày đi để xác nhận giờ mở cửa.</p>
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr><th>Ngày</th><th>Hạng mục</th><th>Mức</th><th>Ghi chú</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="d">28/8</td>
-          <td>Merlion, Spectra, Garden Rhapsody</td>
-          <td><span class="pri free">Miễn phí</span></td>
-          <td>Không cần vé, chỉ cần đến đúng giờ show</td>
-        </tr>
-        <tr>
-          <td class="d">29/8</td>
-          <td>Combo Zoo + River Wonders + Night Safari</td>
-          <td><span class="pri must">Bắt buộc</span></td>
-          <td>Mua vé nhiều điểm ở buy.mandai.com sẽ rẻ hơn mua lẻ ba lần</td>
-        </tr>
-        <tr>
-          <td class="d">29/8</td>
-          <td>Amazon River Quest</td>
-          <td><span class="pri opt">Tùy chọn</span></td>
-          <td>Phụ thu ~S$5, mua tại chỗ. Đóng bảo trì từ 31/8</td>
-        </tr>
-        <tr>
-          <td class="d">30/8</td>
-          <td>Cloud Forest + Flower Dome</td>
-          <td><span class="pri must">Bắt buộc</span></td>
-          <td>Vé chung hai nhà kính tại gardensbythebay.com.sg</td>
-        </tr>
-        <tr>
-          <td class="d">30/8</td>
-          <td>Singapore Night Festival</td>
-          <td><span class="pri free">Miễn phí</span></td>
-          <td>Phần lớn miễn phí; vài tour đặc biệt cần đăng ký riêng</td>
-        </tr>
-        <tr>
-          <td class="d">31/8</td>
-          <td>Universal Studios Singapore</td>
-          <td><span class="pri must">Bắt buộc</span></td>
-          <td>Vé ngày tại rwsentosa.com. Express Pass là tùy chọn</td>
-        </tr>
-        <tr>
-          <td class="d">31/8</td>
-          <td>Harry Potter: Visions of Magic</td>
-          <td><span class="pri must">Bắt buộc</span></td>
-          <td>Vé riêng, không nằm trong vé USS. Đặt khung 19:30. Kèm voucher F&amp;B S$10</td>
-        </tr>
-        <tr>
-          <td class="d">1/9</td>
-          <td>MRT ra sân bay</td>
-          <td><span class="pri free">Trả tại chỗ</span></td>
-          <td>Dùng thẻ EZ-Link hoặc thẻ ngân hàng contactless</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+   {id:"d5",num:"Ngày 5 · Thứ Ba 1/9",title:"Jewel Changi & tách cổng T1 / T3",tag:"Bay 13:00",
+    blocks:[
+     ["i","07:10","<b>Trả phòng, đi bộ ra Bugis MRT.</b>","Kiểm tra lại lần cuối terminal in trên vé của từng người."],
+     ["i","07:25","<b>Bugis → Tanah Merah → Changi Airport</b> bằng EWL.","Hai người vẫn đi cùng nhau tới Jewel."],
+     ["i","08:25","<b>Đến Song Fa, chờ mở cửa.</b>","Cửa hàng mở 08:30."],
+     ["f","Tầm trung · 4.6★ (1.126 đánh giá)","Song Fa Bak Kut Teh Jewel","Sườn heo bak kut teh, quẩy, đậu phộng om. Điểm cao nhất trong danh sách và tiện cho cả T1 lẫn T3 trước khi tách. Không ăn thịt heo thì chọn quán khác trong Jewel."],
+     ["s","09:10","<b>Điểm quyết định — chọn một trong hai phương án dưới đây.</b>","Phụ thuộc vào việc hãng bay của <i>cả hai người</i> có hỗ trợ Early Check-in hay không."]],
+    plans:{h:"Hai phương án cho ngày về",
+      a:{title:"Phương án 1 — còn gặp lại",cond:"Chỉ khi CẢ HAI hãng có Early Check-in",items:[
+        "09:10 tách tạm, mỗi người về terminal của mình làm thủ tục và gửi hành lý",
+        "10:00 gặp lại ở Rain Vortex, Jewel tầng 1 — chỉ khi cả hai đã có boarding pass",
+        "10:20 tách hẳn, không hẹn gặp lại nữa",
+        "10:35 qua xuất cảnh và an ninh"]},
+      b:{title:"Phương án 2 — an toàn",cond:"Nếu một hãng không hỗ trợ",items:[
+        "09:10 tách hẳn ngay tại Song Fa, không hẹn gặp lại",
+        "Mỗi người sang thẳng terminal của mình, chờ quầy mở rồi làm thủ tục",
+        "Bỏ phần gặp lại ở Rain Vortex — ưu tiên check-in xong sớm",
+        "Xong thủ tục lúc nào thì qua xuất cảnh lúc đó"]}},
+    blocks2:[
+     ["i","10:35","<b>Qua xuất cảnh và kiểm tra an ninh</b> tại terminal của mỗi người.","Nếu thấy hàng dài thì bỏ hết phần tham quan, đi thẳng."],
+     ["i","11:30","<b>Đi thẳng đến cổng</b>, chỉ ghé những điểm nằm ngay trên đường đi.","Không đi sang terminal khác vào lúc này."],
+     ["s","11:45","<b>Có mặt tại gate.</b>","Mỗi người tự theo dõi thông báo đổi cổng trên bảng điện tử."],
+     ["i","13:00","<b>Cất cánh.</b>",""]],
+    foot:"Skytrain nối T1 ↔ T3 chạy 05:00–02:00, miễn phí, mất 5–10 phút. T1 nối thẳng vào Jewel qua cửa Bắc; từ T3 phải đi cầu nối. <b>Nếu chưa xác nhận được cả hai hãng có Early Check-in, cứ chọn Phương án 2</b> — mất buổi gặp ở Rain Vortex nhưng không có rủi ro trễ giờ."}],
 
-<footer>
-  <b style="color:var(--ink)">Nguồn kiểm chứng</b><br>
-  <a href="https://www.rwsentosa.com/en/play/universal-studios-singapore/attraction-closure" target="_blank" rel="noopener">RWS — Lịch đóng cửa tạm thời USS</a> ·
-  <a href="https://www.rwsentosa.com/en/events/harry-potter-visions-of-magic" target="_blank" rel="noopener">Harry Potter: Visions of Magic</a> ·
-  <a href="https://www.mandai.com/en/night-safari.html" target="_blank" rel="noopener">Mandai — Night Safari</a> ·
-  <a href="https://www.mandai.com/en/river-wonders.html" target="_blank" rel="noopener">Mandai — River Wonders</a> ·
-  <a href="https://www.timeout.com/singapore/news/singapore-night-festival-2026-the-7-highlights-worth-planning-your-night-around-082026" target="_blank" rel="noopener">Time Out — Singapore Night Festival 2026</a> ·
-  <a href="https://www.changiairport.com/en/at-changi/transport-and-directions/transferring-between-terminals-jewel.html" target="_blank" rel="noopener">Changi — chuyển terminal &amp; Jewel</a> ·
-  <a href="https://www.klook.com/blog/minion-land-universal-studios-singapore/" target="_blank" rel="noopener">Klook — Minion Land USS</a> ·
-  <a href="https://iwandered.net/maxwell-food-centre-best-food/" target="_blank" rel="noopener">Maxwell Food Centre — các quầy nổi bật</a>
-  <ul>
-    <li>Giờ mở cửa, giá vé và lịch diễn có thể thay đổi — RWS ghi rõ lịch đóng cửa "có thể thay đổi mà không báo trước".</li>
-    <li>Thời gian di chuyển là ước tính theo MRT giờ bình thường, có thể chênh vào giờ cao điểm.</li>
-    <li>Tải app <b>Universal Studios Singapore</b> (xem thời gian chờ) và <b>Google Maps</b> hoặc <b>MyTransport.SG</b> (tra MRT thời gian thực).</li>
-  </ul>
-</footer>
+  food:{h:"Quán ăn theo ngày",lead:"Điểm Google Maps tra ngày 23/8/2026, có thể thay đổi. Các quán được chọn theo nguyên tắc nằm đúng tuyến đi — quán điểm cao mà lệch đường sẽ làm hỏng lịch.",
+    head:["Ngày","Quán","Google","Món nên gọi","Giá","Vì sao chọn"],
+    rows:[
+     ["28/8","Makansutra Gluttons Bay","4.1★ · 4.161","Satay, cá đuối sambal, oyster omelette, nước mía","S$–S$$","Ngay cạnh Esplanade, nằm gọn trong tuyến một chiều Merlion → MBS → Gardens"],
+     ["29/8","YY Kafei Dian","4.1★ · 2.993","Kaya bun, trứng lòng đào, kopi","S$","Gần khách sạn và mở sớm, hợp giờ khởi hành 07:10 đi Mandai"],
+     ["29/8","Ah Meng Restaurant","Tiện tuyến","Chicken rice hoặc laksa","S$–S$$","Không phải quán điểm cao, nhưng ở trong Zoo nên không mất 60–90 phút đi lại"],
+     ["29/8","Mandai East / Ulu Ulu","Tiện tuyến","Laksa, chicken rice","S$–S$$","Ăn sớm 16:25 để giữ trọn buổi Night Safari"],
+     ["30/8","Maxwell Food Centre","4.4★ · 23.386","Tian Tian chicken rice, fish soup, One Soy beancurd","S$","Điểm cao, nhiều lựa chọn, đúng tuyến Chinatown"],
+     ["30/8","Singapore Zam Zam","4.2★ · 9.774","Murtabak gà hoặc cừu, biryani, teh halia","S$","Rẻ, nhanh, nổi tiếng, ngay Kampong Glam"],
+     ["30/8","The Coconut Club Beach Road","4.2★ · 3.078","Nasi lemak ayam goreng, beef rendang, chendol","S$$","Phương án nâng cấp cho bữa tối 30/8 — Michelin Bib Gourmand 2026"],
+     ["31/8","Super Hungry Food Stand","Trong Minion Land","Cơm cà ri karaage, burger nấm chay","S$","Ăn trưa ngay trong khu Minion, không mất thời gian đi xa"],
+     ["31/8","Din Tai Fung @ WEAVE","4.2★ · 816","Xiao long bao, cơm chiên trứng, mì bò","S$$","Nằm giữa USS và Harry Potter, khỏi quay về VivoCity"],
+     ["1/9","Song Fa Bak Kut Teh Jewel","4.6★ · 1.126","Sườn heo bak kut teh, quẩy, đậu phộng om","S$$","Điểm cao nhất danh sách, tiện cho cả T1 và T3 trước khi tách"]]},
+
+  tickets:{h:"Vé cần mua trước",lead:"Mua online sẽ rẻ hơn và khỏi xếp hàng quầy. Mở lại nguồn chính thức 24–48 giờ trước ngày đi để xác nhận giờ mở cửa.",
+    head:["Ngày","Hạng mục","Mức","Ghi chú"],
+    rows:[
+     ["28/8","Merlion, Spectra, Garden Rhapsody",["free","Miễn phí"],"Không cần vé, chỉ cần có mặt đúng giờ show"],
+     ["29/8","Combo Zoo + River Wonders + Night Safari",["must","Bắt buộc"],"Vé nhiều điểm ở buy.mandai.com rẻ hơn mua lẻ ba lần"],
+     ["29/8","Ghế Creatures of the Night",["must","Bắt buộc"],"Đặt online, mở đúng 17:30 cho suất 19:30 — không đặt là không vào được"],
+     ["30/8","Cloud Forest + Flower Dome",["must","Bắt buộc"],"Vé chung hai nhà kính tại gardensbythebay.com.sg"],
+     ["30/8","Singapore Night Festival",["free","Miễn phí"],"Phần lớn miễn phí; vài tour đặc biệt cần đăng ký riêng"],
+     ["31/8","Universal Studios Singapore",["must","Bắt buộc"],"Vé ngày tại rwsentosa.com. Express Pass là tùy chọn"],
+     ["31/8","Harry Potter: Visions of Magic",["must","Bắt buộc"],"Vé hoàn toàn riêng, không nằm trong vé USS. Đặt khung 19:30"],
+     ["1/9","Early Check-in tại Changi",["opt","Cần kiểm tra"],"Hỏi trước hãng bay của cả hai người — quyết định chọn Phương án 1 hay 2"]]},
+
+  footer:{h:"Nguồn kiểm chứng",
+    links:[["https://www.mandai.com/en/see-and-do/presentations/night-safari/embers-of-night.html","Mandai — Embers of Night"],
+      ["https://www.mandai.com/en/see-and-do/presentations/night-safari/creatures-of-the-night.html","Mandai — Creatures of the Night"],
+      ["https://www.mandai.com/en/river-wonders/animals-and-zones/giant-panda.html","Mandai — Giant Panda Forest"],
+      ["https://www.gardensbythebay.com.sg/en/things-to-do/calendar-of-events/garden-rhapsody.html","Gardens by the Bay — Garden Rhapsody"],
+      ["https://www.rwsentosa.com/en/play/universal-studios-singapore/attraction-closure","RWS — Lịch đóng cửa tạm thời USS"],
+      ["https://www.rwsentosa.com/en/events/harry-potter-visions-of-magic","RWS — Harry Potter: Visions of Magic"],
+      ["https://www.heritage.sg/sgnightfest","Singapore Night Festival"],
+      ["https://www.changiairport.com/en/at-changi/transport-and-directions/transferring-between-terminals-jewel.html","Changi — chuyển terminal & Jewel"]],
+    notes:["Giờ mở cửa, giá vé và lịch diễn có thể thay đổi — RWS ghi rõ lịch đóng cửa “có thể thay đổi mà không báo trước”.",
+      "Thời gian di chuyển là ước lượng theo MRT giờ bình thường, có thể chênh vào giờ cao điểm.",
+      "Nên tải app <b>Universal Studios Singapore</b> để xem thời gian chờ, và <b>Google Maps</b> hoặc <b>MyTransport.SG</b> để tra MRT."]}
+},
+
+en:{
+  lang:"en",
+  eyebrow:"Travel itinerary · 5 days, 4 nights",
+  title:"Singapore, Aug 28 → Sep 1",
+  sub:"From leaving the hotel at 3pm Friday to a 1pm Tuesday flight — a full Mandai day closing with a 10pm fire show, Universal Studios opening at Minion Land, Harry Potter on the 31st, and two options for splitting between Changi T1 and T3 on the last day.",
+  facts:[["Hotel","Grand Pacific, 101 Victoria St"],["Party","2 people"],["Back by 10pm","Aug 28 & Aug 30"],["Flight home","Sep 1, 1:00pm — T1 & T3"]],
+  nav:[["#luuy","Read first"],["#d1","Aug 28 · Marina Bay"],["#d2","Aug 29 · Mandai"],["#d3","Aug 30 · Chinatown"],["#d4","Aug 31 · USS"],["#d5","Sep 1 · Changi"],["#an","Food"],["#ve","Tickets"]],
+  note:{h:"Five things to know before you go", sub:"Checked against official sources, updated 23 Aug 2026.", items:[
+    "<b>The fire show is now called “Embers of Night”</b>, not Thumbuakar. It runs at the Entrance Courtyard, usually 9pm, with an extra 10pm slot on Fridays, Saturdays and eves of public holidays. Aug 29 is a Saturday, so the 10pm show is available — this itinerary uses it to close the day.",
+    "<b>Creatures of the Night requires an online seat booking</b>, with three shows at 7:30pm, 8:30pm and 9:30pm. Booking opens exactly 2 hours before each show, so 5:30pm is when you reserve the 7:30pm slot. Arrive 15 minutes early; gates shut 10 minutes before showtime.",
+    "<b>Harry Potter does exist in Singapore</b> — just not inside Universal Studios. It is the “Harry Potter: Visions of Magic” exhibition at WEAVE, Level B1 Forum, Resorts World Sentosa, right next to USS. Separate ticket, 60–90 minutes.",
+    "<b>Three things at USS are closed during your dates:</b> WaterWorld through Aug 31, TRANSFORMERS The Ride Aug 23 – Sep 4, and Pantages Theater from Aug 30. Also, <b>USS no longer has a Madagascar zone</b> — that space became Minion Land.",
+    "<b>Garden Rhapsody has two shows, 7:45pm and 8:45pm.</b> August runs the National Day edition, “Songs of Singapore”. This plan takes the 8:45pm slot so it pairs with Spectra at 8pm the same evening."]},
+  days:[
+   {id:"d1",num:"Day 1 · Friday Aug 28",title:"Marina Bay, one way only",tag:"Back by 10pm",
+    blocks:[
+     ["i","3:00pm","<b>Drop bags, change shoes, leave the hotel.</b>","Don't linger past 15 minutes — the whole evening is one continuous walking route."],
+     ["i","3:15pm","<b>City Hall → Raffles Place</b> on the EWL, exactly one stop, then walk out toward Fullerton.",""],
+     ["i","3:40pm","<b>Merlion Park</b> — the best angle puts the Merlion against Marina Bay Sands.",""],
+     ["i","4:20pm","<b>Jubilee Bridge → Esplanade</b>, walking the bayfront.","One direction, no doubling back. Carry water."],
+     ["f","Budget · 4.1★ (4,161 reviews)","Makansutra Gluttons Bay","Satay, sambal stingray, oyster omelette, sugarcane juice. Eat at 5:05pm to beat the 7–8pm rush."],
+     ["i","6:00pm","<b>Helix Bridge → Marina Bay Sands.</b>","Shoot the bridge while there's still daylight."],
+     ["i","6:30pm","<b>MBS and ArtScience Museum from the outside.</b>","Don't go inside the museum — doing so costs you one of tonight's two shows."],
+     ["i","7:40pm","<b>Get to Event Plaza and pick your spot.</b>","Stand facing the water."],
+     ["s","8:00pm","<b>Spectra</b> — free light and water show, about 15 minutes.","Take the first slot at 8pm; it's the only one that connects to Garden Rhapsody."],
+     ["i","8:15pm","<b>Walk straight to Supertree Grove.</b>","No shopping stops. There's a built-in 10-minute buffer here."],
+     ["s","8:45pm","<b>Garden Rhapsody</b> — August runs the National Day edition, “Songs of Singapore”. Free, 15 minutes.",""],
+     ["i","9:00pm","<b>Photos at Supertree Grove after the show.</b>","Don't stay past 9:10pm."],
+     ["i","9:10pm","<b>Bayfront → Promenade → Bras Basah</b>, then walk to the hotel.","Back in the room around 9:40pm."]],
+    foot:"The whole evening is a straight line: Merlion → Esplanade → MBS → Gardens, with no backtracking anywhere. That's why dinner is at 5:05pm rather than 7pm."},
+
+   {id:"d2",num:"Day 2 · Saturday Aug 29",title:"A full day at Mandai, ending in fire",tag:"Longest day — back ~11:25pm",night:true,
+    blocks:[
+     ["f","Budget · 4.1★ (2,993 reviews)","YY Kafei Dian","Kaya bun, soft-boiled eggs, kopi. On Beach Road, a 9-minute walk from the hotel and open early — eat at 6:35am and grab extra buns to take along."],
+     ["i","7:10am","<b>Bras Basah → Caldecott (CCL) → Springleaf (TEL) → bus 138 → Singapore Zoo.</b>","Be there before 8:30am."],
+     ["s","8:30am","<b>Treetops Trail → Orangutan Island → Fragile Forest.</b>","The most valuable window in the Zoo — animals are most active in the morning."],
+     ["i","10:15am","<b>Wild Africa → Elephant Trail.</b>","Use the in-park tram when your legs go; don't try to walk everything."],
+     ["f","On-route · not a high-rated spot","Ah Meng Restaurant (inside the Zoo)","Chicken rice or laksa. Chosen because it's inside the Zoo — leaving to eat costs 60–90 minutes and wrecks the evening."],
+     ["i","12:40pm","<b>Great Rift Valley → Australasia → whatever else you still want.</b>","Leave the Zoo gate no later than 2:40pm."],
+     ["i","2:40pm","<b>Walk over to River Wonders and scan in.</b>","Don't stop at the zones near the entrance."],
+     ["i","3:00pm","<b>Head straight to Giant Panda Forest</b>, following the signs.","Skip Rivers of the World, the presentations and the Amazon River Quest boat entirely — this is the “pandas only, then out” plan."],
+     ["s","3:25pm","<b>See the pandas, Kai Kai and Jia Jia.</b>","The enclosure is air-conditioned, which also makes it a good mid-day rest stop."],
+     ["i","4:00pm","<b>Walk straight back out to the River Wonders gate.</b>","Don't detour to the Amazon Flooded Forest."],
+     ["f","On-route","Mandai East / Ulu Ulu Safari Restaurant","Laksa or chicken rice, eaten early at 4:25pm. Bring backup snacks — the evening runs long."],
+     ["s","5:30pm","<b>Book your Creatures of the Night seats for the 7:30pm show.</b>","Booking opens exactly 2 hours before showtime, so 5:30pm is the earliest you can claim this slot. No booking means no entry."],
+     ["i","7:15pm","<b>Enter Night Safari and go straight to the Amphitheatre.</b>","You must arrive 15 minutes early; gates close 10 minutes before the show."],
+     ["s","7:30pm","<b>Creatures of the Night</b> — about 25 minutes.",""],
+     ["i","8:00pm","<b>Safari Adventure Tram</b> — 40 minutes through seven geographic zones, included in admission.","Sit on the right-hand side if you get the choice."],
+     ["i","8:45pm","<b>Leopard Trail → East Lodge / Tasmanian Devil Trail.</b>","Keep moving one direction so you make the 10pm fire show."],
+     ["s","10:00pm","<b>Embers of Night</b> — fire performance at the Entrance Courtyard, about 10 minutes.","The 10pm slot only runs Fridays, Saturdays and eves of public holidays. Aug 29 is a Saturday, so it's on — and it's right by the exit, so you leave straight after."],
+     ["i","10:15pm","<b>M2 shuttle → Khatib → City Hall → hotel.</b>","Back in the room around 11:25pm. Check the M2 queue the moment you exit."]],
+    foot:"<b>The heaviest day — nearly 17 hours out.</b> If you're flagging, cut in this order: (1) the second half of the Zoo after 12:40pm, (2) East Lodge Trail in the evening, (3) Wild Africa. <b>Don't cut the pandas, the tram, or Embers of Night.</b> Bring mosquito repellent and a light rain jacket."},
+
+   {id:"d3",num:"Day 3 · Sunday Aug 30",title:"Conservatories, Chinatown, Kampong Glam & the night festival",tag:"Back by 10pm",
+    blocks:[
+     ["i","8:20am","<b>Bencoolen → Bayfront</b> on the DTL.","Be at the conservatory doors before 9am."],
+     ["i","9:00am","<b>Cloud Forest</b> — a 35m indoor waterfall, and blessedly cold.","Go early to beat the crowds."],
+     ["i","10:15am","<b>Flower Dome</b> — same ticket as Cloud Forest, walk straight over.",""],
+     ["i","11:15am","<b>Bayfront → Chinatown</b> on the DTL.",""],
+     ["f","Budget · 4.4★ (23,386 reviews)","Maxwell Food Centre","Tian Tian chicken rice, fish soup, One Soy beancurd. Eat at 11:35am — before noon the queues are much shorter. If Tian Tian's line is long, Ah Tai (#01-07) was opened by their former head chef."],
+     ["i","12:30pm","<b>Buddha Tooth Relic Temple and a wander through Chinatown.</b>","Cover shoulders and knees for the temple."],
+     ["i","2:00pm","<b>Chinatown → Bugis/Bencoolen → hotel.</b>",""],
+     ["i","2:30pm","<b>Rest at the hotel, charge phones.</b>","Recover from yesterday's Mandai day."],
+     ["i","3:40pm","<b>Sultan Mosque → Haji Lane → Arab Street.</b>","The whole loop is a ~15-minute walk from the hotel, conveniently on the way back."],
+     ["f","Pick one · Zam Zam 4.2★ (9,774) or Coconut Club 4.2★ (3,078)","Singapore Zam Zam &nbsp;/&nbsp; The Coconut Club Beach Road","Zam Zam: chicken or mutton murtabak, biryani, teh halia — cheap and fast. Coconut Club: nasi lemak ayam goreng, beef rendang, chendol — pricier but a proper sit-down, and a 2026 Michelin Bib Gourmand."],
+     ["i","7:00pm","<b>Walk from Kampong Glam toward Bugis/Bras Basah.</b>","Catch the installations that open early along the way."],
+     ["s","7:30pm","<b>Singapore Night Festival</b> — the Armenian Street → National Museum → Bras Basah route.","Free. The main projections start at 7:30pm. Prioritise the projection pieces and Night Lights."],
+     ["i","9:10pm","<b>Walk back to the hotel.</b>","In the room around 9:25pm."]],
+    foot:"The most flexible day of the trip. The festival is right around the hotel, so arriving late, leaving early or bailing halfway all work — <b>none of it threatens the 10pm mark</b>."},
+
+   {id:"d4",num:"Day 4 · Monday Aug 31",title:"Minion Land, USS & Harry Potter",tag:"Minions come first",
+    blocks:[
+     ["i","8:10am","<b>Bencoolen → Chinatown → HarbourFront → Waterfront</b> via DTL, NEL then the Sentosa Express.","You want to be queuing at the USS gate before 9:30am."],
+     ["i","9:15am","<b>Queue for rope drop.</b>","Have the Universal Studios Singapore app open for live wait times."],
+     ["s","10:00am","<b>MINION LAND — go the moment the gates open.</b> Minion Mayhem → Buggie Boogie → Silly Swirly.","The zone opened in February 2025 and fills up as the day goes on. Hitting it first is the only way to ride with almost no queue."],
+     ["i","11:15am","<b>Battlestar Galactica (both tracks) → Revenge of the Mummy.</b>","TRANSFORMERS is closed Aug 23 – Sep 4, so skip it."],
+     ["f","Inside Minion Land","Super Hungry Food Stand","Japanese karaage curry rice, vegan mushroom burger, rainbow cheesecake. Eating in the zone is on-theme and costs no walking time. Keep it light — there are spinning rides this afternoon."],
+     ["i","1:20pm","<b>Far Far Away: Enchanted Airways → Puss In Boots' Giant Journey.</b>","Use the Single Rider line where it's offered."],
+     ["i","2:45pm","<b>The Lost World: Jurassic Park Rapids → Canopy Flyer → Dino-Soarin'.</b>","You will get wet — bring a light poncho. WaterWorld is closed."],
+     ["i","4:30pm","<b>New York, Hollywood and Sesame Street Spaghetti Space Chase.</b>","There's no Madagascar zone any more — that's exactly the space Minion Land now occupies."],
+     ["s","5:15pm","<b>Second run at Minion Land</b> — re-ride your favourite, meet the characters, and shop the Minion Marketplace.","Late afternoon is the easiest time to get photos with the Minions. Don't join any queue posting a wait past 6:10pm."],
+     ["f","Mid-range · 4.2★ (816 reviews)","Din Tai Fung @ WEAVE","Xiao long bao, egg fried rice, beef noodles. Sits between USS and Harry Potter, so no trek back to VivoCity. Arrive early — peak hours mean queueing."],
+     ["s","7:30pm","<b>Harry Potter: Visions of Magic</b> — WEAVE, Level B1 Forum. Ten immersive rooms including the Chamber of Secrets and The Trap Door, with interactive wand moments.","Allow 60–90 minutes. Separate ticket from USS. Book a time slot and turn up 10–15 minutes early."],
+     ["i","9:05pm","<b>Waterfront → HarbourFront → Chinatown → Bencoolen → hotel.</b>","Back around 10:15pm. No curfew tonight — use the time to start packing."]],
+    foot:"<b>Book USS and Harry Potter online in advance; they are two separate tickets.</b> With TRANSFORMERS and WaterWorld both closed there are fewer queues than usual, so a standard ticket may well be enough without an Express Pass."},
+
+   {id:"d5",num:"Day 5 · Tuesday Sep 1",title:"Jewel Changi & the T1 / T3 split",tag:"Flight at 1:00pm",
+    blocks:[
+     ["i","7:10am","<b>Check out and walk to Bugis MRT.</b>","Do a final check of which terminal is printed on each person's ticket."],
+     ["i","7:25am","<b>Bugis → Tanah Merah → Changi Airport</b> on the EWL.","Both of you travel together as far as Jewel."],
+     ["i","8:25am","<b>Arrive at Song Fa and wait for opening.</b>","The outlet opens at 8:30am."],
+     ["f","Mid-range · 4.6★ (1,126 reviews)","Song Fa Bak Kut Teh Jewel","Pork rib bak kut teh, you tiao, braised peanuts. The highest-rated spot on this list and convenient for both T1 and T3 before you split. If you don't eat pork, pick another Jewel outlet."],
+     ["s","9:10am","<b>Decision point — pick one of the two plans below.</b>","It depends on whether <i>both</i> of your airlines support Early Check-in."]],
+    plans:{h:"Two plans for departure day",
+      a:{title:"Plan 1 — you meet again",cond:"Only if BOTH airlines offer Early Check-in",items:[
+        "9:10am split temporarily; each person checks in and drops bags at their own terminal",
+        "10:00am meet again at the Rain Vortex, Jewel Level 1 — only once both have boarding passes",
+        "10:20am split for good, no further meeting point",
+        "10:35am through immigration and security"]},
+      b:{title:"Plan 2 — the safe one",cond:"If either airline doesn't offer it",items:[
+        "9:10am split for good right at Song Fa, no meeting point",
+        "Each person goes straight to their terminal and waits for the counter to open",
+        "Drop the Rain Vortex reunion — getting checked in comes first",
+        "Head through immigration as soon as you're done"]}},
+    blocks2:[
+     ["i","10:35am","<b>Immigration and security</b> at your own terminal.","If the queues look long, skip all the sightseeing and go straight through."],
+     ["i","11:30am","<b>Head to the gate</b>, stopping only at things directly on your path.","Don't cross to the other terminal at this point."],
+     ["s","11:45am","<b>Be at the gate.</b>","Each of you watches the boards for your own gate changes."],
+     ["i","1:00pm","<b>Departure.</b>",""]],
+    foot:"The T1 ↔ T3 Skytrain runs 5am–2am, is free, and takes 5–10 minutes. T1 connects directly into Jewel via the North entrance; from T3 you take the link bridge. <b>If you can't confirm Early Check-in for both airlines, just take Plan 2</b> — you lose the Rain Vortex reunion but carry no risk of running late."}],
+
+  food:{h:"Where to eat, day by day",lead:"Google Maps ratings checked 23 Aug 2026 and subject to change. Places were picked for sitting on the route — a highly-rated spot that pulls you off course costs more than it's worth.",
+    head:["Day","Place","Google","What to order","Price","Why this one"],
+    rows:[
+     ["Aug 28","Makansutra Gluttons Bay","4.1★ · 4,161","Satay, sambal stingray, oyster omelette, sugarcane juice","S$–S$$","Right by Esplanade, sitting inside the one-way Merlion → MBS → Gardens route"],
+     ["Aug 29","YY Kafei Dian","4.1★ · 2,993","Kaya bun, soft-boiled eggs, kopi","S$","Near the hotel and open early, which fits the 7:10am departure for Mandai"],
+     ["Aug 29","Ah Meng Restaurant","On-route","Chicken rice or laksa","S$–S$$","Not a standout, but it's inside the Zoo so it costs no travel time"],
+     ["Aug 29","Mandai East / Ulu Ulu","On-route","Laksa, chicken rice","S$–S$$","An early 4:25pm meal that protects the whole Night Safari evening"],
+     ["Aug 30","Maxwell Food Centre","4.4★ · 23,386","Tian Tian chicken rice, fish soup, One Soy beancurd","S$","Well rated, plenty of choice, and exactly on the Chinatown route"],
+     ["Aug 30","Singapore Zam Zam","4.2★ · 9,774","Chicken or mutton murtabak, biryani, teh halia","S$","Cheap, fast, famous, and right in Kampong Glam"],
+     ["Aug 30","The Coconut Club Beach Road","4.2★ · 3,078","Nasi lemak ayam goreng, beef rendang, chendol","S$$","The upgrade option for Aug 30 dinner — a 2026 Michelin Bib Gourmand"],
+     ["Aug 31","Super Hungry Food Stand","In Minion Land","Karaage curry rice, vegan mushroom burger","S$","Lunch inside the Minion zone, no walking time lost"],
+     ["Aug 31","Din Tai Fung @ WEAVE","4.2★ · 816","Xiao long bao, egg fried rice, beef noodles","S$$","Between USS and Harry Potter, so no trip back to VivoCity"],
+     ["Sep 1","Song Fa Bak Kut Teh Jewel","4.6★ · 1,126","Pork rib bak kut teh, you tiao, braised peanuts","S$$","Highest rated here and convenient for both T1 and T3 before splitting"]]},
+
+  tickets:{h:"Book these in advance",lead:"Booking online is cheaper and skips the counter queue. Re-check the official pages 24–48 hours before each day to confirm operating hours.",
+    head:["Day","Item","Status","Notes"],
+    rows:[
+     ["Aug 28","Merlion, Spectra, Garden Rhapsody",["free","Free"],"No ticket needed — just be there on time"],
+     ["Aug 29","Zoo + River Wonders + Night Safari combo",["must","Required"],"A multi-park ticket at buy.mandai.com beats three separate ones"],
+     ["Aug 29","Creatures of the Night seats",["must","Required"],"Book online; opens at 5:30pm sharp for the 7:30pm show — no booking, no entry"],
+     ["Aug 30","Cloud Forest + Flower Dome",["must","Required"],"Combined conservatory ticket at gardensbythebay.com.sg"],
+     ["Aug 30","Singapore Night Festival",["free","Free"],"Mostly free; a few special tours need separate registration"],
+     ["Aug 31","Universal Studios Singapore",["must","Required"],"Day ticket at rwsentosa.com. Express Pass optional"],
+     ["Aug 31","Harry Potter: Visions of Magic",["must","Required"],"Entirely separate from the USS ticket. Book the 7:30pm slot"],
+     ["Sep 1","Early Check-in at Changi",["opt","Check first"],"Ask both airlines in advance — it decides whether you use Plan 1 or Plan 2"]]},
+
+  footer:{h:"Sources",
+    links:[["https://www.mandai.com/en/see-and-do/presentations/night-safari/embers-of-night.html","Mandai — Embers of Night"],
+      ["https://www.mandai.com/en/see-and-do/presentations/night-safari/creatures-of-the-night.html","Mandai — Creatures of the Night"],
+      ["https://www.mandai.com/en/river-wonders/animals-and-zones/giant-panda.html","Mandai — Giant Panda Forest"],
+      ["https://www.gardensbythebay.com.sg/en/things-to-do/calendar-of-events/garden-rhapsody.html","Gardens by the Bay — Garden Rhapsody"],
+      ["https://www.rwsentosa.com/en/play/universal-studios-singapore/attraction-closure","RWS — USS temporary closures"],
+      ["https://www.rwsentosa.com/en/events/harry-potter-visions-of-magic","RWS — Harry Potter: Visions of Magic"],
+      ["https://www.heritage.sg/sgnightfest","Singapore Night Festival"],
+      ["https://www.changiairport.com/en/at-changi/transport-and-directions/transferring-between-terminals-jewel.html","Changi — transferring between terminals & Jewel"]],
+    notes:["Opening hours, prices and show schedules can change — RWS states its closure list is “subject to change without prior notice”.",
+      "Travel times are estimates for off-peak MRT and will run longer at rush hour.",
+      "Worth installing the <b>Universal Studios Singapore</b> app for live wait times, plus <b>Google Maps</b> or <b>MyTransport.SG</b> for the MRT."]}
+}
+};
+
+const $ = s => document.querySelector(s);
+
+function esc(s){return String(s);}
+
+function renderBlocks(blocks){
+  return blocks.map(b=>{
+    if(b[0]==="f"){
+      return `<div class="food"><span class="flabel">${b[1]}</span>`+
+        `<span class="fname">${b[2]}</span> — <span class="frating">${b[3]}</span></div>`;
+    }
+    const star = b[0]==="s" ? " star" : "";
+    const note = b[3] ? `<span class="note">${b[3]}</span>` : "";
+    return `<div class="item${star}"><div class="time">${b[1]}</div>`+
+      `<div class="body">${b[2]}${note}</div></div>`;
+  }).join("");
+}
+
+function renderPlans(p){
+  const col = (o,cls)=>`<div class="plan ${cls}"><div class="cond">${o.cond}</div>`+
+    `<h4>${o.title}</h4><ul>${o.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`;
+  return `<div class="plans">${col(p.a,"")}${col(p.b,"safe")}</div>`;
+}
+
+function renderTable(t, isTickets){
+  const rows = t.rows.map(r=>{
+    const cells = r.map((c,i)=>{
+      if(Array.isArray(c)) return `<td><span class="pri ${c[0]}">${c[1]}</span></td>`;
+      if(i===0) return `<td class="d">${c}</td>`;
+      if(!isTickets && i===2) return `<td class="rate">${c}</td>`;
+      return `<td>${c}</td>`;
+    }).join("");
+    return `<tr>${cells}</tr>`;
+  }).join("");
+  return `<h2>${t.h}</h2><p class="lead">${t.lead}</p><div class="tablewrap"><table>`+
+    `<thead><tr>${t.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function render(lang){
+  const d = DATA[lang];
+  document.documentElement.lang = d.lang;
+  $("#eyebrow").textContent = d.eyebrow;
+  $("#h1").textContent = d.title;
+  $("#sub").textContent = d.sub;
+  $("#facts").innerHTML = d.facts.map(f=>`<div class="fact"><div class="k">${f[0]}</div><div class="v">${f[1]}</div></div>`).join("");
+  $("#daynav").innerHTML = d.nav.map(n=>`<a href="${n[0]}">${n[1]}</a>`).join("");
+  $("#luuy").innerHTML = `<h2>${d.note.h}</h2><p class="csub">${d.note.sub}</p><ul>`+
+    d.note.items.map(i=>`<li>${i}</li>`).join("")+`</ul>`;
+
+  $("#days").innerHTML = d.days.map(day=>{
+    const head = `<div class="day-head${day.night?" night":""}"><div>`+
+      `<div class="day-num">${day.num}</div><h2 class="day-title">${day.title}</h2></div>`+
+      `<div class="day-tag">${day.tag}</div></div>`;
+    let inner = `<div class="timeline">${renderBlocks(day.blocks)}</div>`;
+    if(day.plans) inner += renderPlans(day.plans);
+    if(day.blocks2) inner += `<div class="timeline" style="padding-top:0">${renderBlocks(day.blocks2)}</div>`;
+    return `<div class="day" id="${day.id}"><div class="day-card">${head}${inner}`+
+      `<div class="day-foot">${day.foot}</div></div></div>`;
+  }).join("");
+
+  $("#an").innerHTML = renderTable(d.food, false);
+  $("#ve").innerHTML = renderTable(d.tickets, true);
+
+  $("#footer").innerHTML = `<b style="color:var(--ink)">${d.footer.h}</b><br>`+
+    d.footer.links.map(l=>`<a href="${l[0]}" target="_blank" rel="noopener">${l[1]}</a>`).join(" · ")+
+    `<ul>${d.footer.notes.map(n=>`<li>${n}</li>`).join("")}</ul>`;
+
+  document.querySelectorAll(".langtoggle button").forEach(b=>{
+    b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true":"false");
+  });
+  document.title = lang==="vi" ? "Singapore 5 Ngày" : "Singapore in 5 Days";
+}
+
+let current = "vi";
+try{ const saved = localStorage.getItem("sg-lang"); if(saved==="en"||saved==="vi") current = saved; }catch(e){}
+
+document.querySelectorAll(".langtoggle button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    current = b.dataset.lang;
+    try{ localStorage.setItem("sg-lang", current); }catch(e){}
+    render(current);
+  });
+});
+
+render(current);
+</script>
 </body>
 </html>
