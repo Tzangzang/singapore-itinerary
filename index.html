@@ -654,10 +654,10 @@ function render(){
   document.getElementById("sheet").innerHTML = RENDER[current]() + '<footer>Đánh dấu “Đã luyện” được lưu trên trình duyệt này.</footer>';
   renderNav();
 }
-function top(){ window.scrollTo(0,0); }
+function goTop(){ window.scrollTo(0,0); }
 function go(id){
   if(!RENDER[id]) return;
-  current = id; store.set("ielts-tab2", id); render(); top();
+  current = id; store.set("ielts-tab2", id); render(); goTop();
 }
 function setSub(i){
   subIdx[current] = i; store.set("ielts-sub", JSON.stringify(subIdx)); render();
