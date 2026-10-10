@@ -127,6 +127,56 @@ ul.errs li::before{content:"✗";position:absolute;left:4px;color:var(--red);fon
 .pager{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
 .pager button{background:none;border:1px solid var(--line);border-radius:8px;padding:8px 14px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer}
 .pager button:hover{border-color:var(--ink)}
+.qtable tr.q{border-top:0;padding:0;margin:0}
+.qtable{width:100%;border-collapse:collapse;background:var(--paper);margin-top:8px;table-layout:fixed}
+.qtable thead th{text-align:left;font-size:13px;font-weight:500;color:var(--muted);padding:8px 12px;border-bottom:2px solid var(--grid2)}
+.qtable thead th:first-child{width:36%}
+.qtable td{vertical-align:top;padding:14px 12px;border-bottom:1px dashed var(--grid2)}
+.qtable td.qcol{border-right:1px solid var(--line)}
+.qtable .qhead{display:flex;gap:8px}
+.qtable .check{margin:10px 0 0 calc(1.6em + 8px);padding:0}
+.qtable .hint{margin:0;border-left:0;padding:0;gap:10px}
+.qtable .peek{margin:0}
+.block{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:baseline}
+ol.idea{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+ol.idea li{display:grid;grid-template-columns:118px 1fr;gap:8px}
+ol.idea .kwi{font-weight:600;color:var(--ink)}
+ol.idea .lbl{color:var(--muted);font-size:13px;padding-top:2px}
+ol.formula{margin:8px 0 12px}
+.notewrap{display:grid;grid-template-columns:90px 1fr;gap:10px;margin-top:12px;align-items:start}
+.notewrap textarea{width:100%;min-height:52px;resize:vertical;font:inherit;font-size:15px;line-height:1.5;color:var(--text);background:var(--paper);border:1px dashed var(--ink);border-radius:6px;padding:6px 10px;overflow:hidden}
+.notewrap textarea:focus{outline:2px solid var(--ink);outline-offset:1px;border-style:solid}
+@media (max-width:860px){
+  .qtable,.qtable tbody,.qtable tr,.qtable td{display:block;width:100%}
+  .qtable thead{display:none}
+  .qtable tr{border-bottom:1px dashed var(--grid2);padding:12px 0}
+  .qtable td{border:0;padding:4px 0}
+  .qtable td.qcol{border-right:0}
+  .qtable .check{margin-left:0}
+  .block,.notewrap{grid-template-columns:1fr;gap:2px}
+  ol.idea li{grid-template-columns:1fr;gap:0}
+}
+.vh{font-size:16px;margin:22px 0 8px;color:var(--ink)}
+.vtable{width:100%;border-collapse:collapse;background:var(--paper);font-size:15px}
+.vtable th{text-align:left;font-size:13px;font-weight:500;color:var(--muted);padding:6px 10px;border-bottom:2px solid var(--grid2)}
+.vtable td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.vtable td.vp{color:var(--ink);font-weight:700;white-space:nowrap}
+.vtable td.vex{font-style:italic;color:var(--text)}
+.vtable .hl{color:var(--ink);font-style:italic}
+.sheetp{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 6px;align-items:baseline;font-size:14px}
+.sheetp .tag{margin-right:6px}
+.sheetp .pm{color:var(--muted);margin-right:10px}
+@media (max-width:860px){
+  .vtable thead{display:none}
+  .vtable,.vtable tbody,.vtable tr,.vtable td{display:block;width:100%}
+  .vtable tr{padding:8px 0;border-bottom:1px solid var(--line)}
+  .vtable td{border:0;padding:1px 0}
+  .vtable td.vp{white-space:normal}
+}
+.vtable .ipa{display:block;font-weight:400;color:var(--muted);font-family:"Be Vietnam Pro","Segoe UI","Lucida Sans Unicode","DejaVu Sans",sans-serif;font-size:14px;margin-top:2px;white-space:normal}
+.vtable .ipa .red{font-weight:700}
+.legend{font-size:13.5px;color:var(--muted);margin:-2px 0 8px}
+em.past{font-style:inherit}
 footer{margin-top:56px;color:var(--muted);font-size:13px}
 button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 @media (max-width:860px){
@@ -158,341 +208,278 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-of
   <main id="main"><div class="sheet" id="sheet"></div></main>
 </div>
 <script>
-function T(topic, phrases, qs){return {topic, phrases, qs};}
-function Q(q, idea, kw, frame, note){return {q, idea, kw, frame, note};}
-
-var P1_DAY10 = [
-T("Music",[["listen to pop music","nghe nhạc pop"],["help me relax","giúp tôi thư giãn"],["put me in a good mood","làm tôi vui lên"],["have the same taste in music","có cùng gu âm nhạc"]],[
-Q("What music do you like?","V-pop, ca sĩ yêu thích.",["a big fan of","V-pop","catchy"],"I'm a big fan of ___, especially songs [[which]] ___."),
-Q("Do you often listen to one type of music?","Tùy việc: nhạc cổ điển khi cần tập trung, EDM buổi sáng.",["depend on my mood","focus","wake me up"],"Not really. I listen to ___ [[when]] ___, but ___ [[because]] ___."),
-Q("What music do your friends like? Do you enjoy the same type of music?","Bạn thân cùng gu, hay đi karaoke cùng nhau.",["have the same taste in music","get together"],"Yes, my friend and I ___. [[When]] we get together, we ___."),
-Q("What's the most popular type of music where you live?","V-pop, giai điệu dễ hát theo.",["catchy tunes","sing along to"],"___ is the most popular, [[because]] it has ___ [[which]] ___."),
-Q("Which singer or musician would you like to see in person?","Ca sĩ yêu thích; nếu có concert sẽ mua vé.",["favourite singer","in person","concert"],"I'd love to see ___, [[who]] ___. [[If]] she had a concert ___, I [[would]] ___."),
-Q("Do you prefer sad or happy music?","Nhạc vui, giúp tâm trạng tốt hơn khi mệt.",["put me in a good mood","exhausted"],"I prefer ___ music, [[because]] it ___ [[when]] I ___."),
-Q("Does happy music make you feel more excited?","Có khi đang vui; khi buồn thì có thể ngược lại.",["cheerful","in a good mood"],"Yes. [[When]] I'm ___, happy music [[makes]] me ___. [[But if]] I'm ___, ___.","Thói quen → dùng thì hiện tại, không dùng quá khứ."),
-Q("Do you like music?","Thích, giúp thư giãn sau một ngày dài.",["relax","after a long day"],"Yes. Music is something [[which]] helps me ___."),
-Q("What kinds of music do you listen to?","V-pop và nhạc cổ điển; nghe cổ điển khi làm việc.",["classical music","concentrate"],"Mostly ___ and ___. I listen to ___ [[while]] I'm ___ [[because]] ___."),
-Q("Is it easy to learn music?","Không; hát có vẻ dễ nhưng học nhạc cụ mất nhiều thời gian.",["instrument","practice","take time"],"I don't think so. [[Although]] ___ seems easy, learning ___ takes ___.")
-]),
+function T(topic, phrases, rows, common){return {topic:topic, phrases:phrases, common:!!common, qs:rows.map(function(r){return {q:r[0], idea:[r[1],r[2],r[3]], kw:r[4].split("|"), frame:r[5], note:r[6]};})};}
+var TOPICS = [
 T("Social media",[["keep in touch with friends","giữ liên lạc với bạn bè"],["watch short videos","xem video ngắn"],["share photos online","chia sẻ ảnh trên mạng"],["spend too much time on social media","dành quá nhiều thời gian cho mạng xã hội"]],[
-Q("Do you think you spend too much time on social media?","Đôi khi; lướt video ngắn sau giờ làm.",["scroll through","short videos","lose track of time"],"Sometimes, yes. [[When]] I'm tired after work, I ___."),
-Q("Do your friends use social media?","Tất cả bạn bè đều dùng để giữ liên lạc.",["keep in touch","share photos"],"Yes, all of my friend[[s]] use it [[because]] it's the easiest way to ___."),
-Q("What do people often do on social media?","Chia sẻ ảnh, tham gia các nhóm cùng sở thích.",["share photos online","join groups"],"Most people ___. Some also join groups [[where]] they ___."),
-Q("When did you start using social media?","Từ cấp 3; ban đầu chỉ nhắn tin với bạn.",["high school","chat with friends"],"I started using it [[when]] I [[was]] ___. At that time I mainly ___, but now I ___."),
-Q("Do you like to use social media?","Thích để giải trí, nhưng đang cố giảm thời gian dùng.",["relax","cut down on screen time"],"Yes, [[because]] ___. [[However]], I'm trying to ___."),
-Q("Do you think your friends use too much social media?","Không; bận đi làm nên chỉ dùng buổi tối.",["busy with work"],"I don't think so. [[Since]] they're ___, they ___."),
-Q("Do you want to work in social media? Why?","Không hẳn; làm nội dung mỗi ngày rất vất vả.",["create content","suit me"],"Not really. [[Although]] it looks ___, ___."),
-Q("What's the most popular social media in Vietnam? Why?","Facebook, nhiều tính năng như Marketplace.",["features","buy and sell things"],"___, [[because]] it has ___, like Marketplace, [[where]] people ___."),
-Q("Do you think people in your country find social media useful?","Có; liên lạc với người thân ở xa, cập nhật tin tức.",["family members","keep up with the news"],"Yes. People use it to talk to family members [[who]] ___.")
-]),
-T("Computer/Tablets",[["use my laptop for work","dùng laptop để làm việc"],["type documents","gõ tài liệu"],["more convenient than","tiện hơn"],["find information quickly","tìm thông tin nhanh"]],[
-Q("Do you often use a computer or tablet?","Dùng hằng ngày cho công việc marketing.",["digital marketing","laptop"],"Yes, every day. My laptop is something [[which]] I ___."),
-Q("What do you usually use your computer or tablet for?","Kiểm tra chiến dịch quảng cáo; buổi tối xem phim.",["ad campaigns","write reports"],"Mostly for work. I use it to ___ [[which]] I ___. In the evening, I ___."),
-Q("Did you use computers much when you were a child?","Ít; nhà không có máy, hay chơi ở quán net.",["internet café"],"Not much. [[When]] I was a child, ___, so I [[used to]] ___."),
-Q("Do you prefer using a computer or a smartphone for studying?","Máy tính vì màn hình to, dễ ghi chép.",["bigger screen","take notes"],"A computer, [[because]] ___, so it's [[more convenient than]] ___."),
-Q("Is there anything you find difficult to do on a computer?","Chỉnh sửa video; phần mềm quá nhiều chức năng.",["edit videos","software"],"Yes, ___, [[because]] the software has ___ [[which]] I ___.")
-]),
-T("Headphones",[["wear headphones","đeo tai nghe"],["block out the noise","chặn tiếng ồn"],["wireless headphones","tai nghe không dây"],["on the way to work","trên đường đi làm"]],[
-Q("How often do you wear headphones?","Gần như mỗi ngày, nhất là khi làm việc.",["block out the noise"],"Almost every day, especially [[when]] ___, [[because]] ___."),
-Q("Do you think headphones are useful?","Nghe riêng mà không làm phiền người xung quanh.",["disturb","people around me"],"Yes. They let me ___ without disturbing people [[who]] ___."),
-Q("Are headphones popular in your country?","Thấy nhiều người đeo tai nghe không dây trên phố, trên xe buýt.",["wireless headphones"],"Yes. [[When]] I go out, I often see people [[who]] ___."),
-Q("In what situations should people not wear headphones?","Sự kiện trang trọng, rạp phim; trông bất lịch sự.",["formal events","impolite"],"At ___. [[If]] people wear headphones there, ___."),
-Q("Do you use headphones?","Có, đeo ở văn phòng ồn để tập trung.",["concentrate","noisy office"],"Yes, I do. I wear them ___ [[because]] they help me ___."),
-Q("In what situations would you use headphones?","Khi làm việc, trên đường đi làm, khi gọi điện.",["on the way to work","make phone calls"],"Mainly [[when]] I'm ___, and sometimes [[when]] I ___."),
-Q("What type of headphones do you use?","Tai nghe không dây, nhỏ gọn.",["wireless","easy to carry"],"I use ___, [[which]] are ___.")
-]),
+["Do you think you spend too much time on social media?","Sometimes, yes.","I scroll through short videos after work.","I often lose track of time.","scroll through|short videos|lose track of time","Sometimes, yes. [[When]] I'm tired after work, I ___."],
+["Do your friends use social media?","Yes, all of them.","It's the easiest way to keep in touch.","We share photos and message each other.","keep in touch|share photos","Yes, all of my friend[[s]] use it [[because]] it's the easiest way to ___."],
+["What do people often do on social media?","They share photos and updates.","Some join groups about their hobbies.","e.g. cooking or travel groups.","share photos online|join groups","Most people ___. Some also join groups [[where]] they ___."],
+["When did you start using social media?","In high school.","At first I only chatted with friends.","Now I also read the news on it.","high school|chat with friends","I started using it [[when]] I [[was]] ___. At that time I mainly ___, but now I ___."],
+["Do you like to use social media?","Yes, I do.","It's a good way to relax.","But I'm trying to cut down on screen time.","relax|cut down on screen time","Yes, [[because]] ___. [[However]], I'm trying to ___."],
+["Do you think your friends use too much social media?","I don't think so.","They're busy with work.","They only use it in the evening.","busy with work","I don't think so. [[Since]] they're ___, they ___."],
+["Do you want to work in social media? Why?","Not really.","Creating content every day is hard work.","It doesn't really suit me.","create content|suit me","Not really. [[Although]] it looks ___, ___."],
+["What's the most popular social media in Vietnam? Why?","Facebook.","It has many features, like Marketplace.","People buy and sell things there.","features|buy and sell things","___, [[because]] it has ___, like Marketplace, [[where]] people ___."],
+["Do you think people in your country find social media useful?","Yes, very useful.","People talk to family members who live far away.","They also keep up with local news.","family members|keep up with the news","Yes. People use it to talk to family members [[who]] ___."]]),
+T("Music",[["listen to pop music","nghe nhạc pop"],["help me relax","giúp tôi thư giãn"],["put me in a good mood","làm tôi vui lên"],["have the same taste in music","có cùng gu âm nhạc"]],[
+["What music do you like?","V-pop.","Especially Chipu, my favourite singer.","Her songs are catchy and cheer me up.","a big fan of|V-pop|catchy","I'm a big fan of ___, especially songs [[which]] ___."],
+["Do you often listen to one type of music?","Not really, it depends on what I'm doing.","Classical music when I need to focus.","EDM in the morning wakes me up.","depend on my mood|focus|wake me up","Not really. I listen to ___ [[when]] ___, but ___ [[because]] ___."],
+["What music do your friends like? Do you enjoy the same type of music?","Yes, my best friend and I have the same taste.","We both love V-pop.","We often sing it at karaoke together.","have the same taste in music|get together","Yes, my friend and I ___. [[When]] we get together, we ___."],
+["What's the most popular type of music where you live?","V-pop.","It has catchy tunes that are easy to sing along to.","e.g. you hear it in every café.","catchy tunes|sing along to","___ is the most popular, [[because]] it has ___ [[which]] ___."],
+["Which singer or musician would you like to see in person?","Chipu.","She's my favourite singer.","I'd buy a ticket if she had a concert in my city.","favourite singer|in person|concert","I'd love to see ___, [[who]] ___. [[If]] she had a concert ___, I [[would]] ___."],
+["Do you prefer sad or happy music?","Happy music.","It puts me in a good mood.","Especially when I'm exhausted after work.","put me in a good mood|exhausted","I prefer ___ music, [[because]] it ___ [[when]] I ___."],
+["Does happy music make you feel more excited?","Yes, usually.","When I'm in a good mood, it makes me more cheerful.","But if I'm sad, it can make me feel worse.","cheerful|in a good mood","Yes. [[When]] I'm ___, happy music [[makes]] me ___. [[But if]] I'm ___, ___.","Thói quen → dùng thì hiện tại, không dùng quá khứ."],
+["Do you like music?","Yes, I love it.","I listen to it every day.","It helps me relax after a long day.","relax|after a long day","Yes. Music is something [[which]] helps me ___."],
+["What kinds of music do you listen to?","Mostly V-pop and classical music.","I listen to classical music while I'm working.","It helps me concentrate.","classical music|concentrate","Mostly ___ and ___. I listen to ___ [[while]] I'm ___ [[because]] ___."],
+["Is it easy to learn music?","No, I don't think so.","Singing seems easy.","But learning an instrument takes years of practice.","instrument|practice|take time","I don't think so. [[Although]] ___ seems easy, learning ___ takes ___."]]),
 T("Websites",[["keep up with the news","cập nhật tin tức"],["look up information","tra cứu thông tin"],["learn things for free","học miễn phí"],["part of my job","một phần công việc"]],[
-Q("What kinds of websites are popular in your country?","Mạng xã hội; ai cũng có tài khoản.",["social media sites","have an account"],"___ like ___, [[because]] almost everyone [[who]] I know ___."),
-Q("Are there any changes to the websites you often visit?","Facebook trước chỉ để liên lạc, giờ có Marketplace.",["buy and sell"],"Yes. ___ [[used to]] be ___, but now it has ___, [[where]] ___."),
-Q("What is your favourite website?","YouTube, học được nhiều thứ miễn phí, ví dụ mẹo học tiếng Anh.",["learn things for free"],"___, [[because]] I can ___. For example, I [[learnt]] ___."),
-Q("What kinds of websites do you often visit?","YouTube và báo điện tử mỗi sáng.",["keep up with the news"],"___ and ___. Every morning I ___, [[which]] helps me ___."),
-Q("Do you usually use websites?","Mỗi ngày, vì là một phần công việc.",["part of my job"],"Yes, every day. It's part of my job, [[because]] I ___."),
-Q("Do you prefer to search for information through websites or books?","Tùy: web khi cần nhanh, sách khi cần thông tin chính thống.",["quick updates","reliable"],"It depends. I use websites [[when]] ___, but [[if]] ___, I prefer books."),
-Q("Do you want to create your own website in the future?","Có; nếu có thời gian sẽ làm trang portfolio.",["portfolio","show my skills"],"Yes. [[If]] I had more time, I [[would]] create ___ [[which]] ___.")
-]),
+["What kinds of websites are popular in your country?","Social media sites.","Like Facebook and TikTok.","Almost everyone I know has an account.","social media sites|have an account","___ like ___, [[because]] almost everyone [[who]] I know ___."],
+["Are there any changes to the websites you often visit?","Yes, a lot.","Facebook used to be just for chatting.","Now it has Marketplace for buying and selling.","buy and sell","Yes. ___ [[used to]] be ___, but now it has ___, [[where]] ___."],
+["What is your favourite website?","YouTube.","I can learn things for free.","e.g. I learnt some English tips from a BBC video.","learn things for free","___, [[because]] I can ___. For example, I [[learnt]] ___."],
+["What kinds of websites do you often visit?","YouTube and online news sites.","I read the news every morning.","It keeps me updated.","keep up with the news","___ and ___. Every morning I ___, [[which]] helps me ___."],
+["Do you usually use websites?","Yes, every day.","It's part of my job.","I check my campaigns on Google and Facebook.","part of my job","Yes, every day. It's part of my job, [[because]] I ___."],
+["Do you prefer to search for information through websites or books?","It depends.","Websites for quick updates.","Books for formal, reliable information.","quick updates|reliable","It depends. I use websites [[when]] ___, but [[if]] ___, I prefer books."],
+["Do you want to create your own website in the future?","Yes, maybe.","A portfolio website.","To show my skills to clients, if I had more time.","portfolio|show my skills","Yes. [[If]] I had more time, I [[would]] create ___ [[which]] ___."]]),
+T("Headphones",[["wear headphones","đeo tai nghe"],["block out the noise","chặn tiếng ồn"],["wireless headphones","tai nghe không dây"],["on the way to work","trên đường đi làm"]],[
+["How often do you wear headphones?","Almost every day.","Especially when I'm working.","They help me block out the noise.","block out the noise","Almost every day, especially [[when]] ___, [[because]] ___."],
+["Do you think headphones are useful?","Yes, very.","I can listen to my own music.","Without disturbing people around me.","disturb|people around me","Yes. They let me ___ without disturbing people [[who]] ___."],
+["Are headphones popular in your country?","Yes, very popular.","Especially wireless ones.","e.g. I see them on every bus.","wireless headphones","Yes. [[When]] I go out, I often see people [[who]] ___."],
+["In what situations should people not wear headphones?","At formal events or in the cinema.","People can't enjoy the moment.","It also looks impolite.","formal events|impolite","At ___. [[If]] people wear headphones there, ___."],
+["Do you use headphones?","Yes, I do.","I wear them in the office.","It's noisy, so they help me concentrate.","concentrate|noisy office","Yes, I do. I wear them ___ [[because]] they help me ___."],
+["In what situations would you use headphones?","Mainly at work.","And on the way to work.","Sometimes for phone calls.","on the way to work|make phone calls","Mainly [[when]] I'm ___, and sometimes [[when]] I ___."],
+["What type of headphones do you use?","Wireless headphones, AirPods.","They're small.","Easy to put in my bag.","wireless|easy to carry","I use ___, [[which]] are ___."]]),
+T("Computer/Tablets",[["use my laptop for work","dùng laptop để làm việc"],["type documents","gõ tài liệu"],["more convenient than","tiện hơn"],["find information quickly","tìm thông tin nhanh"]],[
+["Do you often use a computer or tablet?","Yes, every day.","I work in digital marketing.","I can't work without my laptop.","digital marketing|laptop","Yes, every day. My laptop is something [[which]] I ___."],
+["What do you usually use your computer or tablet for?","Mostly for work.","I check my ad campaigns and write reports.","In the evening, I watch films on it.","ad campaigns|write reports","Mostly for work. I use it to ___ [[which]] I ___. In the evening, I ___."],
+["Did you use computers much when you were a child?","Not much.","My family didn't have a computer.","I used to play games at an internet café.","internet café","Not much. [[When]] I was a child, ___, so I [[used to]] ___."],
+["Do you prefer using a computer or a smartphone for studying?","A computer.","The screen is bigger.","It's easier to read and take notes.","bigger screen|take notes","A computer, [[because]] ___, so it's [[more convenient than]] ___."],
+["Is there anything you find difficult to do on a computer?","Yes, editing videos.","The software has so many functions.","I often get confused.","edit videos|software","Yes, ___, [[because]] the software has ___ [[which]] I ___."]]),
 T("Advertisements",[["skip the ads","bỏ qua quảng cáo"],["catchy","dễ nhớ, bắt tai"],["be on sale","đang giảm giá"],["pop-up ads","quảng cáo bật lên"]],[
-Q("Do you often notice advertisements?","Thường xuyên vì làm marketing; chú ý quảng cáo sáng tạo.",["pay attention to","creative"],"Yes, quite often, [[because]] ___, so I pay attention to ads [[which]] ___."),
-Q("Where do you usually see advertisements?","Mạng xã hội, YouTube, biển quảng cáo trên đường.",["billboards","on the way to work"],"Mostly on ___. I also see them on ___ [[when]] I'm ___."),
-Q("Is there any advertisement that you remember particularly well?","Quảng cáo Tết về gia đình đoàn tụ, rất cảm động.",["emotional","family reunion"],"Yes, a ___ advert about ___, [[which]] made me feel ___."),
-Q("Have you ever bought something because you saw it in an advertisement?","Mua sản phẩm skincare thấy trên Facebook vì đang giảm giá.",["be on sale"],"Yes. Last month I [[bought]] ___ [[which]] I saw ___, [[because]] ___."),
-Q("What kinds of advertisements do you find annoying?","Quảng cáo bật lên, không bỏ qua được.",["pop-up ads","skip"],"___, [[because]] they appear [[while]] I'm ___ and I can't ___.")
-]),
+["Do you often notice advertisements?","Yes, quite often.","I work in marketing.","I pay attention to creative ads.","pay attention to|creative","Yes, quite often, [[because]] ___, so I pay attention to ads [[which]] ___."],
+["Where do you usually see advertisements?","Mostly on social media and YouTube.","Also on billboards.","e.g. on my way to work.","billboards|on the way to work","Mostly on ___. I also see them on ___ [[when]] I'm ___."],
+["Is there any advertisement that you remember particularly well?","Yes, a Tet advert.","It was about a family reunion.","It made me feel really emotional.","emotional|family reunion","Yes, a ___ advert about ___, [[which]] made me feel ___."],
+["Have you ever bought something because you saw it in an advertisement?","Yes.","A skincare product I saw on Facebook.","It was on sale, so I couldn't resist.","be on sale","Yes. Last month I [[bought]] ___ [[which]] I saw ___, [[because]] ___."],
+["What kinds of advertisements do you find annoying?","Pop-up ads.","They appear while I'm reading.","And I can't skip them.","pop-up ads|skip","___, [[because]] they appear [[while]] I'm ___ and I can't ___."]]),
 T("Singing",[["sing karaoke","hát karaoke"],["sing along to","hát theo"],["have a good voice","có giọng hát hay"],["feel shy about","ngại làm gì"]],[
-Q("Do you like singing?","Thích hát V-pop, giúp giảm stress.",["reduce stress"],"Yes, I love singing, especially ___, [[because]] ___."),
-Q("Do you often sing?","Gần như mỗi ngày, ở phòng khách có dàn karaoke.",["sing karaoke","living room"],"Yes. I usually sing in ___, [[where]] I have ___."),
-Q("Do many people in Vietnam know how to sing?","Hát rất phổ biến; tiệc nào cũng có karaoke.",["popular","after dinner"],"Singing is very popular. [[When]] there's a party, people ___."),
-Q("Did you enjoy singing when you were younger?","Hồi nhỏ muốn làm ca sĩ, bố mẹ khuyến khích.",["encourage","become a singer"],"Yes. [[When]] I [[was]] a child, I [[wanted]] to ___, and my parents ___."),
-Q("Does your school teach you to sing? / Have you ever learnt how to sing? / Did you take music lessons?","Cấp 1 học vài bài dân ca đơn giản, không học kỹ thuật.",["traditional songs","technique"],"Yes. At primary school we [[learnt]] ___, [[but]] ___."),
-Q("Who do you want to sing for?","Bạn thân giọng hay, cùng gu nhạc.",["have a good voice"],"My best friend ___, [[who]] ___."),
-Q("When do you like to sing?","Khi ở một mình hoặc với bạn thân; ngại hát trước người lạ.",["feel shy about"],"Usually [[when]] ___, [[because]] I feel shy about singing in front of people [[who]] ___."),
-Q("What kinds of music do you like to sing?","V-pop, bolero; giai điệu dễ nhớ.",["melody","easy to remember"],"___ and ___, [[because]] they have melodies [[which]] ___."),
-Q("Do you think singing can bring happiness to people?","Có; hát bài vui giúp bớt mệt, thoải mái hơn.",["less tired","relaxed"],"Yes. [[When]] people sing ___, they feel ___."),
-Q("Do you like listening to other people sing?","Có, nhất là bạn hát hay.",["sing beautifully"],"Yes, especially ___, [[who]] ___."),
-Q("Will you sing in the car?","Thỉnh thoảng, khi lái xe một mình.",["sing along to"],"Yes, sometimes. [[When]] I drive alone, I ___.")
-]),
+["Do you like singing?","Yes, I love singing.","Especially V-pop.","It's the best way for me to reduce stress.","reduce stress","Yes, I love singing, especially ___, [[because]] ___."],
+["Do you often sing?","Yes, almost every day.","In my living room.","I have a big TV for karaoke.","sing karaoke|living room","Yes. I usually sing in ___, [[where]] I have ___."],
+["Do many people in Vietnam know how to sing?","Singing is very popular.","Almost every party has karaoke.","People sing after dinner.","popular|after dinner","Singing is very popular. [[When]] there's a party, people ___."],
+["Did you enjoy singing when you were younger?","Yes, I did.","I wanted to become a singer.","My parents always encouraged me.","encourage|become a singer","Yes. [[When]] I [[was]] a child, I [[wanted]] to ___, and my parents ___."],
+["Does your school teach you to sing? / Have you ever learnt how to sing? / Did you take music lessons?","Yes, a little.","We learnt simple traditional songs.","But no singing techniques.","traditional songs|technique","Yes. At primary school we [[learnt]] ___, [[but]] ___."],
+["Who do you want to sing for?","My best friend Han.","She has a really good voice.","We have the same taste in music.","have a good voice","My best friend ___, [[who]] ___."],
+["When do you like to sing?","When I'm alone or with close friends.","I feel shy with strangers.","e.g. I never sing at work parties.","feel shy about","Usually [[when]] ___, [[because]] I feel shy about singing in front of people [[who]] ___."],
+["What kinds of music do you like to sing?","V-pop and bolero.","The melodies are easy to remember.","They're easy to sing along to.","melody|easy to remember","___ and ___, [[because]] they have melodies [[which]] ___."],
+["Do you think singing can bring happiness to people?","Yes, definitely.","Singing happy songs makes people feel lighter.","They feel less tired and more relaxed.","less tired|relaxed","Yes. [[When]] people sing ___, they feel ___."],
+["Do you like listening to other people sing?","Yes.","Especially my friend Han.","She sings beautifully.","sing beautifully","Yes, especially ___, [[who]] ___."],
+["Will you sing in the car?","Yes, sometimes.","When I drive alone.","I sing along to my favourite songs.","sing along to","Yes, sometimes. [[When]] I drive alone, I ___."]]),
 T("Art",[["visit an art gallery","đi triển lãm nghệ thuật"],["have a talent for","có năng khiếu về"],["express feelings","thể hiện cảm xúc"],["easy to understand","dễ hiểu"]],[
-Q("Do you like art?","Thích phim, loại nghệ thuật dễ hiểu nhất.",["a form of art","easy to understand"],"Yes, especially ___. [[Although]] many people don't see ___ as art, I think ___."),
-Q("Do you like visiting art galleries?","Thích; xem tranh luôn học được điều mới.",["learn something new"],"Yes, [[because]] I always ___ [[when]] I ___."),
-Q("Do you want to be an artist?","Không, vì không có năng khiếu.",["have a talent for"],"Not really, [[because]] I don't ___. I prefer ___."),
-Q("Do you like modern art or traditional art?","Truyền thống dễ hiểu hơn; hiện đại thường trừu tượng.",["abstract"],"___ art, [[because]] it's [[easier to understand than]] ___, [[which]] is ___."),
-Q("Do you like drawing? Why?","Không hẳn; chỉ vẽ được chút ít.",["draw a little"],"Not really. [[Although]] I enjoy art, I ___, so I prefer ___."),
-Q("Do you want to visit an art gallery or museum?","Có; cuối tuần rảnh sẽ đi bảo tàng Mỹ thuật.",["Fine Arts Museum"],"Yes. [[If]] I had ___, I [[would]] visit ___."),
-Q("What are the differences between old and modern arts?","Tranh cũ tả thực; hiện đại dùng hình khối, màu sắc khó hiểu.",["real life","shapes and colours"],"Old art usually ___, [[while]] modern art ___ [[which]] ___."),
-Q("Have you ever visited an art gallery?","Một lần năm ngoái, phòng tranh về Hà Nội xưa.",["exhibition"],"Yes, once. Last year I [[visited]] ___ [[where]] ___."),
-Q("Do you think it would be interesting for you to be an artist?","Có, được tự do thể hiện cảm xúc; nhưng khó với mình.",["express feelings"],"Yes, [[because]] artists can ___. [[But]] it would be hard for me [[since]] ___.")
-]),
+["Do you like art?","Yes, especially films.","Many people don't see films as art.","But I think they're the easiest art to understand.","a form of art|easy to understand","Yes, especially ___. [[Although]] many people don't see ___ as art, I think ___."],
+["Do you like visiting art galleries?","Yes, I do.","I always learn something new.","e.g. about history from old paintings.","learn something new","Yes, [[because]] I always ___ [[when]] I ___."],
+["Do you want to be an artist?","Not really.","I don't have a talent for art.","I prefer enjoying it as a viewer.","have a talent for","Not really, [[because]] I don't ___. I prefer ___."],
+["Do you like modern art or traditional art?","Traditional art.","It's easier to understand.","Modern art is often too abstract for me.","abstract","___ art, [[because]] it's [[easier to understand than]] ___, [[which]] is ___."],
+["Do you like drawing? Why?","Not really.","I can only draw a little.","So I prefer looking at other people's work.","draw a little","Not really. [[Although]] I enjoy art, I ___, so I prefer ___."],
+["Do you want to visit an art gallery or museum?","Yes.","The Vietnam Fine Arts Museum.","If I had a free weekend.","Fine Arts Museum","Yes. [[If]] I had ___, I [[would]] visit ___."],
+["What are the differences between old and modern arts?","Old art shows real life clearly.","Modern art uses shapes and colours.","Which are harder to understand.","real life|shapes and colours","Old art usually ___, [[while]] modern art ___ [[which]] ___."],
+["Have you ever visited an art gallery?","Yes, once.","A small gallery last year.","It showed paintings of old Hanoi.","exhibition","Yes, once. Last year I [[visited]] ___ [[where]] ___."],
+["Do you think it would be interesting for you to be an artist?","Yes, in a way.","Artists can express their feelings freely.","But it would be hard for me.","express feelings","Yes, [[because]] artists can ___. [[But]] it would be hard for me [[since]] ___."]]),
 T("Films",[["a big fan of","rất thích"],["make me laugh","làm tôi cười"],["go to the cinema","đi xem phim rạp"],["on a big screen","trên màn hình lớn"]],[
-Q("What films do you like?","Phim hài, giúp cười sau một ngày dài.",["a big fan of","make me laugh"],"I'm a big fan of ___, [[because]] ___."),
-Q("Did you often watch films when you were a child?","Hay xem hoạt hình trên TV mỗi tối.",["cartoons"],"Yes. [[When]] I was a child, I [[used to]] ___."),
-Q("Did you ever go to the cinema alone as a child?","Chưa bao giờ; bố mẹ không cho đi một mình.",["let me","too young"],"No, never. My parents didn't ___ [[because]] I ___."),
-Q("Do you often go to the cinema with your friends?","Khoảng tháng một lần, tối thứ Sáu.",["once a month"],"About ___. We usually go ___, [[when]] ___."),
-Q("Do you think going to the cinema is a good way to spend time with friends?","Có; xem xong đi ăn và nói chuyện, thân nhau hơn.",["over dinner","bring us closer"],"Yes, [[because]] after the film we ___, [[which]] ___."),
-Q("What kinds of movies do you like best?","Hài và hoạt hình, nhẹ nhàng dễ thư giãn.",["light","animated films"],"___ and ___, [[because]] they ___."),
-Q("How often do you go to a cinema to watch a movie?","Tháng một lần, khi có phim mới đang hot.",["everyone is talking about"],"About ___, usually [[when]] there's a new film [[which]] ___."),
-Q("Did you usually go to the cinema when you were a kid?","Không; quê ít rạp, chủ yếu xem TV.",["hometown"],"Not really. [[When]] I was a kid, there [[weren't]] ___, so I mostly ___."),
-Q("What was the first film that you watched?","Phim hoạt hình về động vật, xem cùng gia đình.",["animated film"],"I think it [[was]] ___, [[which]] I watched ___."),
-Q("Do you like to watch movies alone or with your friends?","Với bạn vui hơn; phim nghiêm túc thì xem một mình.",["share the moment","serious"],"With ___, [[because]] ___. [[But if]] the film is ___, I prefer ___."),
-Q("Do you like to go to the cinema with your friends?","Có; vé đắt nhưng là cách thư giãn cùng nhau.",["expensive tickets"],"Yes, I do. [[Although]] ___, it's ___."),
-Q("Do you prefer foreign films or films made in your country?","Phim nước ngoài kỹ xảo tốt; phim Việt đang tiến bộ.",["special effects","improve"],"___ films, [[because]] ___. [[However]], Vietnamese films ___.")
-]),
+["What films do you like?","Comedies.","They make me laugh.","Perfect after a long day.","a big fan of|make me laugh","I'm a big fan of ___, [[because]] ___."],
+["Did you often watch films when you were a child?","Yes, very often.","Cartoons on TV.","Every evening after dinner.","cartoons","Yes. [[When]] I was a child, I [[used to]] ___."],
+["Did you ever go to the cinema alone as a child?","No, never.","My parents didn't let me.","I was too young.","let me|too young","No, never. My parents didn't ___ [[because]] I ___."],
+["Do you often go to the cinema with your friends?","About once a month.","Usually on Friday evenings.","When we're free after work.","once a month","About ___. We usually go ___, [[when]] ___."],
+["Do you think going to the cinema is a good way to spend time with friends?","Yes.","We talk about the film over dinner.","It brings us closer.","over dinner|bring us closer","Yes, [[because]] after the film we ___, [[which]] ___."],
+["What kinds of movies do you like best?","Comedies and animated films.","They're light.","They help me relax.","light|animated films","___ and ___, [[because]] they ___."],
+["How often do you go to a cinema to watch a movie?","About once a month.","When there's a new film.","One that everyone is talking about.","everyone is talking about","About ___, usually [[when]] there's a new film [[which]] ___."],
+["Did you usually go to the cinema when you were a kid?","Not really.","There weren't many cinemas in my hometown.","So I mostly watched films on TV.","hometown","Not really. [[When]] I was a kid, there [[weren't]] ___, so I mostly ___."],
+["What was the first film that you watched?","An animated film about animals.","I watched it on TV.","With my whole family.","animated film","I think it [[was]] ___, [[which]] I watched ___."],
+["Do you like to watch movies alone or with your friends?","With friends.","It's more fun.","But I watch serious films alone.","share the moment|serious","With ___, [[because]] ___. [[But if]] the film is ___, I prefer ___."],
+["Do you like to go to the cinema with your friends?","Yes, I do.","Tickets are quite expensive.","But it's a great way to relax together.","expensive tickets","Yes, I do. [[Although]] ___, it's ___."],
+["Do you prefer foreign films or films made in your country?","Foreign films.","They have better special effects.","But Vietnamese films have improved a lot.","special effects|improve","___ films, [[because]] ___. [[However]], Vietnamese films ___."]]),
 T("Jokes",[["have a good sense of humour","có khiếu hài hước"],["make people laugh","làm mọi người cười"],["cheer me up","làm tôi vui lên"],["tease each other","trêu nhau"]],[
-Q("Do you like to tell jokes?","Không, không giỏi kể; thích nghe hơn.",["not good at"],"Not really, [[because]] I'm ___. I prefer ___."),
-Q("Do you often joke with your friends?","Có, hay trêu nhau, không khí thoải mái.",["tease each other","atmosphere"],"Yes. [[When]] we get together, we ___, [[which]] makes ___."),
-Q("Do you have friends who love telling jokes?","Một đồng nghiệp rất hài hước.",["a great sense of humour"],"Yes. One of my colleagues, [[who]] ___, always ___."),
-Q("What are some common comedy shows in your country?","Táo Quân, chiếu đêm giao thừa.",["New Year's Eve"],"The most famous one is ___, a comedy show [[which]] ___."),
-Q("Do you like being joked about?","Tùy; đùa thân thiện thì được, không thích đùa về ngoại hình.",["friendly","appearance"],"It depends. [[If]] the joke is ___, I don't mind, [[but]] I don't like jokes [[which]] ___."),
-Q("Are you good at telling jokes?","Không; hay cười trước khi kể xong.",["burst out laughing"],"Not really. [[When]] I tell a joke, I ___."),
-Q("Do you like to watch comedies?","Có, giúp vui lên khi căng thẳng.",["cheer me up"],"Yes, [[because]] they ___ [[when]] I'm ___.")
-]),
+["Do you like to tell jokes?","Not really.","I'm not very good at it.","I prefer listening to other people's jokes.","not good at","Not really, [[because]] I'm ___. I prefer ___."],
+["Do you often joke with your friends?","Yes, all the time.","We tease each other.","It makes the atmosphere relaxed.","tease each other|atmosphere","Yes. [[When]] we get together, we ___, [[which]] makes ___."],
+["Do you have friends who love telling jokes?","Yes.","A colleague with a great sense of humour.","He always makes everyone laugh.","a great sense of humour","Yes. One of my colleagues, [[who]] ___, always ___."],
+["What are some common comedy shows in your country?","Tao Quan.","It's shown every Lunar New Year's Eve.","My family watches it together every year.","New Year's Eve","The most famous one is ___, a comedy show [[which]] ___."],
+["Do you like being joked about?","It depends.","Friendly jokes are fine.","But not jokes about my appearance.","friendly|appearance","It depends. [[If]] the joke is ___, I don't mind, [[but]] I don't like jokes [[which]] ___."],
+["Are you good at telling jokes?","Not really.","I laugh before I finish.","So nobody gets the joke.","burst out laughing","Not really. [[When]] I tell a joke, I ___."],
+["Do you like to watch comedies?","Yes.","They cheer me up.","Especially when I'm stressed.","cheer me up","Yes, [[because]] they ___ [[when]] I'm ___."]]),
+T("Shopping",null,[
+["Do you like shopping?","Yes, but I prefer shopping online.","It saves time.","I can shop from my sofa.","shop online|save time","Yes, but I prefer ___ [[because]] ___."],
+["How often do you go shopping?","Online about once a week.","I go to the mall about once a month.","Usually when there's a sale.","once a week|shopping mall","I shop online about ___, but I only go to ___ [[when]] ___."],
+["Do you prefer shopping alone or with others?","Alone.","I can make decisions quickly.","With friends, it takes all day.","make decisions quickly","Alone, [[because]] ___. [[If]] I go with friends, ___."],
+["What do you usually buy?","Clothes and skincare products.","Also household items.","I usually buy them online.","skincare products|household items","Mostly ___ and ___, [[which]] I ___."],
+["Do you like shopping online?","Yes, I do.","There's more choice and free delivery.","But sometimes items look different from the photos.","deliver to my door|look different from the photos","Yes. [[Although]] ___, I like it [[because]] ___."],
+["Did you enjoy shopping when you were a child?","Yes.","I went to the market with my mum before Tet.","It was busy and exciting.","Tet holiday","Yes. [[When]] I was a child, I [[used to]] go ___ with ___."]],true),
+T("Street market",null,[
+["Are there many street markets where you live?","Yes, quite a few.","Night markets and weekend markets.","They're always crowded.","night market","Yes, there are ___ [[where]] people ___."],
+["What do they sell?","Street food, clothes and souvenirs.","Everything is cheap.","You can bargain too.","street food|souvenirs|bargain","They sell ___, ___ and ___, [[which]] are ___."],
+["Do you like going to street markets?","Yes, I do.","I love the lively atmosphere.","But it's sometimes too crowded.","lively atmosphere|crowded","Yes, [[because]] ___. [[However]], it's sometimes ___."],
+["Do you prefer street markets or supermarkets?","Supermarkets.","They have fixed prices and are clean.","But markets have fresher food.","fixed prices|fresher","I prefer ___, [[because]] ___, [[while]] ___ is ___."],
+["Did you go to markets when you were a child?","Yes.","With my grandmother early in the morning.","She always bought me a snack.","grandmother|early morning","Yes. [[When]] I was small, I [[used to]] ___."]],true),
+T("Clothes",null,[
+["What kind of clothes do you usually wear?","Smart casual clothes for work.","Comfortable clothes at weekends.","e.g. T-shirts and jeans.","smart casual|comfortable","I usually wear ___ [[when]] I go to work, but at weekends I ___."],
+["Do you like shopping for clothes?","Yes, I do.","Especially when there's a sale.","Or a new collection.","new collection|on sale","Yes, especially [[when]] ___."],
+["Do you spend a lot of money on clothes?","Not really.","I buy good-quality basics.","They're easy to mix and match.","mix and match|good quality","Not really. I prefer clothes [[which]] ___."],
+["Did you wear a uniform at school?","Yes.","A white shirt and blue trousers.","It was convenient, I didn't have to choose.","school uniform","Yes. [[When]] I was at school, we [[had to]] wear ___, [[which]] ___."],
+["Do you prefer comfortable or fashionable clothes?","Comfortable ones.","I wear them every day.","But I dress up for formal events.","comfortable|formal events","Comfortable ones, [[because]] ___. [[But if]] I go to ___, I ___."],
+["Do you wear different clothes at weekends?","Yes.","I wear smart clothes at work.","At weekends, just T-shirts and jeans.","T-shirt and jeans","Yes. [[Although]] I wear ___ at work, at weekends I ___."]],true),
+T("Shoes",null,[
+["Do you like buying shoes?","Yes, I do.","Especially trainers.","They're comfortable and stylish.","trainers|a pair of","Yes, especially ___, [[because]] ___."],
+["How many pairs of shoes do you have?","About six pairs.","For different occasions.","Work, sport and parties.","different occasions","About ___ pairs, [[which]] I wear for ___."],
+["Do you prefer comfortable or fashionable shoes?","Comfortable ones.","I walk a lot every day.","High heels hurt my feet.","walk a lot","Comfortable ones, [[because]] I ___."],
+["Do you buy shoes online or in a store?","In a store.","I need to try them on.","Sizes are different between brands.","try them on|size","In a store, [[because]] [[if]] I don't ___, ___."],
+["Have you ever bought uncomfortable shoes?","Yes.","A pair that looked really nice.","But they hurt my feet, so I never wore them.","hurt my feet","Yes. Last year I [[bought]] ___ [[which]] looked nice, but ___."]],true),
 T("Mirrors",[["check my appearance","kiểm tra diện mạo"],["a full-length mirror","gương soi toàn thân"],["make a room look bigger","làm phòng trông rộng hơn"],["try clothes on","thử quần áo"]],[
-Q("Would you use mirrors to decorate your room?","Nếu phòng rộng hơn sẽ treo gương lớn; phòng trông rộng.",["make a room look bigger"],"Yes. [[If]] I had ___, I [[would]] ___, [[because]] ___."),
-Q("Do you usually take a mirror with you?","Không; dùng camera điện thoại.",["phone camera","check my appearance"],"Not usually, [[because]] I can ___ [[when]] I need to ___."),
-Q("Have you ever bought mirrors?","Năm ngoái mua gương toàn thân để phòng ngủ.",["full-length mirror"],"Yes. Last year I [[bought]] ___, [[which]] I ___."),
-Q("Do you like looking at yourself in the mirror? How often?","Không hẳn; chỉ soi khi chuẩn bị đi làm.",["get ready"],"Not really. I only look in the mirror [[when]] ___."),
-Q("How often do you use a mirror?","Hai, ba lần mỗi ngày.",["twice a day"],"___ times a day, usually [[when]] ___."),
-Q("Do you use a mirror before buying clothing?","Luôn luôn, để biết có hợp không.",["try on","suit me"],"Yes, always. [[If]] I don't ___, I can't tell whether ___."),
-Q("What functions does a mirror have?","Soi diện mạo; gương xe giúp nhìn phía sau.",["drivers","see behind them"],"Mirrors help people ___, and they're also used in ___, [[where]] ___."),
-Q("Do you think a mirror is a good decoration?","Có; phản chiếu ánh sáng, phòng sáng hơn.",["reflect light","brighter"],"Yes, [[because]] a mirror ___, [[which]] makes ___.")
-]),
+["Would you use mirrors to decorate your room?","Yes, I would.","A large mirror on the wall.","It makes a room look bigger.","make a room look bigger","Yes. [[If]] I had ___, I [[would]] ___, [[because]] ___."],
+["Do you usually take a mirror with you?","Not usually.","I use my phone camera.","When I need to check my appearance.","phone camera|check my appearance","Not usually, [[because]] I can ___ [[when]] I need to ___."],
+["Have you ever bought mirrors?","Yes.","A full-length mirror last year.","I put it in my bedroom.","full-length mirror","Yes. Last year I [[bought]] ___, [[which]] I ___."],
+["Do you like looking at yourself in the mirror? How often?","Not really.","Only when I'm getting ready.","About twice a day.","get ready","Not really. I only look in the mirror [[when]] ___."],
+["How often do you use a mirror?","Two or three times a day.","Mostly in the morning.","When I get ready for work.","twice a day","___ times a day, usually [[when]] ___."],
+["Do you use a mirror before buying clothing?","Yes, always.","I try clothes on in front of a mirror.","Otherwise I can't tell if they suit me.","try on|suit me","Yes, always. [[If]] I don't ___, I can't tell whether ___."],
+["What functions does a mirror have?","To check our appearance.","They're also used in cars.","They help drivers see behind them.","drivers|see behind them","Mirrors help people ___, and they're also used in ___, [[where]] ___."],
+["Do you think a mirror is a good decoration?","Yes.","Mirrors reflect light.","They make a room brighter.","reflect light|brighter","Yes, [[because]] a mirror ___, [[which]] makes ___."]]),
 T("Watches",[["wear a watch","đeo đồng hồ"],["check the time on my phone","xem giờ trên điện thoại"],["a smartwatch","đồng hồ thông minh"],["a status symbol","biểu tượng địa vị"]],[
-Q("Did you wear a watch when you were a child? (Why/Why not?)","Hồi cấp 1 đeo đồng hồ hoạt hình bố mẹ mua.",["cartoon watch"],"Yes. [[When]] I was ___, I [[used to]] wear ___ [[which]] ___."),
-Q("Have you ever received a watch as a gift?","Bạn thân tặng dịp sinh nhật, vẫn giữ đến giờ.",["give as a present"],"Yes. ___ gave me ___ for ___, [[which]] I still ___."),
-Q("Do you usually wear a watch now? (Why/Why not?)","Không hay đeo; xem giờ trên điện thoại.",["check the time on my phone"],"Not really. [[Although]] I have ___, I usually ___."),
-Q("Why do you think some people enjoy wearing expensive watches?","Biểu tượng địa vị, thể hiện thành công.",["status symbol"],"[[Because]] an expensive watch is ___, [[which]] shows ___."),
-Q("Do you like to wear watches?","Khi đi sự kiện trang trọng, trông chuyên nghiệp.",["professional"],"Yes, [[when]] I go to ___, [[because]] ___."),
-Q("Do you think a watch is important for you?","Không quá, điện thoại thay được; nếu có smartwatch sẽ theo dõi tập luyện.",["track my exercise"],"Not very, [[because]] ___. [[But if]] I had ___, I [[would]] ___."),
-Q("Why do people like expensive watches?","Bền hơn, hoặc để khoe.",["last longer","show off"],"Some people think ___, [[while]] others ___."),
-Q("What kind of watch do you have?","Đồng hồ bạc đơn giản, hợp nhiều kiểu đồ.",["go with my clothes"],"I have ___, [[which]] goes with ___."),
-Q("What kind of watch do the people around you like to wear?","Bạn bè đeo smartwatch để theo dõi sức khỏe.",["track their health","receive messages"],"Most of my friends wear ___, [[because]] they can ___.")
-])
+["Did you wear a watch when you were a child? (Why/Why not?)","Yes.","A cartoon watch from my parents.","I wore it every day at primary school.","cartoon watch","Yes. [[When]] I was ___, I [[used to]] wear ___ [[which]] ___."],
+["Have you ever received a watch as a gift?","Yes.","From my best friend for my birthday.","I still keep it.","give as a present","Yes. ___ gave me ___ for ___, [[which]] I still ___."],
+["Do you usually wear a watch now? (Why/Why not?)","Not really.","I have one.","But I usually check the time on my phone.","check the time on my phone","Not really. [[Although]] I have ___, I usually ___."],
+["Why do you think some people enjoy wearing expensive watches?","It's a status symbol.","It shows they're successful.","e.g. businessmen often wear luxury watches.","status symbol","[[Because]] an expensive watch is ___, [[which]] shows ___."],
+["Do you like to wear watches?","Yes, for formal events.","A watch looks professional.","e.g. at meetings with clients.","professional","Yes, [[when]] I go to ___, [[because]] ___."],
+["Do you think a watch is important for you?","Not very.","My phone does the same job.","But a smartwatch could track my exercise.","track my exercise","Not very, [[because]] ___. [[But if]] I had ___, I [[would]] ___."],
+["Why do people like expensive watches?","Some think they last longer.","Others want to show off.","e.g. on social media.","last longer|show off","Some people think ___, [[while]] others ___."],
+["What kind of watch do you have?","A simple silver watch.","It goes with most of my clothes.","I wear it on special occasions.","go with my clothes","I have ___, [[which]] goes with ___."],
+["What kind of watch do the people around you like to wear?","Smartwatches.","They track their health.","And receive messages.","track their health|receive messages","Most of my friends wear ___, [[because]] they can ___."]]),
+T("Glasses",null,[
+["Do you wear glasses?","Yes, sometimes.","Blue-light glasses.","When I work on my computer for hours.","blue-light glasses|screen","Yes, I wear ___ [[when]] I ___."],
+["Why do people wear glasses?","Mostly because they're short-sighted.","Some want to protect their eyes.","Others wear them for fashion.","short-sighted|protect their eyes","Some people wear them [[because]] ___, [[while]] others ___."],
+["Do you wear sunglasses?","Yes.","When the sunlight is strong.","Especially when I ride my motorbike.","strong sunlight","Yes, [[when]] ___, [[because]] ___."],
+["Do you prefer glasses or contact lenses?","Glasses.","They're more convenient.","Contact lenses make my eyes dry.","convenient|sensitive eyes","I prefer ___ [[because]] they're [[more comfortable than]] ___."],
+["Does anyone in your family wear glasses?","Yes, my father.","He's worn glasses since he was young.","He can't read without them.","since he was young","Yes, my ___, [[who]] has worn glasses since ___."]],true),
+T("Cars",null,[
+["Do you have a car?","Not yet.","I ride a motorbike.","But I'm saving up for a car.","motorbike|save up","Not yet. I ride ___, but [[if]] I ___, I [[would]] buy ___."],
+["Do you like driving?","It depends.","I enjoy road trips.","But I hate traffic jams.","traffic jams|road trip","It depends. I enjoy ___, but I hate ___ [[when]] ___."],
+["Are cars popular in your country?","They're becoming more popular.","More families can afford them.","But motorbikes are still the most common.","more and more|motorbikes","They're becoming [[more popular]], [[although]] ___."],
+["What kind of car would you like to buy?","A small electric car.","It's cheap to run.","And it's environmentally friendly.","electric car|environmentally friendly","I'd like ___, [[which]] is ___."],
+["Did your family have a car when you were a child?","No.","My whole family rode one motorbike.","It was crowded but fun.","the whole family","No. [[When]] I was a child, my family [[used to]] ___."]],true),
+T("Collecting things",null,[
+["Do you collect anything?","Yes, souvenirs.","From places I travel to.","Each one reminds me of a trip.","souvenirs|keep","Yes, I collect ___ [[which]] ___."],
+["Did you collect things as a child?","Yes.","Stickers and stamps.","I swapped them with my friends.","stickers|stamps","Yes. [[When]] I was a child, I [[used to]] collect ___."],
+["Why do people collect things?","To keep memories.","Some collect to invest.","e.g. old coins can be valuable.","memories|valuable","Some people collect things [[because]] ___, [[while]] others ___."],
+["Is collecting things expensive?","It depends.","Antiques can be very expensive.","But stamps are quite cheap.","antiques","It depends. [[If]] people collect ___, it can be ___."],
+["What would you like to collect in the future?","Souvenirs from every country I visit.","If I had more time to travel.","It would be a lovely memory.","every country I visit","[[If]] I had more time to travel, I [[would]] collect ___."]],true),
+T("Lost and found",null,[
+["Have you ever lost anything?","Yes, my wallet.","Last year.","I left it in a café.","wallet|leave behind","Yes. Last year I [[left]] ___ at ___."],
+["What did you do?","I went back and asked the staff.","Luckily, they had kept it.","I was so relieved.","staff|luckily","I [[went]] back and asked ___. Luckily, ___."],
+["Have you ever found something that someone else lost?","Yes, once.","A phone on a bus.","I returned it to the owner.","return it to the owner","Yes. I once [[found]] ___ [[which]] ___, so I ___."],
+["What do people often lose?","Keys and phones.","Also umbrellas.","Because people are always in a hurry.","keys|umbrellas","People often lose ___ [[because]] they ___."],
+["How can people avoid losing things?","Keep things in the same place.","Double-check before leaving.","That's what I do with my keys.","in the same place|double-check","[[If]] people always ___, they [[won't]] ___."]],true),
+T("Secondary school",null,[
+["Where did you go to secondary school?","A school in my hometown.","It was near my house.","I walked there every day.","in my hometown","I went to ___ [[which]] was ___."],
+["Did you enjoy secondary school?","Yes, I did.","I made lots of good friends.","We're still close today.","make friends","Yes, [[because]] ___."],
+["What was your favourite subject?","English.","My teacher was very enthusiastic.","She made lessons fun.","enthusiastic teacher","My favourite subject [[was]] ___ [[because]] ___."],
+["Do you still keep in touch with your classmates?","Yes.","We have a group chat.","We meet up every Tet.","group chat|reunion","Yes. We have ___ and we meet [[when]] ___."],
+["What did you usually do after school?","Played shuttlecock with friends.","In front of the school gate.","It was so much fun.","after school","After school, I [[used to]] ___."]],true),
+T("Teachers",null,[
+["Do you have a favourite teacher?","Yes, my high school English teacher.","She explained things clearly.","She inspired me to learn English.","explain things clearly","Yes, my ___ teacher, [[who]] ___."],
+["What makes a good teacher?","Patience.","They make lessons interesting.","And they care about students.","patient|make lessons interesting","A good teacher is someone [[who]] ___."],
+["Would you like to be a teacher?","Not really.","It needs a lot of patience.","I don't think I'm patient enough.","patience","Not really. [[Although]] ___, I don't think I'm ___."],
+["Do you still keep in touch with your teachers?","Sometimes.","I send messages on Teachers' Day.","On the 20th of November.","Teachers' Day","Sometimes. I send ___ [[when]] it's ___."],
+["Are teachers at school different from university lecturers?","Yes.","School teachers check on students closely.","Lecturers expect us to study independently.","independent","School teachers ___, [[while]] university lecturers ___."]],true),
+T("Paper/Writing letters",null,[
+["Do you often write letters?","Not really.","I send emails or messages.","They're much faster.","send messages","Not really. I usually ___ [[because]] it's [[faster than]] ___."],
+["Did you write letters when you were a child?","Yes.","Greeting cards at Tet.","To my classmates.","greeting cards","Yes. [[When]] I was ___, I [[used to]] write ___."],
+["Do you prefer paper or electronic documents?","It depends.","Electronic documents for work.","Paper for taking notes.","take notes","It depends. I use ___ for work, but [[when]] I ___, I prefer paper."],
+["Do people use less paper now?","Yes.","Many offices go paperless.","It's better for the environment.","go paperless","Yes. [[Compared to]] the past, ___."],
+["Would you like to receive a handwritten letter?","Yes.","Handwritten letters feel personal.","They show that someone really cares.","personal|special","Yes, [[because]] a handwritten letter is ___."]],true),
+T("Science",null,[
+["Did you like science at school?","Some subjects.","I liked biology.","But I wasn't good at physics.","biology|physics","I liked ___ [[but]] I wasn't good at ___."],
+["What is your favourite science subject?","Biology.","I learnt about the human body.","It was fascinating.","human body","___, [[because]] it helped me understand ___."],
+["Are science programmes popular in your country?","Yes, quite popular.","Especially documentaries on YouTube.","e.g. about animals or space.","documentaries","Yes, especially ___ [[which]] ___."],
+["How does science affect your daily life?","In many ways.","My phone, medicine.","e.g. vaccines keep us healthy.","technology|medicine","Science is everywhere. For example, ___ [[which]] ___."],
+["Would you like to be a scientist?","Not really.","Research takes a lot of patience.","I prefer marketing.","research","Not really. [[Although]] science is ___, I ___."]],true),
+T("Outer space and stars",null,[
+["Do you like looking at the stars?","Yes.","When I'm in the countryside.","The sky is clear and full of stars.","in the countryside|clear sky","Yes, especially [[when]] I'm ___, [[where]] ___."],
+["Have you ever learnt about space?","Yes, at school.","About the solar system.","I also watch documentaries.","the solar system","Yes. I [[learnt]] about ___ [[when]] I was ___."],
+["Would you like to go into space?","Yes, if it were safe.","I'd love to see the Earth from space.","It would be amazing.","see the Earth","[[If]] it were safe, I [[would]] ___."],
+["Is it easy to see stars where you live?","No, not really.","There are too many lights in the city.","I can only see a few stars.","light pollution","Not really, [[because]] ___."],
+["Do you like films about space?","Yes.","Science fiction films.","e.g. films about travelling to Mars.","science fiction","Yes, I enjoy ___ [[which]] ___."]],true),
+T("History",null,[
+["Do you like history?","Yes, I do.","I enjoy historical stories.","But I don't like memorising dates.","historical stories|dates","Yes. [[Although]] I don't like ___, I enjoy ___."],
+["Did you like history at school?","Not really.","We had to memorise a lot.","It was boring.","memorise","Not really, [[because]] we [[had to]] ___."],
+["How do you learn about history now?","Through documentaries and museums.","And YouTube videos.","They make history more interesting.","documentaries|museums","Mostly through ___, [[which]] make history ___."],
+["Have you ever visited a history museum?","Yes.","The National Museum of Vietnamese History.","I learnt a lot about our past.","National Museum","Yes. Last ___ I [[visited]] ___ [[where]] ___."],
+["Is it important to learn history?","Yes.","It helps us understand the past.","And avoid repeating mistakes.","learn from the past","Yes, [[because]] it helps people ___."]],true),
+T("Old buildings",null,[
+["Are there many old buildings in your city?","Yes, quite a lot.","In the Old Quarter.","There's French architecture too.","Old Quarter|French architecture","Yes, especially in ___, [[where]] ___."],
+["Do you like old buildings?","Yes, I do.","Each building has its own story.","They make the city unique.","unique|history","Yes, [[because]] they ___."],
+["Should old buildings be protected?","Definitely.","They're part of our heritage.","Once destroyed, they're gone forever.","heritage","Definitely. [[If]] we don't ___, ___ [[will]] ___."],
+["Would you prefer to live in an old or a modern building?","A modern one.","It has better facilities.","It's more comfortable.","modern facilities","A modern one, [[because]] it's [[more comfortable than]] ___."],
+["Have you visited an old building recently?","Yes.","The Temple of Literature.","It was peaceful and beautiful.","Temple of Literature","Yes. Last month I [[visited]] ___, [[which]] ___."]],true),
+T("Dreams and ambitions",null,[
+["What job did you want to do when you were a child?","A singer.","I loved singing.","I sang for my family every day.","become a singer","[[When]] I was a child, I [[wanted]] to ___."],
+["What are your ambitions now?","To become a manager.","Or run my own business one day.","If I have enough savings.","run my own business","I'd like to ___ [[if]] ___."],
+["Is it important to have ambitions?","Yes.","Ambitions give people motivation.","They help us work harder.","motivation","Yes, [[because]] ___ gives people ___."],
+["Do you think you will achieve your dream?","I hope so.","I'm doing a master's degree.","It will help my career.","work hard|master's degree","I hope so. I'm ___, [[which]] ___."],
+["Do you often remember your dreams?","Not often.","I forget them quickly.","As soon as I wake up.","wake up","Not often. [[When]] I wake up, I usually ___."]],true),
+T("Remember names",null,[
+["Are you good at remembering names?","Not really.","I'm better at remembering faces.","Names just slip my mind.","faces","Not really. I'm [[better at]] remembering ___ [[than]] ___."],
+["How do you remember people's names?","I repeat the name when we talk.","I also write it down in my phone.","It really helps.","repeat|write down","I usually ___ [[when]] I ___."],
+["Have you ever forgotten someone's name?","Yes.","When I met a former colleague.","I was so embarrassed.","embarrassed","Yes. [[When]] I [[met]] ___, I ___."],
+["Is it important to remember names?","Yes, especially at work.","It shows respect.","Clients feel valued.","show respect","Yes, especially at work, [[because]] ___."],
+["What names are easy to remember?","Short or unusual names.","They stand out.","They're easy to remember.","unusual names","Names [[which]] are ___ are easier to remember."]],true),
+T("Morning routine",null,[
+["What do you usually do in the morning?","I wake up at 6:30.","I have a coffee and check the news.","Then I get ready for work.","have a coffee|check the news","[[As soon as]] I wake up, I ___. Then I ___."],
+["Is a morning routine important?","Yes.","It helps me stay productive.","If I skip it, my whole day feels messy.","productive","Yes, [[because]] [[if]] I ___, I ___."],
+["Is your morning the same every day?","On weekdays, yes.","At weekends I sleep in.","It's my favourite part of the week.","sleep in","On weekdays, ___, [[but]] at weekends I ___."],
+["Has your morning routine changed since you were a child?","Yes.","My mum used to wake me up for school.","Now I use an alarm.","wake me up","Yes. [[When]] I was a child, my mother [[used to]] ___."],
+["Do you have breakfast every day?","Usually.","Pho or banh mi.","It's quick and gives me energy.","a quick breakfast","Usually. I have ___ [[because]] ___."]],true),
+T("Evening time",null,[
+["What do you usually do in the evening?","I cook dinner.","Then I study for my master's.","Or watch a film to relax.","cook dinner|study","[[When]] I get home, I ___ [[before]] I ___."],
+["Do you prefer mornings or evenings?","Evenings.","I have more free time.","I feel more relaxed.","free time","Evenings, [[because]] ___."],
+["Do you often go out in the evening?","Sometimes.","I hang out with friends at a café.","Usually on Fridays.","hang out","Sometimes. [[When]] I'm free, I ___."],
+["How were your evenings different when you were a child?","Very different.","As a child I did homework and watched TV.","Now I study and work.","homework","[[When]] I was a child, I [[used to]] ___, but now I ___."],
+["What time do you usually go to bed?","Around 11 pm.","I need enough sleep.","Otherwise I feel tired at work.","get enough sleep","Around ___, [[because]] I need to ___."]],true),
+T("Tiredness",null,[
+["When do you usually feel tired?","At the end of the working day.","Especially after long meetings.","My brain feels empty.","after long meetings","I usually feel tired [[when]] ___."],
+["What do you do when you feel tired?","I take a short nap.","Or listen to music.","It helps me recharge.","take a nap","[[If]] I'm tired, I ___."],
+["Does tiredness affect your work?","Yes.","I can't concentrate.","And I make more mistakes.","concentrate","Yes. [[When]] I'm tired, I can't ___."],
+["Do students often feel tired?","Yes.","They study a lot.","And they often stay up late.","stay up late","Yes, [[because]] they ___."],
+["Do you feel tired after exercise?","Yes.","But I also feel refreshed.","It's a good kind of tired.","refreshed","Yes, [[but]] I also feel ___."]],true),
+T("Tidiness",null,[
+["Are you a tidy person?","Yes, quite tidy.","I can't relax in a messy room.","I like everything in its place.","messy|organised","Yes, quite. I can't ___ [[when]] my room is ___."],
+["How often do you tidy your room?","Every weekend.","Even when I'm busy.","It makes me feel calm.","every weekend","[[Although]] I'm busy, I ___ every weekend."],
+["Were you tidy as a child?","Not really.","My mother used to remind me.","My room was always messy.","remind me","Not really. [[When]] I was a child, my mother [[used to]] ___."],
+["Is tidiness important at work?","Yes.","It's easier to find documents.","And it looks professional.","find documents","Yes, [[because]] [[if]] your desk is ___, you ___."],
+["Are tidy people more successful?","Maybe.","Tidy people are organised.","They manage their time better.","organised","Maybe, [[because]] people [[who]] are tidy ___."]],true),
+T("Sports programs",null,[
+["Do you watch sports programmes?","Yes, sometimes.","Mainly football.","Especially when Vietnam's national team plays.","national team","Yes, especially [[when]] ___."],
+["What is your favourite sports programme?","Live football matches.","They're exciting.","You never know who will win.","live matches","I like ___ [[which]] are shown ___."],
+["Do you prefer watching sports alone or with others?","With friends.","We cheer together.","The atmosphere is amazing.","cheer together","With ___, [[because]] ___."],
+["Did you watch sports when you were a child?","Yes.","With my father.","We watched football every weekend.","with my father","Yes. [[When]] I was a child, I [[used to]] ___."],
+["Do you prefer watching or playing sports?","Watching.","It's more exciting for me.","Playing just makes me tired.","more exciting","I prefer ___ [[because]] ___, [[while]] ___."]],true),
+T("Parks",null,[
+["Do you often go to parks?","Yes.","There's a park near my house.","I go there after work.","after work","Yes. There's a park near my house [[where]] I ___."],
+["What do people do in parks?","Some go jogging.","Others take a walk.","Children play games.","go jogging|take a walk","Some people ___, [[while]] others ___."],
+["Did you go to parks when you were a child?","Yes.","I played with my friends there.","It was my favourite place.","play games","Yes. [[When]] I was a child, I [[used to]] ___."],
+["Would you like more parks in your city?","Yes, definitely.","My city lacks green space.","People would be healthier.","green space","Yes. [[If]] there were more parks, people [[would]] ___."],
+["How are parks today different from the past?","They're more modern now.","They have exercise equipment.","And better lighting.","exercise equipment","[[Compared to]] the past, parks now have ___."]],true),
+T("Rubbish/Recycling",null,[
+["Do you recycle?","Yes, I try to.","I separate plastic bottles and paper.","Before I throw them away.","separate|plastic bottles","Yes. I ___ [[before]] I throw them away."],
+["Is recycling popular in your country?","It's becoming more popular.","But it's not common yet.","Many people still mix all their rubbish.","not common yet","It's becoming more popular, [[although]] ___."],
+["How can people reduce rubbish?","Use reusable bags.","Bring our own water bottles.","We'd create much less waste.","reusable bags","[[If]] everyone ___, we [[will]] ___."],
+["Should the government encourage recycling?","Yes.","They should provide recycling bins.","And teach children at school.","recycling bins","Yes. The government should ___ so that ___."],
+["Did you learn about recycling at school?","Yes.","We collected waste paper.","Our class competed with other classes.","collect waste paper","Yes. [[When]] I was at school, we [[used to]] ___."]],true),
+T("Politeness",null,[
+["Is politeness important?","Yes, very.","It shows respect.","It makes people feel comfortable.","show respect","Yes, [[because]] ___."],
+["How do people show politeness in Vietnam?","People greet older people first.","They use polite words.","e.g. \"dạ\" and \"vâng\".","greet|older people","People ___ [[when]] they talk to ___."],
+["Were you taught to be polite as a child?","Yes.","My parents taught me to greet adults.","With my arms crossed.","taught me to","Yes. [[When]] I was young, my parents ___."],
+["Are people less polite now than in the past?","Some people are.","Especially online.","Where they can hide their identity.","online","Some people are, especially ___, [[where]] ___."],
+["What kind of people do you think are polite?","People who say thank you.","And listen carefully.","e.g. my colleague always thanks the cleaner.","say thank you","I respect people [[who]] ___."]],true)
 ];
 
-function C(topic, rows){return {topic:topic, common:true, phrases:null, qs:rows.map(function(r){return Q(r[0],r[1],r[2].split("|"),r[3],r[4]);})};}
-var COMMON = [
-C("Shopping",[
-["Do you like shopping?","Thích mua online hơn, tiết kiệm thời gian.","shop online|save time","Yes, but I prefer ___ [[because]] ___."],
-["How often do you go shopping?","Mua online hằng tuần, ra trung tâm thương mại tháng một lần.","once a week|shopping mall","I shop online about ___, but I only go to ___ [[when]] ___."],
-["Do you prefer shopping alone or with others?","Một mình cho nhanh, tự quyết định.","make decisions quickly","Alone, [[because]] ___. [[If]] I go with friends, ___."],
-["What do you usually buy?","Quần áo, đồ skincare, đồ gia dụng.","skincare products|household items","Mostly ___ and ___, [[which]] I ___."],
-["Do you like shopping online?","Có, nhiều lựa chọn, giao tận nhà; đôi khi hàng khác ảnh.","deliver to my door|look different from the photos","Yes. [[Although]] ___, I like it [[because]] ___."],
-["Did you enjoy shopping when you were a child?","Thích đi chợ với mẹ dịp Tết.","Tet holiday","Yes. [[When]] I was a child, I [[used to]] go ___ with ___."]]),
-C("Street market",[
-["Are there many street markets where you live?","Có, chợ đêm, chợ cuối tuần.","night market","Yes, there are ___ [[where]] people ___."],
-["What do they sell?","Đồ ăn, quần áo, đồ lưu niệm, giá rẻ.","street food|souvenirs|cheap","They sell ___, ___ and ___, [[which]] are ___."],
-["Do you like going to street markets?","Thích không khí nhộn nhịp, đồ ăn ngon; nhưng đôi khi đông.","lively atmosphere|crowded","Yes, [[because]] ___. [[However]], it's sometimes ___."],
-["Do you prefer street markets or supermarkets?","Siêu thị giá niêm yết, sạch; chợ đồ tươi hơn.","fixed prices|fresher","I prefer ___, [[because]] ___, [[while]] ___ is ___."],
-["Did you go to markets when you were a child?","Đi chợ sáng với bà.","grandmother|early morning","Yes. [[When]] I was small, I [[used to]] ___."]]),
-C("Clothes",[
-["What kind of clothes do you usually wear?","Đi làm mặc lịch sự, cuối tuần mặc thoải mái.","smart casual|comfortable","I usually wear ___ [[when]] I go to work, but at weekends I ___."],
-["Do you like shopping for clothes?","Thích, nhất là khi có bộ sưu tập mới, đang giảm giá.","new collection|on sale","Yes, especially [[when]] ___."],
-["Do you spend a lot of money on clothes?","Không nhiều, chọn đồ dễ phối, chất lượng tốt.","mix and match|good quality","Not really. I prefer clothes [[which]] ___."],
-["Did you wear a uniform at school?","Có, áo trắng quần xanh, tiện không phải chọn đồ.","school uniform","Yes. [[When]] I was at school, we [[had to]] wear ___, [[which]] ___."],
-["Do you prefer comfortable or fashionable clothes?","Thoải mái; đi sự kiện thì chọn đồ thời trang.","comfortable|formal events","Comfortable ones, [[because]] ___. [[But if]] I go to ___, I ___."],
-["Do you wear different clothes at weekends?","Có, áo phông quần jean.","T-shirt and jeans","Yes. [[Although]] I wear ___ at work, at weekends I ___."]]),
-C("Shoes",[
-["Do you like buying shoes?","Thích, nhất là giày thể thao.","trainers|a pair of","Yes, especially ___, [[because]] ___."],
-["How many pairs of shoes do you have?","Khoảng 6 đôi cho các dịp khác nhau.","different occasions","About ___ pairs, [[which]] I wear for ___."],
-["Do you prefer comfortable or fashionable shoes?","Thoải mái, vì đi bộ nhiều.","walk a lot","Comfortable ones, [[because]] I ___."],
-["Do you buy shoes online or in a store?","Tại cửa hàng để thử size.","try them on|size","In a store, [[because]] [[if]] I don't ___, ___."],
-["Have you ever bought uncomfortable shoes?","Mua đôi giày đẹp nhưng đau chân.","hurt my feet","Yes. Last year I [[bought]] ___ [[which]] looked nice, but ___."]]),
-C("Glasses",[
-["Do you wear glasses?","Đeo kính chống ánh sáng xanh khi làm máy tính.","blue-light glasses|screen","Yes, I wear ___ [[when]] I ___."],
-["Why do people wear glasses?","Cận thị, bảo vệ mắt, hoặc cho thời trang.","short-sighted|protect their eyes","Some people wear them [[because]] ___, [[while]] others ___."],
-["Do you wear sunglasses?","Khi ra ngoài trời nắng gắt.","strong sunlight","Yes, [[when]] ___, [[because]] ___."],
-["Do you prefer glasses or contact lenses?","Kính, dễ dùng, đỡ khô mắt.","convenient|sensitive eyes","I prefer ___ [[because]] they're [[more comfortable than]] ___."],
-["Does anyone in your family wear glasses?","Bố đeo kính từ khi còn trẻ.","since he was young","Yes, my ___, [[who]] has worn glasses since ___."]]),
-C("Cars",[
-["Do you have a car?","Chưa, đi xe máy; sau này muốn mua.","motorbike|save up","Not yet. I ride ___, but [[if]] I ___, I [[would]] buy ___."],
-["Do you like driving?","Thích đi xa nhưng ghét tắc đường.","traffic jams|road trip","It depends. I enjoy ___, but I hate ___ [[when]] ___."],
-["Are cars popular in your country?","Ngày càng phổ biến nhưng xe máy vẫn nhiều nhất.","more and more|motorbikes","They're becoming [[more popular]], [[although]] ___."],
-["What kind of car would you like to buy?","Xe điện nhỏ, tiết kiệm, thân thiện môi trường.","electric car|environmentally friendly","I'd like ___, [[which]] is ___."],
-["Did your family have a car when you were a child?","Không, cả nhà đi xe máy.","the whole family","No. [[When]] I was a child, my family [[used to]] ___."]]),
-C("Collecting things",[
-["Do you collect anything?","Sưu tầm đồ lưu niệm khi đi du lịch.","souvenirs|keep","Yes, I collect ___ [[which]] ___."],
-["Did you collect things as a child?","Sưu tầm hình dán, tem.","stickers|stamps","Yes. [[When]] I was a child, I [[used to]] collect ___."],
-["Why do people collect things?","Lưu giữ kỷ niệm, hoặc để đầu tư.","memories|valuable","Some people collect things [[because]] ___, [[while]] others ___."],
-["Is collecting things expensive?","Tùy đồ; đồ cổ thì rất đắt.","antiques","It depends. [[If]] people collect ___, it can be ___."],
-["What would you like to collect in the future?","Đồ lưu niệm từ mỗi nước đã đến.","every country I visit","[[If]] I had more time to travel, I [[would]] collect ___."]]),
-C("Lost and found",[
-["Have you ever lost anything?","Bỏ quên ví ở quán cà phê năm ngoái.","wallet|leave behind","Yes. Last year I [[left]] ___ at ___."],
-["What did you do?","Quay lại hỏi nhân viên, may mắn tìm được.","staff|luckily","I [[went]] back and asked ___. Luckily, ___."],
-["Have you ever found something that someone else lost?","Nhặt được điện thoại, trả lại chủ.","return it to the owner","Yes. I once [[found]] ___ [[which]] ___, so I ___."],
-["What do people often lose?","Chìa khóa, điện thoại, ô.","keys|umbrellas","People often lose ___ [[because]] they ___."],
-["How can people avoid losing things?","Để đồ đúng chỗ, kiểm tra trước khi đi.","in the same place|double-check","[[If]] people always ___, they [[won't]] ___."]]),
-C("Secondary school",[
-["Where did you go to secondary school?","Trường gần nhà ở quê.","in my hometown","I went to ___ [[which]] was ___."],
-["Did you enjoy secondary school?","Thích, có nhiều bạn tốt.","make friends","Yes, [[because]] ___."],
-["What was your favourite subject?","Tiếng Anh, cô giáo rất nhiệt tình.","enthusiastic teacher","My favourite subject [[was]] ___ [[because]] ___."],
-["Do you still keep in touch with your classmates?","Có nhóm chat, gặp nhau dịp Tết.","group chat|reunion","Yes. We have ___ and we meet [[when]] ___."],
-["What did you usually do after school?","Chơi đá cầu với bạn.","after school","After school, I [[used to]] ___."]]),
-C("Teachers",[
-["Do you have a favourite teacher?","Cô dạy tiếng Anh cấp 3.","explain things clearly","Yes, my ___ teacher, [[who]] ___."],
-["What makes a good teacher?","Kiên nhẫn, làm bài học thú vị.","patient|make lessons interesting","A good teacher is someone [[who]] ___."],
-["Would you like to be a teacher?","Không, cần rất nhiều kiên nhẫn.","patience","Not really. [[Although]] ___, I don't think I'm ___."],
-["Do you still keep in touch with your teachers?","Thỉnh thoảng nhắn hỏi thăm dịp 20/11.","Teachers' Day","Sometimes. I send ___ [[when]] it's ___."],
-["Are teachers at school different from university lecturers?","Cấp 3 sát sao, đại học để sinh viên tự học.","independent","School teachers ___, [[while]] university lecturers ___."]]),
-C("Paper/Writing letters",[
-["Do you often write letters?","Không, dùng email và tin nhắn.","send messages","Not really. I usually ___ [[because]] it's [[faster than]] ___."],
-["Did you write letters when you were a child?","Viết thiệp Tết cho bạn bè.","greeting cards","Yes. [[When]] I was ___, I [[used to]] write ___."],
-["Do you prefer paper or electronic documents?","Điện tử khi làm việc, giấy khi ghi chú.","take notes","It depends. I use ___ for work, but [[when]] I ___, I prefer paper."],
-["Do people use less paper now?","Có, nhờ công nghệ, tốt cho môi trường.","go paperless","Yes. [[Compared to]] the past, ___."],
-["Would you like to receive a handwritten letter?","Có, cảm giác đặc biệt, chân thành.","personal|special","Yes, [[because]] a handwritten letter is ___."]]),
-C("Science",[
-["Did you like science at school?","Thích sinh học, không giỏi vật lý.","biology|physics","I liked ___ [[but]] I wasn't good at ___."],
-["What is your favourite science subject?","Sinh học, hiểu về cơ thể người.","human body","___, [[because]] it helped me understand ___."],
-["Are science programmes popular in your country?","Phim tài liệu trên YouTube khá phổ biến.","documentaries","Yes, especially ___ [[which]] ___."],
-["How does science affect your daily life?","Điện thoại, y học.","technology|medicine","Science is everywhere. For example, ___ [[which]] ___."],
-["Would you like to be a scientist?","Không, thích marketing hơn.","research","Not really. [[Although]] science is ___, I ___."]]),
-C("Outer space and stars",[
-["Do you like looking at the stars?","Thích khi về quê, trời trong.","in the countryside|clear sky","Yes, especially [[when]] I'm ___, [[where]] ___."],
-["Have you ever learnt about space?","Học ở trường, xem phim tài liệu.","the solar system","Yes. I [[learnt]] about ___ [[when]] I was ___."],
-["Would you like to go into space?","Có nếu an toàn; muốn nhìn Trái Đất từ trên cao.","see the Earth","[[If]] it were safe, I [[would]] ___."],
-["Is it easy to see stars where you live?","Khó, thành phố nhiều ánh đèn.","light pollution","Not really, [[because]] ___."],
-["Do you like films about space?","Thích phim khoa học viễn tưởng.","science fiction","Yes, I enjoy ___ [[which]] ___."]]),
-C("History",[
-["Do you like history?","Thích nghe chuyện lịch sử, không thích học ngày tháng.","historical stories|dates","Yes. [[Although]] I don't like ___, I enjoy ___."],
-["Did you like history at school?","Không, phải học thuộc nhiều.","memorise","Not really, [[because]] we [[had to]] ___."],
-["How do you learn about history now?","Phim, video, bảo tàng.","documentaries|museums","Mostly through ___, [[which]] make history ___."],
-["Have you ever visited a history museum?","Bảo tàng Lịch sử Quốc gia.","National Museum","Yes. Last ___ I [[visited]] ___ [[where]] ___."],
-["Is it important to learn history?","Có, hiểu quá khứ, tránh lặp lại sai lầm.","learn from the past","Yes, [[because]] it helps people ___."]]),
-C("Old buildings",[
-["Are there many old buildings in your city?","Có, phố cổ, kiến trúc Pháp.","Old Quarter|French architecture","Yes, especially in ___, [[where]] ___."],
-["Do you like old buildings?","Thích, mỗi tòa nhà có câu chuyện riêng.","unique|history","Yes, [[because]] they ___."],
-["Should old buildings be protected?","Nên, vì là di sản.","heritage","Definitely. [[If]] we don't ___, ___ [[will]] ___."],
-["Would you prefer to live in an old or a modern building?","Hiện đại, tiện nghi hơn.","modern facilities","A modern one, [[because]] it's [[more comfortable than]] ___."],
-["Have you visited an old building recently?","Văn Miếu.","Temple of Literature","Yes. Last month I [[visited]] ___, [[which]] ___."]]),
-C("Dreams and ambitions",[
-["What job did you want to do when you were a child?","Muốn làm ca sĩ.","become a singer","[[When]] I was a child, I [[wanted]] to ___."],
-["What are your ambitions now?","Lên vị trí quản lý hoặc mở doanh nghiệp riêng.","run my own business","I'd like to ___ [[if]] ___."],
-["Is it important to have ambitions?","Có, tạo động lực.","motivation","Yes, [[because]] ___ gives people ___."],
-["Do you think you will achieve your dream?","Hy vọng vậy; đang học thạc sĩ.","work hard|master's degree","I hope so. I'm ___, [[which]] ___."],
-["Do you often remember your dreams?","Hiếm khi.","wake up","Not often. [[When]] I wake up, I usually ___."]]),
-C("Remember names",[
-["Are you good at remembering names?","Không giỏi, nhớ mặt hơn nhớ tên.","faces","Not really. I'm [[better at]] remembering ___ [[than]] ___."],
-["How do you remember people's names?","Nhắc lại tên khi nói chuyện, ghi vào điện thoại.","repeat|write down","I usually ___ [[when]] I ___."],
-["Have you ever forgotten someone's name?","Gặp lại đồng nghiệp cũ, quên tên, rất ngại.","embarrassed","Yes. [[When]] I [[met]] ___, I ___."],
-["Is it important to remember names?","Có, nhất là trong công việc, thể hiện tôn trọng.","show respect","Yes, especially at work, [[because]] ___."],
-["What names are easy to remember?","Tên ngắn hoặc đặc biệt.","unusual names","Names [[which]] are ___ are easier to remember."]]),
-C("Morning routine",[
-["What do you usually do in the morning?","Dậy 6:30, uống cà phê, đọc tin tức.","have a coffee|check the news","[[As soon as]] I wake up, I ___. Then I ___."],
-["Is a morning routine important?","Có, giúp làm việc hiệu quả.","productive","Yes, [[because]] [[if]] I ___, I ___."],
-["Is your morning the same every day?","Ngày thường giống nhau, cuối tuần ngủ muộn.","sleep in","On weekdays, ___, [[but]] at weekends I ___."],
-["Has your morning routine changed since you were a child?","Hồi nhỏ mẹ gọi dậy đi học.","wake me up","Yes. [[When]] I was a child, my mother [[used to]] ___."],
-["Do you have breakfast every day?","Thường ăn phở hoặc bánh mì.","a quick breakfast","Usually. I have ___ [[because]] ___."]]),
-C("Evening time",[
-["What do you usually do in the evening?","Nấu ăn, xem phim, học bài thạc sĩ.","cook dinner|study","[[When]] I get home, I ___ [[before]] I ___."],
-["Do you prefer mornings or evenings?","Buổi tối, thoải mái hơn.","free time","Evenings, [[because]] ___."],
-["Do you often go out in the evening?","Thỉnh thoảng đi cà phê với bạn.","hang out","Sometimes. [[When]] I'm free, I ___."],
-["How were your evenings different when you were a child?","Hồi nhỏ làm bài tập, xem TV.","homework","[[When]] I was a child, I [[used to]] ___, but now I ___."],
-["What time do you usually go to bed?","Khoảng 11 giờ.","get enough sleep","Around ___, [[because]] I need to ___."]]),
-C("Tiredness",[
-["When do you usually feel tired?","Cuối ngày làm việc, sau nhiều cuộc họp.","after long meetings","I usually feel tired [[when]] ___."],
-["What do you do when you feel tired?","Ngủ một giấc ngắn, nghe nhạc.","take a nap","[[If]] I'm tired, I ___."],
-["Does tiredness affect your work?","Có, khó tập trung.","concentrate","Yes. [[When]] I'm tired, I can't ___."],
-["Do students often feel tired?","Có, học nhiều, ngủ ít.","stay up late","Yes, [[because]] they ___."],
-["Do you feel tired after exercise?","Có, nhưng thấy sảng khoái.","refreshed","Yes, [[but]] I also feel ___."]]),
-C("Tidiness",[
-["Are you a tidy person?","Khá gọn gàng, không chịu được phòng bừa.","messy|organised","Yes, quite. I can't ___ [[when]] my room is ___."],
-["How often do you tidy your room?","Dọn kỹ mỗi cuối tuần.","every weekend","[[Although]] I'm busy, I ___ every weekend."],
-["Were you tidy as a child?","Không, mẹ hay nhắc.","remind me","Not really. [[When]] I was a child, my mother [[used to]] ___."],
-["Is tidiness important at work?","Có, dễ tìm tài liệu.","find documents","Yes, [[because]] [[if]] your desk is ___, you ___."],
-["Are tidy people more successful?","Có thể, vì họ có tổ chức.","organised","Maybe, [[because]] people [[who]] are tidy ___."]]),
-C("Sports programs",[
-["Do you watch sports programmes?","Xem bóng đá khi đội tuyển Việt Nam đá.","national team","Yes, especially [[when]] ___."],
-["What is your favourite sports programme?","Các trận bóng đá trực tiếp.","live matches","I like ___ [[which]] are shown ___."],
-["Do you prefer watching sports alone or with others?","Với bạn bè, cùng cổ vũ.","cheer together","With ___, [[because]] ___."],
-["Did you watch sports when you were a child?","Xem bóng đá cùng bố.","with my father","Yes. [[When]] I was a child, I [[used to]] ___."],
-["Do you prefer watching or playing sports?","Thích xem hơn chơi.","more exciting","I prefer ___ [[because]] ___, [[while]] ___."]]),
-C("Parks",[
-["Do you often go to parks?","Công viên gần nhà, đi sau giờ làm.","after work","Yes. There's a park near my house [[where]] I ___."],
-["What do people do in parks?","Chạy bộ, đi dạo, trẻ con chơi.","go jogging|take a walk","Some people ___, [[while]] others ___."],
-["Did you go to parks when you were a child?","Chơi với bạn ở công viên.","play games","Yes. [[When]] I was a child, I [[used to]] ___."],
-["Would you like more parks in your city?","Có, thành phố thiếu cây xanh.","green space","Yes. [[If]] there were more parks, people [[would]] ___."],
-["How are parks today different from the past?","Hiện đại hơn, có máy tập thể dục.","exercise equipment","[[Compared to]] the past, parks now have ___."]]),
-C("Rubbish/Recycling",[
-["Do you recycle?","Phân loại chai nhựa, giấy.","separate|plastic bottles","Yes. I ___ [[before]] I throw them away."],
-["Is recycling popular in your country?","Đang tăng nhưng chưa phổ biến.","not common yet","It's becoming more popular, [[although]] ___."],
-["How can people reduce rubbish?","Dùng túi vải, bình nước cá nhân.","reusable bags","[[If]] everyone ___, we [[will]] ___."],
-["Should the government encourage recycling?","Nên, đặt thùng rác phân loại.","recycling bins","Yes. The government should ___ so that ___."],
-["Did you learn about recycling at school?","Có phong trào thu gom giấy vụn.","collect waste paper","Yes. [[When]] I was at school, we [[used to]] ___."]]),
-C("Politeness",[
-["Is politeness important?","Có, thể hiện sự tôn trọng.","show respect","Yes, [[because]] ___."],
-["How do people show politeness in Vietnam?","Chào hỏi, dùng kính ngữ với người lớn.","greet|older people","People ___ [[when]] they talk to ___."],
-["Were you taught to be polite as a child?","Bố mẹ dạy khoanh tay chào người lớn.","taught me to","Yes. [[When]] I was young, my parents ___."],
-["Are people less polite now than in the past?","Một số người, nhất là trên mạng.","online","Some people are, especially ___, [[where]] ___."],
-["What kind of people do you think are polite?","Người luôn nói cảm ơn.","say thank you","I respect people [[who]] ___."]])
-];
-
-var P2 = {
- d12:[
-  {title:"Đề 1: Tả một người", cue:"Describe a person who has helped you a lot.", reuse:"a family member you admire, a person who encouraged you", steps:[
-   ["Người đó là ai","Mẹ, người luôn ủng hộ mình.",["support","always there for me"],"I'd like to talk about ___, [[who]] ___."],
-   ["Người đó thế nào","Kiên nhẫn, chăm chỉ.",["patient","hard-working"],"She's someone [[who]] ___."],
-   ["Đã giúp bạn thế nào","Hồi đại học trượt một kỳ thi; mẹ động viên, giúp lập kế hoạch học.",["fail an exam","encourage","study plan"],"[[When]] I was ___, I [[failed]] ___. She [[encouraged]] me and [[helped]] me ___."],
-   ["Cảm nghĩ","Biết ơn; không có mẹ có lẽ đã bỏ cuộc.",["grateful","give up"],"I'm really grateful [[because]] ___. Without her help, I [[might have]] ___."]
-  ]},
-  {title:"Đề 2: Tả một nơi chốn", cue:"Describe a quiet place you like to go.", reuse:"a park you visit, a place where you relax", steps:[
-   ["Ở đâu","Công viên nhỏ gần nhà, đi sau giờ làm.",["near my house","after work"],"It's ___ near ___, [[where]] I usually ___."],
-   ["Trông thế nào","Nhiều cây, có hồ nhỏ, yên tĩnh.",["peaceful","a small lake"],"There are ___ and ___, [[which]] make it ___."],
-   ["Bạn làm gì ở đó","Ngồi ghế đá, nghe nhạc, tập nhẹ.",["sit on a bench","light exercise"],"I usually ___ or ___."],
-   ["Vì sao thích","Quên chuyện công việc; lần đầu tìm thấy năm ngoái rất bất ngờ.",["forget about work","surprised"],"I like it [[because]] ___. [[When]] I first [[found]] it ___, I [[was]] ___."]
-  ]}
- ],
- d12check:["Phần kể chuyện đã xảy ra dùng [[quá khứ đơn]] (failed, encouraged, found, was)","Thói quen trong quá khứ dùng [[used to]]","Mỗi đề có ít nhất [[2 mệnh đề quan hệ]] (who, which, where)"],
- d13:[
-  {title:"Đề 3: Tả một đồ vật", cue:"Describe something useful you use every day.", reuse:"a piece of technology you like, something you bought recently", steps:[
-   ["Đồ vật là gì","Laptop dùng làm việc mỗi ngày.",["laptop","for work"],"I'd like to talk about ___, [[which]] I ___."],
-   ["Có khi nào","Mua 2 năm trước, khi bắt đầu làm marketing.",["two years ago"],"I [[bought]] it ___, [[when]] I [[started]] ___."],
-   ["Dùng để làm gì","Chạy quảng cáo, viết báo cáo.",["ad campaigns","reports"],"I use it to ___ [[which]] ___, and to ___."],
-   ["Vì sao hữu ích","Tiện hơn điện thoại; không có thì không làm việc được.",["more convenient than"],"It's much [[more convenient than]] ___ [[because]] ___. [[If]] I didn't have it, I [[couldn't]] ___."]
-  ]},
-  {title:"Đề 4: Kể một trải nghiệm", cue:"Describe a time you had fun with your friends.", reuse:"a happy event, a party you enjoyed, a time you sang", steps:[
-   ["Khi nào, ở đâu","Tháng trước, quán karaoke mới mở gần công ty.",["last month","karaoke bar"],"Last month, ___ and I [[went]] to ___ [[which]] had just opened ___."],
-   ["Đi với ai","Bạn thân giọng hay và hai người bạn khác.",["a good voice"],"___, [[who]] ___, and ___."],
-   ["Đã làm gì","Hát 3 tiếng; trong lúc bạn hát, cả nhóm nhảy và cười.",["dance","laugh"],"We [[sang]] ___ for ___. [[While]] ___ [[was singing]], the rest of us [[were]] ___."],
-   ["Cảm nghĩ","Vui vì lâu không gặp; hôm sau mệt nhưng xứng đáng.",["worth it"],"It [[was]] fun [[because]] we [[hadn't seen]] ___. [[Although]] I was tired ___, it was worth it."]
-  ]}
- ],
- d13check:["[[Quá khứ đơn]] cho chuỗi hành động (went, sang, was)","[[Quá khứ tiếp diễn]] cho hành động đang diễn ra (While … was singing)","Mỗi đề có ít nhất 1 câu [[because / although / if]]"]
-};
-
-var P3 = [
- {day:"Ngày 14/10: Người và nơi chốn", qs:[
-  Q("Who has more influence on children, parents or teachers?","Bố mẹ, vì trẻ ở nhà nhiều hơn; lớn lên thì thầy cô quan trọng hơn.",["influence","spend more time"],"I think ___ have more influence, [[because]] ___. [[However]], ___ [[when]] children ___."),
-  Q("What qualities make a good friend?","Biết lắng nghe, ủng hộ khi gặp khó khăn.",["trustworthy","supportive"],"A good friend is someone [[who]] ___ [[when]] ___."),
-  Q("Why do people like going to parks?","Nơi thư giãn, hít thở không khí trong lành.",["fresh air","escape from"],"[[Because]] parks are places [[where]] people can ___."),
-  Q("Should cities have more green spaces?","Có; nhiều công viên thì người dân khỏe, bớt căng thẳng.",["healthier","less stressed"],"Definitely. [[If]] cities had ___, people [[would]] ___.")
- ]},
- {day:"Ngày 15/10: Công nghệ và bạn bè", qs:[
-  Q("How has technology changed the way people work?","Làm việc ở đâu cũng được; lấy ví dụ bản thân.",["work remotely"],"[[Compared to]] the past, people can ___. For example, ___."),
-  Q("Do you think technology makes people lazier?","Một phần: tiết kiệm thời gian nhưng ít vận động hơn.",["save time","exercise less"],"Partly. [[Although]] technology ___, some people ___."),
-  Q("Why do young people like karaoke?","Rẻ, vui với bạn bè, giảm stress.",["affordable","have fun"],"[[Because]] it's ___, and it helps them ___."),
-  Q("Is it important to spend time with friends?","Có; không gặp bạn dễ cô đơn, nhất là khi bận.",["feel lonely"],"Yes. [[If]] people don't ___, they may ___, especially [[when]] ___.")
- ]}
-];
-
+var KW_IDEAS = {"Social media": [["sometimes", "short videos, after work", "lose track of time"], ["yes, all of them", "keep in touch", "share photos, message"], ["photos, updates", "hobby groups", "cooking, travel groups"], ["high school", "chat with friends", "now: read news"], ["yes", "relax", "cut down on screen time"], ["no", "busy with work", "only in the evening"], ["not really", "content every day, hard work", "doesn't suit me"], ["Facebook", "many features, Marketplace", "buy and sell"], ["yes", "family far away", "local news"]], "Music": [["V-pop", "Chipu, favourite singer", "catchy, cheer me up"], ["not really, it depends", "classical: focus", "EDM: morning, wake up"], ["yes, same taste", "both love V-pop", "karaoke together"], ["V-pop", "catchy tunes, sing along", "every café"], ["Chipu", "favourite singer", "concert, buy a ticket"], ["happy music", "good mood", "after work, exhausted"], ["yes, usually", "good mood, more cheerful", "sad, feel worse"], ["yes, love it", "every day", "relax, long day"], ["V-pop, classical", "classical while working", "concentrate"], ["no", "singing: easy", "instrument: years of practice"]], "Websites": [["social media sites", "Facebook, TikTok", "everyone has an account"], ["yes, a lot", "Facebook used to: chatting", "now: Marketplace"], ["YouTube", "learn for free", "English tips, BBC video"], ["YouTube, news sites", "news every morning", "keep updated"], ["yes, every day", "part of my job", "campaigns, Google, Facebook"], ["it depends", "websites: quick updates", "books: reliable information"], ["maybe", "portfolio website", "show skills, clients"]], "Headphones": [["almost every day", "when working", "block out noise"], ["yes", "my own music", "not disturb others"], ["yes, very", "wireless", "every bus"], ["formal events, cinema", "can't enjoy the moment", "impolite"], ["yes", "office", "noisy, concentrate"], ["work", "on the way to work", "phone calls"], ["wireless, AirPods", "small", "easy to carry"]], "Computer/Tablets": [["yes, every day", "digital marketing", "can't work without it"], ["work", "ad campaigns, reports", "evening: films"], ["not much", "no computer at home", "internet café, games"], ["computer", "bigger screen", "read, take notes"], ["editing videos", "too many functions", "confused"]], "Advertisements": [["yes, often", "work in marketing", "creative ads"], ["social media, YouTube", "billboards", "way to work"], ["Tet advert", "family reunion", "emotional"], ["yes", "skincare, Facebook", "on sale, couldn't resist"], ["pop-up ads", "while reading", "can't skip"]], "Singing": [["yes, love it", "V-pop", "reduce stress"], ["almost every day", "living room", "big TV, karaoke"], ["very popular", "every party: karaoke", "after dinner"], ["yes", "wanted to be a singer", "parents encouraged"], ["a little", "traditional songs", "no technique"], ["best friend Han", "good voice", "same taste"], ["alone, close friends", "shy with strangers", "never at work parties"], ["V-pop, bolero", "easy melodies", "sing along"], ["yes", "happy songs", "less tired, relaxed"], ["yes", "friend Han", "sings beautifully"], ["sometimes", "driving alone", "favourite songs"]], "Art": [["yes, films", "not seen as art", "easiest to understand"], ["yes", "learn something new", "history, old paintings"], ["not really", "no talent", "viewer"], ["traditional", "easier to understand", "modern: too abstract"], ["not really", "draw a little", "other people's work"], ["yes", "Fine Arts Museum", "free weekend"], ["old: real life", "modern: shapes, colours", "harder to understand"], ["once", "small gallery, last year", "old Hanoi paintings"], ["yes, in a way", "express feelings", "hard for me"]], "Films": [["comedies", "make me laugh", "after a long day"], ["yes, often", "cartoons, TV", "every evening"], ["never", "parents didn't let me", "too young"], ["once a month", "Friday evenings", "free after work"], ["yes", "talk over dinner", "bring us closer"], ["comedies, animation", "light", "relax"], ["once a month", "new films", "everyone talks about it"], ["not really", "few cinemas, hometown", "TV"], ["animated film, animals", "on TV", "whole family"], ["with friends", "more fun", "serious films: alone"], ["yes", "tickets expensive", "relax together"], ["foreign films", "special effects", "Vietnamese films improving"]], "Jokes": [["not really", "not good at it", "prefer listening"], ["yes, all the time", "tease each other", "relaxed atmosphere"], ["yes", "colleague, sense of humour", "makes everyone laugh"], ["Tao Quan", "Lunar New Year's Eve", "family watches together"], ["it depends", "friendly: fine", "appearance: no"], ["not really", "laugh before the end", "nobody gets it"], ["yes", "cheer me up", "stressed"]], "Shopping": [["yes, online", "save time", "from my sofa"], ["online: weekly", "mall: monthly", "sales"], ["alone", "decide quickly", "friends: all day"], ["clothes, skincare", "household items", "online"], ["yes", "more choice, free delivery", "different from photos"], ["yes", "market with mum, before Tet", "busy, exciting"]], "Street market": [["yes, quite a few", "night markets, weekend markets", "crowded"], ["food, clothes, souvenirs", "cheap", "bargain"], ["yes", "lively atmosphere", "too crowded"], ["supermarkets", "fixed prices, clean", "markets: fresher"], ["yes", "grandmother, early morning", "snacks"]], "Clothes": [["smart casual: work", "comfortable: weekends", "T-shirts, jeans"], ["yes", "sales", "new collections"], ["not really", "good-quality basics", "mix and match"], ["yes", "white shirt, blue trousers", "convenient"], ["comfortable", "every day", "dress up: formal events"], ["yes", "smart at work", "weekends: T-shirt, jeans"]], "Shoes": [["yes", "trainers", "comfortable, stylish"], ["about six", "different occasions", "work, sport, parties"], ["comfortable", "walk a lot", "heels hurt"], ["in a store", "try on", "sizes differ"], ["yes", "looked nice", "hurt my feet, never wore them"]], "Mirrors": [["yes", "large mirror, wall", "room looks bigger"], ["not usually", "phone camera", "check appearance"], ["yes", "full-length mirror, last year", "bedroom"], ["not really", "getting ready", "twice a day"], ["2–3 times a day", "morning", "get ready for work"], ["always", "try clothes on", "suit me or not"], ["check appearance", "cars", "see behind"], ["yes", "reflect light", "brighter room"]], "Watches": [["yes", "cartoon watch, parents", "primary school"], ["yes", "best friend, birthday", "still keep it"], ["not really", "have one", "phone for the time"], ["status symbol", "successful", "businessmen"], ["yes, formal events", "professional", "client meetings"], ["not very", "phone does the job", "smartwatch: exercise"], ["last longer", "show off", "social media"], ["simple silver watch", "goes with my clothes", "special occasions"], ["smartwatches", "track health", "messages"]], "Glasses": [["sometimes", "blue-light glasses", "computer, hours"], ["short-sighted", "protect eyes", "fashion"], ["yes", "strong sunlight", "riding my motorbike"], ["glasses", "convenient", "lenses: dry eyes"], ["my father", "since he was young", "can't read without them"]], "Cars": [["not yet", "motorbike", "saving up"], ["it depends", "road trips", "traffic jams"], ["more popular", "more families can afford", "motorbikes still common"], ["small electric car", "cheap to run", "environmentally friendly"], ["no", "whole family, one motorbike", "crowded but fun"]], "Collecting things": [["souvenirs", "from trips", "memories"], ["yes", "stickers, stamps", "swapped with friends"], ["memories", "investment", "old coins, valuable"], ["it depends", "antiques: expensive", "stamps: cheap"], ["souvenirs, every country", "more time to travel", "lovely memory"]], "Lost and found": [["wallet", "last year", "café"], ["went back, asked staff", "they kept it", "relieved"], ["once", "phone, bus", "returned it"], ["keys, phones", "umbrellas", "in a hurry"], ["same place", "double-check", "my keys"]], "Secondary school": [["hometown school", "near my house", "walked every day"], ["yes", "good friends", "still close"], ["English", "enthusiastic teacher", "fun lessons"], ["yes", "group chat", "meet every Tet"], ["shuttlecock", "school gate", "fun"]], "Teachers": [["high school English teacher", "explained clearly", "inspired me"], ["patience", "interesting lessons", "care about students"], ["not really", "needs patience", "not patient enough"], ["sometimes", "Teachers' Day", "20th November"], ["yes", "school: close support", "university: independent"]], "Paper/Writing letters": [["not really", "emails, messages", "faster"], ["yes", "greeting cards, Tet", "classmates"], ["it depends", "work: electronic", "notes: paper"], ["yes", "paperless offices", "environment"], ["yes", "personal", "someone cares"]], "Science": [["some subjects", "biology", "not physics"], ["biology", "human body", "fascinating"], ["quite popular", "YouTube documentaries", "animals, space"], ["many ways", "phone, medicine", "vaccines"], ["not really", "research, patience", "prefer marketing"]], "Outer space and stars": [["yes", "countryside", "clear sky, many stars"], ["at school", "solar system", "documentaries"], ["yes, if safe", "see the Earth", "amazing"], ["not really", "city lights", "few stars"], ["yes", "science fiction", "Mars"]], "History": [["yes", "stories", "not dates"], ["not really", "memorise a lot", "boring"], ["documentaries, museums", "YouTube", "more interesting"], ["yes", "National Museum of History", "learnt a lot"], ["yes", "understand the past", "avoid mistakes"]], "Old buildings": [["quite a lot", "Old Quarter", "French architecture"], ["yes", "own story", "unique city"], ["definitely", "heritage", "gone forever"], ["modern", "better facilities", "more comfortable"], ["yes", "Temple of Literature", "peaceful, beautiful"]], "Dreams and ambitions": [["singer", "loved singing", "sang for my family"], ["manager", "own business", "enough savings"], ["yes", "motivation", "work harder"], ["hope so", "master's degree", "career"], ["not often", "forget quickly", "after waking up"]], "Remember names": [["not really", "faces: better", "names slip my mind"], ["repeat the name", "write it in my phone", "helps"], ["yes", "former colleague", "embarrassed"], ["yes, at work", "respect", "clients feel valued"], ["short, unusual names", "stand out", "easy"]], "Morning routine": [["6:30", "coffee, news", "get ready"], ["yes", "productive", "skip it: messy day"], ["weekdays: same", "weekends: sleep in", "favourite"], ["yes", "mum woke me up", "alarm now"], ["usually", "pho, banh mi", "quick, energy"]], "Evening time": [["cook dinner", "study, master's", "films"], ["evenings", "free time", "relaxed"], ["sometimes", "café with friends", "Fridays"], ["different", "homework, TV", "now: work, study"], ["11 pm", "enough sleep", "tired at work"]], "Tiredness": [["end of the day", "long meetings", "brain empty"], ["short nap", "music", "recharge"], ["yes", "can't concentrate", "mistakes"], ["yes", "study a lot", "stay up late"], ["yes", "refreshed", "good tired"]], "Tidiness": [["quite tidy", "messy room: can't relax", "everything in its place"], ["every weekend", "even when busy", "calm"], ["not really", "mum reminded me", "messy room"], ["yes", "find documents", "professional"], ["maybe", "organised", "manage time"]], "Sports programs": [["sometimes", "football", "national team"], ["live football", "exciting", "unpredictable"], ["with friends", "cheer together", "atmosphere"], ["yes", "with my father", "every weekend"], ["watching", "more exciting", "playing: tiring"]], "Parks": [["yes", "near my house", "after work"], ["jogging", "walking", "children playing"], ["yes", "with friends", "favourite place"], ["definitely", "little green space", "healthier"], ["more modern", "exercise equipment", "better lighting"]], "Rubbish/Recycling": [["try to", "plastic bottles, paper", "before throwing away"], ["growing", "not common yet", "mixed rubbish"], ["reusable bags", "own water bottles", "less waste"], ["yes", "recycling bins", "teach children"], ["yes", "waste paper", "class competition"]], "Politeness": [["very", "respect", "comfortable"], ["greet older people", "polite words", "\"dạ\", \"vâng\""], ["yes", "greet adults", "arms crossed"], ["some people", "online", "hide identity"], ["say thank you", "listen carefully", "colleague thanks the cleaner"]]};
+TOPICS.forEach(function(t){ var k=KW_IDEAS[t.topic]; if(k) t.qs.forEach(function(q,i){ if(k[i]) q.idea=k[i]; }); });
+var VOCAB = {"Social media": [["be glued to my phone", "dán mắt vào điện thoại", "I'm glued to my phone after work.", "/biː ɡluː<em class=\"red\">d</em> tə maɪ fəʊn/"], ["scroll through my newsfeed", "lướt bảng tin", "I scroll through my newsfeed before bed.", "/skrəʊl θruː maɪ ˈnjuːzfiː<em class=\"red\">d</em>/"], ["stay connected with", "giữ kết nối với", "It helps me stay connected with old friends.", "/steɪ kəˈnektɪ<em class=\"red\">d</em> wɪ<em class=\"red\">ð</em>/"], ["a waste of time", "lãng phí thời gian", "Sometimes it's a total waste of time.", "/ə weɪ<em class=\"red\">st</em> ɒ<em class=\"red\">v</em> taɪm/"], ["go viral", "lan truyền nhanh", "Funny videos often go viral.", "/ɡəʊ ˈvaɪərəl/"], ["be addicted to", "nghiện", "Many teenagers are addicted to TikTok.", "/biː ʌˈdɪktɪ<em class=\"red\">d</em> tuː/"]], "Music": [["my cup of tea", "đúng gu của tôi", "Rap isn't really my cup of tea.", "/maɪ kʌ<em class=\"red\">p</em> ɒ<em class=\"red\">v</em> tiː/"], ["a catchy tune", "giai điệu bắt tai", "This song has a catchy tune.", "/ə ˈkætʃi tjuːn/"], ["lift my mood", "làm tâm trạng tốt lên", "Happy songs lift my mood.", "/lɪ<em class=\"red\">ft</em> maɪ muː<em class=\"red\">d</em>/"], ["background music", "nhạc nền", "I need background music to focus.", "/ˈbækɡraʊn<em class=\"red\">d</em> ˈmjuːzɪ<em class=\"red\">k</em>/"], ["a music lover", "người yêu âm nhạc", "I'm a real music lover.", "/ə ˈmjuːzɪ<em class=\"red\">k</em> ˈlʌvə/"], ["have an ear for music", "có khả năng cảm thụ âm nhạc", "My friend really has an ear for music.", "/hæ<em class=\"red\">v</em> ʌn iə fɔː ˈmjuːzɪ<em class=\"red\">k</em>/"]], "Websites": [["browse the Internet", "lướt web", "I browse the Internet every evening.", "/braʊ<em class=\"red\">z</em> ðɪ ˈɪntəˌne<em class=\"red\">t</em>/"], ["a reliable source", "nguồn đáng tin cậy", "Books are a more reliable source.", "/ə rɪˈlaɪəbəl sɔː<em class=\"red\">s</em>/"], ["user-friendly", "dễ sử dụng", "That website is very user-friendly.", "/ˌjuːzəˈfrendli/"], ["look something up", "tra cứu", "I look new words up on Google.", "/lʊ<em class=\"red\">k</em> ˈsʌmθɪŋ ʌ<em class=\"red\">p</em>/"], ["stay up to date", "cập nhật thông tin", "News sites help me stay up to date.", "/steɪ ʌ<em class=\"red\">p</em> tə deɪ<em class=\"red\">t</em>/"], ["pop up", "hiện lên bất ngờ", "Annoying ads pop up everywhere.", "/pɒ<em class=\"red\">p</em> ʌ<em class=\"red\">p</em>/"]], "Headphones": [["noise-cancelling headphones", "tai nghe chống ồn", "Noise-cancelling headphones are great in the office.", "/ˌnɔɪzˈkænsəlɪŋ ˈhedfəʊn<em class=\"red\">z</em>/"], ["block out background noise", "chặn tiếng ồn xung quanh", "They block out background noise.", "/blɒ<em class=\"red\">k</em> aʊ<em class=\"red\">t</em> ˈbækɡraʊn<em class=\"red\">d</em> nɔɪ<em class=\"red\">z</em>/"], ["in my own world", "trong thế giới riêng", "With headphones on, I'm in my own world.", "/ɪn maɪ əʊn wɜːl<em class=\"red\">d</em>/"], ["crystal-clear sound", "âm thanh rất rõ", "My AirPods have crystal-clear sound.", "/ˌkrɪstəlˈkliə saʊn<em class=\"red\">d</em>/"], ["damage your hearing", "hại thính giác", "Loud music can damage your hearing.", "/ˈdæmɪ<em class=\"red\">dʒ</em> jɔː ˈhiərɪŋ/"], ["on the go", "khi đang di chuyển", "I listen to podcasts on the go.", "/ɒnðə ɡəʊ/"]], "Computer/Tablets": [["tech-savvy", "thành thạo công nghệ", "Young people are very tech-savvy.", "/ˌtekˈsævi/"], ["can't live without", "không thể thiếu", "I can't live without my laptop.", "/kɑːn<em class=\"red\">t</em> lɪ<em class=\"red\">v</em> wɪˈðaʊ<em class=\"red\">t</em>/"], ["work remotely", "làm việc từ xa", "My laptop lets me work remotely.", "/wɜː<em class=\"red\">k</em> rɪˈməʊtli/"], ["screen time", "thời gian dùng màn hình", "I try to reduce my screen time.", "/skriːn taɪm/"], ["portable", "dễ mang theo", "Tablets are light and portable.", "/ˈpɔːtəbəl/"], ["strain my eyes", "làm mỏi mắt", "Long hours on a screen strain my eyes.", "/streɪn maɪ aɪ<em class=\"red\">z</em>/"]], "Advertisements": [["target audience", "khách hàng mục tiêu", "Every ad has a target audience.", "/ˈtɑːɡɪ<em class=\"red\">t</em> ˈɔːdiən<em class=\"red\">s</em>/"], ["catch my eye", "thu hút ánh nhìn", "Creative ads always catch my eye.", "/kæ<em class=\"red\">tʃ</em> maɪ aɪ/"], ["impulse buying", "mua sắm bốc đồng", "Ads often lead to impulse buying.", "/ˈɪmpʌl<em class=\"red\">s</em> baɪɪŋ/"], ["misleading", "gây hiểu lầm", "Some ads are quite misleading.", "/mɪˈsliːdɪŋ/"], ["skip the ads", "bỏ qua quảng cáo", "I always skip the ads on YouTube.", "/skɪ<em class=\"red\">p</em> ðɪ æ<em class=\"red\">dz</em>/"], ["be bombarded with ads", "bị quảng cáo dồn dập", "We're bombarded with ads every day.", "/biː bəmˈbɑːdɪ<em class=\"red\">d</em> wɪ<em class=\"red\">ð</em> æ<em class=\"red\">dz</em>/"]], "Singing": [["sing my heart out", "hát hết mình", "At karaoke, I sing my heart out.", "/sɪŋ maɪ hɑː<em class=\"red\">t</em> aʊ<em class=\"red\">t</em>/"], ["sing out of tune", "hát lạc tông", "I often sing out of tune.", "/sɪŋ ˌaʊtə<em class=\"red\">v</em> tjuːn/"], ["a beautiful voice", "giọng hát hay", "My friend has a beautiful voice.", "/ə ˈbjuːtifəl vɔɪ<em class=\"red\">s</em>/"], ["let off steam", "xả căng thẳng", "Singing helps me let off steam.", "/le<em class=\"red\">t</em> ɒ<em class=\"red\">f</em> stiːm/"], ["stage fright", "sợ đứng trước đám đông", "I get stage fright in front of strangers.", "/steɪ<em class=\"red\">dʒ</em> fraɪ<em class=\"red\">t</em>/"], ["hum along to", "ngân nga theo", "I hum along to songs while cooking.", "/hʌm ʌˈlɒŋ tuː/"]], "Art": [["an art lover", "người yêu nghệ thuật", "I'm not really an art lover.", "/ʌn ɑː<em class=\"red\">t</em> ˈlʌvə/"], ["a work of art", "tác phẩm nghệ thuật", "Each painting is a work of art.", "/ə wɜː<em class=\"red\">k</em> ɒ<em class=\"red\">v</em> ɑː<em class=\"red\">t</em>/"], ["abstract art", "nghệ thuật trừu tượng", "Abstract art is hard to understand.", "/ˈæbstræ<em class=\"red\">kt</em> ɑː<em class=\"red\">t</em>/"], ["artistic", "có khiếu nghệ thuật", "I'm not very artistic.", "/ɑːˈtɪstɪ<em class=\"red\">k</em>/"], ["an exhibition", "buổi triển lãm", "I visited an exhibition last year.", "/ʌn eksɪˈbɪʃən/"], ["appreciate art", "thưởng thức nghệ thuật", "You don't need talent to appreciate art.", "/ʌˈpriːʃɪˌeɪ<em class=\"red\">t</em> ɑː<em class=\"red\">t</em>/"]], "Films": [["a box-office hit", "phim ăn khách", "That film was a box-office hit.", "/ə ˌbɒkˈsɒfɪ<em class=\"red\">s</em> hɪ<em class=\"red\">t</em>/"], ["the plot", "cốt truyện", "The plot was quite predictable.", "/ðə plɒ<em class=\"red\">t</em>/"], ["special effects", "kỹ xảo", "Hollywood films have amazing special effects.", "/ˈspeʃəl ɪˈfe<em class=\"red\">kts</em>/"], ["binge-watch", "xem liền một mạch", "I binge-watched a series last weekend.", "/ˌbɪndʒˈwɒ<em class=\"red\">tʃ</em>/"], ["a feel-good film", "phim nhẹ nhàng, dễ chịu", "I love feel-good films.", "/ə ˌfiːlˈɡʊ<em class=\"red\">d</em> fɪlm/"], ["on the big screen", "trên màn ảnh rộng", "Action films are better on the big screen.", "/ɒnðə bɪ<em class=\"red\">ɡ</em> skriːn/"]], "Jokes": [["crack a joke", "pha trò", "My colleague often cracks jokes.", "/kræ<em class=\"red\">k</em> ə dʒəʊ<em class=\"red\">k</em>/"], ["a sense of humour", "khiếu hài hước", "He has a great sense of humour.", "/ə sen<em class=\"red\">s</em> ɒ<em class=\"red\">v</em> ˈhjuːmə/"], ["burst out laughing", "phá lên cười", "Everyone burst out laughing.", "/bɜː<em class=\"red\">st</em> aʊ<em class=\"red\">t</em> ˈlæfɪŋ/"], ["have a laugh", "cười đùa vui vẻ", "We have a laugh at lunch.", "/hæ<em class=\"red\">v</em> ə læ<em class=\"red\">f</em>/"], ["take a joke", "biết đùa, không tự ái", "I can take a joke.", "/teɪ<em class=\"red\">k</em> ə dʒəʊ<em class=\"red\">k</em>/"], ["lighten the mood", "làm không khí nhẹ nhàng", "A joke can lighten the mood.", "/ˈlaɪtən ðə muː<em class=\"red\">d</em>/"]], "Shopping": [["shop around", "so giá trước khi mua", "I always shop around first.", "/ʃɒ<em class=\"red\">p</em> ʌˈraʊn<em class=\"red\">d</em>/"], ["a bargain", "món hời", "I got a real bargain online.", "/ə ˈbɑːɡɪn/"], ["window shopping", "ngắm đồ mà không mua", "I enjoy window shopping at weekends.", "/ˈwɪndəʊ ˈʃɒpɪŋ/"], ["a shopaholic", "người nghiện mua sắm", "I'm not a shopaholic.", "/ə ˌʃɒpʌˈhɒlɪ<em class=\"red\">k</em>/"], ["on sale", "đang giảm giá", "I only buy clothes on sale.", "/ɒn seɪl/"], ["splash out on", "chi mạnh tay cho", "I splashed out on a new phone.", "/splæ<em class=\"red\">ʃ</em> aʊ<em class=\"red\">t</em> ɒn/"]], "Street market": [["haggle over the price", "mặc cả", "People haggle over the price.", "/ˈhæɡəl ˌəʊvə ðə praɪ<em class=\"red\">s</em>/"], ["bustling", "nhộn nhịp", "Night markets are always bustling.", "/ˈbʌsəlɪŋ/"], ["a wide variety of", "nhiều loại", "There's a wide variety of street food.", "/ə waɪ<em class=\"red\">d</em> vəˈraɪəti ɒ<em class=\"red\">v</em>/"], ["dirt cheap", "rẻ bèo", "Clothes there are dirt cheap.", "/dɜː<em class=\"red\">t</em> tʃiː<em class=\"red\">p</em>/"], ["local produce", "nông sản địa phương", "They sell fresh local produce.", "/ˈləʊkəl prəˈdjuː<em class=\"red\">s</em>/"], ["soak up the atmosphere", "tận hưởng không khí", "I go there to soak up the atmosphere.", "/səʊ<em class=\"red\">k</em> ʌ<em class=\"red\">p</em> ðɪ ˈætməsˌfiə/"]], "Clothes": [["dress code", "quy định trang phục", "My office has a smart casual dress code.", "/dre<em class=\"red\">s</em> kəʊ<em class=\"red\">d</em>/"], ["dress up", "ăn diện", "I dress up for weddings.", "/dre<em class=\"red\">s</em> ʌ<em class=\"red\">p</em>/"], ["go out of fashion", "lỗi mốt", "Some styles go out of fashion quickly.", "/ɡəʊ ˌaʊtə<em class=\"red\">v</em> ˈfæʃən/"], ["suit me", "hợp với tôi", "Bright colours don't suit me.", "/suː<em class=\"red\">t</em> miː/"], ["casual wear", "đồ mặc thường ngày", "I prefer casual wear at weekends.", "/ˈkæʒuːəl weə/"], ["follow the latest trends", "theo xu hướng mới nhất", "I don't follow the latest trends.", "/ˈfɒləʊ ðə ˈleɪtɪ<em class=\"red\">st</em> tren<em class=\"red\">dz</em>/"]], "Shoes": [["a pair of trainers", "một đôi giày thể thao", "I bought a new pair of trainers.", "/ə peər ɒ<em class=\"red\">v</em> ˈtreɪnə<em class=\"red\">z</em>/"], ["break in new shoes", "đi cho giày mới quen chân", "It takes time to break in new shoes.", "/breɪ<em class=\"red\">k</em> ɪn njuː ʃuː<em class=\"red\">z</em>/"], ["high heels", "giày cao gót", "High heels hurt my feet.", "/haɪ hiːl<em class=\"red\">z</em>/"], ["fit perfectly", "vừa khít", "These shoes fit perfectly.", "/fɪ<em class=\"red\">t</em> ˈpɜːfektˌlɪ/"], ["durable", "bền", "Leather shoes are more durable.", "/ˈdjʊərəbəl/"], ["wear out", "mòn, hỏng", "My trainers wore out after a year.", "/weər aʊ<em class=\"red\">t</em>/"]], "Mirrors": [["a full-length mirror", "gương soi toàn thân", "I have a full-length mirror in my room.", "/ə ˌfʊlˈleŋ<em class=\"red\">θ</em> ˈmɪrə/"], ["check my reflection", "soi gương", "I check my reflection before going out.", "/tʃe<em class=\"red\">k</em> maɪ rɪˈflekʃən/"], ["create a sense of space", "tạo cảm giác rộng rãi", "Mirrors create a sense of space.", "/kriːˈeɪ<em class=\"red\">t</em> ə sen<em class=\"red\">s</em> ɒ<em class=\"red\">v</em> speɪ<em class=\"red\">s</em>/"], ["a rear-view mirror", "gương chiếu hậu", "Drivers check the rear-view mirror.", "/ə ˌriəˈvjuː ˈmɪrə/"], ["look presentable", "trông chỉn chu", "I want to look presentable at work.", "/lʊ<em class=\"red\">k</em> prɪˈzentəbəl/"], ["reflect light", "phản chiếu ánh sáng", "Mirrors reflect natural light.", "/rɪˈfle<em class=\"red\">kt</em> laɪ<em class=\"red\">t</em>/"]], "Watches": [["keep track of time", "theo dõi thời gian", "A watch helps me keep track of time.", "/kiː<em class=\"red\">p</em> træ<em class=\"red\">k</em> ɒ<em class=\"red\">v</em> taɪm/"], ["a status symbol", "biểu tượng địa vị", "Luxury watches are a status symbol.", "/ə ˈsteɪtə<em class=\"red\">s</em> ˈsɪmbəl/"], ["a smartwatch", "đồng hồ thông minh", "My friend uses a smartwatch.", "/ə ˈsmɑːtwɒ<em class=\"red\">tʃ</em>/"], ["punctual", "đúng giờ", "Wearing a watch helps me be punctual.", "/ˈpʌŋktʃuːəl/"], ["sentimental value", "giá trị tinh thần", "That watch has sentimental value.", "/ˌsentɪˈmentəl ˈvæljuː/"], ["go with my outfit", "hợp với bộ đồ", "It goes with any outfit.", "/ɡəʊ wɪ<em class=\"red\">ð</em> maɪ ˈaʊtfɪ<em class=\"red\">t</em>/"]], "Glasses": [["short-sighted", "cận thị", "I'm a little short-sighted.", "/ˌʃɔːtˈsaɪtɪ<em class=\"red\">d</em>/"], ["eye strain", "mỏi mắt", "Blue-light glasses reduce eye strain.", "/aɪ streɪn/"], ["contact lenses", "kính áp tròng", "Contact lenses make my eyes dry.", "/ˈkɒntæ<em class=\"red\">kt</em> ˈlenzɪ<em class=\"red\">z</em>/"], ["have my eyes tested", "đi kiểm tra mắt", "I have my eyes tested every year.", "/hæ<em class=\"red\">v</em> maɪ aɪ<em class=\"red\">z</em> ˈtestɪ<em class=\"red\">d</em>/"], ["a fashion accessory", "phụ kiện thời trang", "Glasses are now a fashion accessory.", "/ə ˈfæʃən ʌkˈsesəri/"], ["prescription glasses", "kính thuốc", "My dad wears prescription glasses.", "/prɪˈskrɪpʃən ˈɡlæsɪ<em class=\"red\">z</em>/"]], "Cars": [["get stuck in traffic", "bị kẹt xe", "I often get stuck in traffic.", "/ɡe<em class=\"red\">t</em> stʌ<em class=\"red\">k</em> ɪn ˈtræfɪ<em class=\"red\">k</em>/"], ["rush hour", "giờ cao điểm", "Driving at rush hour is stressful.", "/rʌ<em class=\"red\">ʃ</em> aʊə/"], ["get a driving licence", "lấy bằng lái xe", "I want to get a driving licence.", "/ɡe<em class=\"red\">t</em> ə ˈdraɪvɪŋ ˈlaɪsən<em class=\"red\">s</em>/"], ["fuel-efficient", "tiết kiệm nhiên liệu", "I'd like a fuel-efficient car.", "/ˌfjuːəlɪˈfɪʃən<em class=\"red\">t</em>/"], ["a road trip", "chuyến đi đường dài bằng ô tô", "We went on a road trip to Ha Long.", "/ə rəʊ<em class=\"red\">d</em> trɪ<em class=\"red\">p</em>/"], ["public transport", "giao thông công cộng", "Public transport is cheaper.", "/ˈpʌblɪ<em class=\"red\">k</em> ˈtrænspɔː<em class=\"red\">t</em>/"]], "Collecting things": [["a keen collector", "người sưu tầm nhiệt tình", "My uncle is a keen collector.", "/ə kiːn kəˈlektə/"], ["sentimental value", "giá trị tinh thần", "My souvenirs have sentimental value.", "/ˌsentɪˈmentəl ˈvæljuː/"], ["rare items", "món đồ hiếm", "Rare items can be very expensive.", "/reər ˈaɪtəm<em class=\"red\">z</em>/"], ["take up a hobby", "bắt đầu một sở thích", "I took up collecting as a child.", "/teɪ<em class=\"red\">k</em> ʌ<em class=\"red\">p</em> ə ˈhɒbi/"], ["swap with", "trao đổi với", "I used to swap stickers with friends.", "/swɒ<em class=\"red\">p</em> wɪ<em class=\"red\">ð</em>/"], ["gather dust", "để bám bụi", "Old collections often gather dust.", "/ˈɡæðə dʌ<em class=\"red\">st</em>/"]], "Lost and found": [["misplace", "để nhầm chỗ", "I often misplace my keys.", "/mɪˈspleɪ<em class=\"red\">s</em>/"], ["absent-minded", "đãng trí", "I'm a bit absent-minded.", "/ˌæbsəntˈmaɪndɪ<em class=\"red\">d</em>/"], ["hand it in", "nộp lại", "I handed it in to the staff.", "/hæn<em class=\"red\">d</em> ɪ<em class=\"red\">t</em> ɪn/"], ["a lost property office", "phòng đồ thất lạc", "Airports have a lost property office.", "/ə lɒ<em class=\"red\">st</em> ˈprɒpəti ˈɒfɪ<em class=\"red\">s</em>/"], ["in a rush", "đang vội", "People lose things when they're in a rush.", "/ɪn ə rʌ<em class=\"red\">ʃ</em>/"], ["a huge relief", "nhẹ cả người", "Finding my wallet was a huge relief.", "/ə hjuː<em class=\"red\">dʒ</em> rɪˈliː<em class=\"red\">f</em>/"]], "Secondary school": [["get on well with", "hòa hợp với", "I got on well with my classmates.", "/ɡe<em class=\"red\">t</em> ɒn wel wɪ<em class=\"red\">ð</em>/"], ["extracurricular activities", "hoạt động ngoại khóa", "I joined many extracurricular activities.", "/ˌekstrəkəˈrɪkjʊlər ækˈtɪvɪti<em class=\"red\">z</em>/"], ["cram for exams", "học dồn trước kỳ thi", "We used to cram for exams.", "/kræm fɔːr eɡˈzæm<em class=\"red\">z</em>/"], ["a strict teacher", "giáo viên nghiêm khắc", "My maths teacher was very strict.", "/ə strɪ<em class=\"red\">kt</em> ˈtiːtʃə/"], ["school days", "thời đi học", "I miss my school days.", "/skuːl deɪ<em class=\"red\">z</em>/"], ["make lifelong friends", "có những người bạn suốt đời", "I made lifelong friends there.", "/meɪ<em class=\"red\">k</em> ˈlaɪflɒŋ fren<em class=\"red\">dz</em>/"]], "Teachers": [["explain things clearly", "giảng dễ hiểu", "She explained things clearly.", "/ekˈspleɪn θɪŋ<em class=\"red\">z</em> ˈkliəli/"], ["a role model", "hình mẫu", "My teacher was my role model.", "/ə rəʊl ˈmɒdəl/"], ["inspire someone to", "truyền cảm hứng cho ai làm gì", "She inspired me to learn English.", "/ɪnˈspaɪə ˈsʌmwɒn tuː/"], ["be patient with", "kiên nhẫn với", "Good teachers are patient with students.", "/biː ˈpeɪʃən<em class=\"red\">t</em> wɪ<em class=\"red\">ð</em>/"], ["give feedback", "nhận xét, góp ý", "She always gave useful feedback.", "/ɡɪ<em class=\"red\">v</em> ˈfiːdbæ<em class=\"red\">k</em>/"], ["make lessons engaging", "làm bài học cuốn hút", "He made lessons engaging.", "/meɪ<em class=\"red\">k</em> ˈlesən<em class=\"red\">z</em> eŋˈɡeɪdʒɪŋ/"]], "Paper/Writing letters": [["handwritten", "viết tay", "I love handwritten cards.", "/ˈhændrɪtən/"], ["go paperless", "không dùng giấy", "My company went paperless.", "/ɡəʊ ˈpeɪpələ<em class=\"red\">s</em>/"], ["jot down", "ghi nhanh", "I jot down ideas in a notebook.", "/dʒɒ<em class=\"red\">t</em> daʊn/"], ["a personal touch", "dấu ấn cá nhân", "Letters have a personal touch.", "/ə ˈpɜːsənəl tʌ<em class=\"red\">tʃ</em>/"], ["old-fashioned", "lỗi thời", "Writing letters seems old-fashioned.", "/ˌəʊldˈfæʃən<em class=\"red\">d</em>/"], ["stay in touch", "giữ liên lạc", "Email helps me stay in touch.", "/steɪ ɪn tʌ<em class=\"red\">tʃ</em>/"]], "Science": [["be fascinated by", "bị cuốn hút bởi", "I'm fascinated by the human body.", "/biː ˈfæsɪˌneɪtɪ<em class=\"red\">d</em> baɪ/"], ["a breakthrough", "bước đột phá", "Vaccines were a big breakthrough.", "/ə ˈbreɪkθruː/"], ["carry out experiments", "làm thí nghiệm", "We carried out experiments at school.", "/ˈkæri aʊ<em class=\"red\">t</em> ekˈsperɪmən<em class=\"red\">ts</em>/"], ["a scientific discovery", "phát hiện khoa học", "A scientific discovery can change our lives.", "/ə saɪənˈtɪfɪ<em class=\"red\">k</em> dɪˈskʌvəri/"], ["not my strong point", "không phải điểm mạnh", "Physics was not my strong point.", "/nɒ<em class=\"red\">t</em> maɪ strɒŋ pɔɪn<em class=\"red\">t</em>/"], ["make life easier", "làm cuộc sống dễ dàng hơn", "Science makes life easier.", "/meɪ<em class=\"red\">k</em> laɪ<em class=\"red\">f</em> ˈiːziə/"]], "Outer space and stars": [["gaze at the stars", "ngắm sao", "I love gazing at the stars.", "/ɡeɪ<em class=\"red\">z</em> æ<em class=\"red\">t</em> ðə stɑː<em class=\"red\">z</em>/"], ["light pollution", "ô nhiễm ánh sáng", "Light pollution hides the stars.", "/laɪ<em class=\"red\">t</em> pəˈluːʃən/"], ["the solar system", "hệ mặt trời", "We learnt about the solar system.", "/ðə ˈsəʊlə ˈsɪstəm/"], ["a shooting star", "sao băng", "I once saw a shooting star.", "/ə ˈʃuːtɪŋ stɑː/"], ["explore space", "khám phá vũ trụ", "Humans want to explore space.", "/ekˈsplɔː speɪ<em class=\"red\">s</em>/"], ["out of this world", "tuyệt vời", "The view from space must be out of this world.", "/ˌaʊtə<em class=\"red\">v</em> ðɪ<em class=\"red\">s</em> wɜːl<em class=\"red\">d</em>/"]], "History": [["historical sites", "di tích lịch sử", "Hanoi has many historical sites.", "/hɪˈstɒrɪkəl saɪ<em class=\"red\">ts</em>/"], ["learn from the past", "học từ quá khứ", "We should learn from the past.", "/lɜːn frʌmðə pæ<em class=\"red\">st</em>/"], ["memorise dates", "học thuộc ngày tháng", "I hated memorising dates.", "/ˈmeməˌraɪ<em class=\"red\">z</em> deɪ<em class=\"red\">ts</em>/"], ["bring history to life", "làm lịch sử sống động", "Documentaries bring history to life.", "/brɪŋ ˈhɪstəri tə laɪ<em class=\"red\">f</em>/"], ["a history buff", "người mê lịch sử", "My dad is a history buff.", "/ə ˈhɪstəri bʌ<em class=\"red\">f</em>/"], ["national heritage", "di sản quốc gia", "Old temples are part of our national heritage.", "/ˈnæʃənəl ˈherɪtɪ<em class=\"red\">dʒ</em>/"]], "Old buildings": [["well-preserved", "được bảo tồn tốt", "The temple is well-preserved.", "/ˌwelprɪˈzɜː<em class=\"red\">vd</em>/"], ["architecture", "kiến trúc", "I like French colonial architecture.", "/ˈɑːkɪˌtektʃə/"], ["be knocked down", "bị phá bỏ", "Many old houses were knocked down.", "/biː nɒ<em class=\"red\">kt</em> daʊn/"], ["historic charm", "nét cổ kính", "The Old Quarter has historic charm.", "/hɪˈstɒrɪ<em class=\"red\">k</em> tʃɑːm/"], ["restore", "trùng tu", "They restored the old theatre.", "/rɪˈstɔː/"], ["a landmark", "địa danh nổi tiếng", "The Opera House is a famous landmark.", "/ə ˈlændmɑː<em class=\"red\">k</em>/"]], "Dreams and ambitions": [["set goals", "đặt mục tiêu", "I set goals every year.", "/se<em class=\"red\">t</em> ɡəʊl<em class=\"red\">z</em>/"], ["achieve my dream", "đạt được ước mơ", "I hope to achieve my dream.", "/ʌˈtʃiː<em class=\"red\">v</em> maɪ driːm/"], ["climb the career ladder", "thăng tiến", "I want to climb the career ladder.", "/klaɪm ðə kəˈriə ˈlædə/"], ["be determined to", "quyết tâm", "I'm determined to finish my master's.", "/biː dɪˈtɜːmɪn<em class=\"red\">d</em> tuː/"], ["a long-term goal", "mục tiêu dài hạn", "Running a business is my long-term goal.", "/ə ˌlɒŋˈtɜːm ɡəʊl/"], ["follow my passion", "theo đuổi đam mê", "I want to follow my passion.", "/ˈfɒləʊ maɪ ˈpæʃən/"]], "Remember names": [["on the tip of my tongue", "sắp nhớ ra", "Her name is on the tip of my tongue.", "/ɒnðə tɪ<em class=\"red\">p</em> ɒ<em class=\"red\">v</em> maɪ tʌŋ/"], ["slip my mind", "quên mất", "Names often slip my mind.", "/slɪ<em class=\"red\">p</em> maɪ maɪn<em class=\"red\">d</em>/"], ["make a good impression", "gây ấn tượng tốt", "Remembering names makes a good impression.", "/meɪ<em class=\"red\">k</em> ə ɡʊ<em class=\"red\">d</em> ɪmˈpreʃən/"], ["a good memory for", "trí nhớ tốt về", "I don't have a good memory for names.", "/ə ɡʊ<em class=\"red\">d</em> ˈmeməri fɔː/"], ["put a face to a name", "nhớ mặt gắn với tên", "I can't always put a face to a name.", "/pʊ<em class=\"red\">t</em> ə feɪ<em class=\"red\">s</em> tʊ ə neɪm/"], ["a memory trick", "mẹo ghi nhớ", "I use a memory trick to remember names.", "/ə ˈmeməri trɪ<em class=\"red\">k</em>/"]], "Morning routine": [["an early bird", "người hay dậy sớm", "I'm an early bird.", "/ʌn ˈɜːlɪ bɜː<em class=\"red\">d</em>/"], ["hit the snooze button", "bấm báo thức thêm lần nữa", "I never hit the snooze button.", "/hɪ<em class=\"red\">t</em> ðə snuː<em class=\"red\">z</em> ˈbʌtən/"], ["grab a quick bite", "ăn vội", "I grab a quick bite before work.", "/ɡræ<em class=\"red\">b</em> ə kwɪ<em class=\"red\">k</em> baɪ<em class=\"red\">t</em>/"], ["get ready for work", "chuẩn bị đi làm", "It takes 30 minutes to get ready for work.", "/ɡe<em class=\"red\">t</em> ˈredi fɔː wɜː<em class=\"red\">k</em>/"], ["start the day", "bắt đầu ngày mới", "Coffee helps me start the day.", "/stɑː<em class=\"red\">t</em> ðə deɪ/"], ["stick to a routine", "duy trì thói quen", "I try to stick to a routine.", "/stɪ<em class=\"red\">k</em> tʊ ə ruːˈtiːn/"]], "Evening time": [["unwind", "thư giãn", "I unwind by watching films.", "/ʌnˈwaɪn<em class=\"red\">d</em>/"], ["a night owl", "cú đêm", "I'm not a night owl.", "/ə naɪ<em class=\"red\">t</em> aʊl/"], ["wind down", "thả lỏng trước khi ngủ", "I read to wind down.", "/wɪn<em class=\"red\">d</em> daʊn/"], ["catch up on", "làm bù", "I catch up on my studies in the evening.", "/kæ<em class=\"red\">tʃ</em> ʌ<em class=\"red\">p</em> ɒn/"], ["spend quality time with", "dành thời gian ý nghĩa với", "I spend quality time with my family.", "/spen<em class=\"red\">d</em> ˈkwɒlɪti taɪm wɪ<em class=\"red\">ð</em>/"], ["go to bed early", "đi ngủ sớm", "I try to go to bed early.", "/ɡəʊ tə be<em class=\"red\">d</em> ˈɜːlɪ/"]], "Tiredness": [["worn out", "kiệt sức", "I'm worn out after long meetings.", "/wɔːn aʊ<em class=\"red\">t</em>/"], ["recharge my batteries", "nạp lại năng lượng", "A short nap recharges my batteries.", "/rɪˈtʃɑː<em class=\"red\">dʒ</em> maɪ ˈbætəri<em class=\"red\">z</em>/"], ["lack of sleep", "thiếu ngủ", "Lack of sleep makes me tired.", "/læ<em class=\"red\">k</em> ɒ<em class=\"red\">v</em> sliː<em class=\"red\">p</em>/"], ["take a break", "nghỉ giải lao", "I take a break every hour.", "/teɪ<em class=\"red\">k</em> ə breɪ<em class=\"red\">k</em>/"], ["burn out", "kiệt sức vì làm quá nhiều", "Many office workers burn out.", "/bɜːn aʊ<em class=\"red\">t</em>/"], ["feel drained", "cạn năng lượng", "I feel drained by Friday.", "/fiːl dreɪn<em class=\"red\">d</em>/"]], "Tidiness": [["neat and tidy", "gọn gàng", "I keep my desk neat and tidy.", "/niː<em class=\"red\">t</em> æn<em class=\"red\">d</em> ˈtaɪdi/"], ["a mess", "bừa bộn", "My room was always a mess.", "/ə me<em class=\"red\">s</em>/"], ["declutter", "dọn bớt đồ", "I declutter my wardrobe every year.", "/dɪˈklʌtə/"], ["put things away", "cất đồ đúng chỗ", "I put things away after using them.", "/pʊ<em class=\"red\">t</em> θɪŋ<em class=\"red\">z</em> ʌˈweɪ/"], ["organised", "ngăn nắp, có tổ chức", "Tidy people are more organised.", "/ˈɔːɡʌˌnaɪ<em class=\"red\">zd</em>/"], ["clean up", "dọn dẹp", "I clean up every weekend.", "/kliːn ʌ<em class=\"red\">p</em>/"]], "Sports programs": [["a big fan of", "rất hâm mộ", "I'm a big fan of football.", "/ə bɪ<em class=\"red\">ɡ</em> fæn ɒ<em class=\"red\">v</em>/"], ["a live broadcast", "truyền hình trực tiếp", "I watch the live broadcast.", "/ə laɪ<em class=\"red\">v</em> ˈbrɔːdkæ<em class=\"red\">st</em>/"], ["cheer for", "cổ vũ cho", "We cheer for the national team.", "/tʃiə fɔː/"], ["a nail-biting match", "trận đấu kịch tính", "It was a nail-biting match.", "/ə ˌneɪlˈbaɪtɪŋ mæ<em class=\"red\">tʃ</em>/"], ["a couch potato", "người lười vận động", "I'm a bit of a couch potato.", "/ə kaʊ<em class=\"red\">tʃ</em> pəˈteɪtəʊ/"], ["score a goal", "ghi bàn", "Everyone screamed when Vietnam scored a goal.", "/skɔːr ə ɡəʊl/"]], "Parks": [["green space", "không gian xanh", "My city needs more green space.", "/ɡriːn speɪ<em class=\"red\">s</em>/"], ["get some fresh air", "hít thở không khí trong lành", "I go there to get some fresh air.", "/ɡe<em class=\"red\">t</em> sʌm fre<em class=\"red\">ʃ</em> eə/"], ["go for a stroll", "đi dạo", "We go for a stroll after dinner.", "/ɡəʊ fərə strəʊl/"], ["escape from the noise", "thoát khỏi ồn ào", "Parks help me escape from the noise.", "/eˈskeɪ<em class=\"red\">p</em> frʌmðə nɔɪ<em class=\"red\">z</em>/"], ["well-maintained", "được chăm sóc tốt", "The park is well-maintained.", "/ˌwelmeɪnˈteɪn<em class=\"red\">d</em>/"], ["peaceful", "yên bình", "It's very peaceful in the morning.", "/ˈpiːsfəl/"]], "Rubbish/Recycling": [["sort the rubbish", "phân loại rác", "I sort the rubbish at home.", "/sɔː<em class=\"red\">t</em> ðə ˈrʌbɪ<em class=\"red\">ʃ</em>/"], ["single-use plastic", "nhựa dùng một lần", "We should avoid single-use plastic.", "/ˌsɪŋɡəˈljuː<em class=\"red\">s</em> ˈplæstɪ<em class=\"red\">k</em>/"], ["reduce waste", "giảm rác thải", "Reusable bags reduce waste.", "/rɪˈdjuː<em class=\"red\">s</em> weɪ<em class=\"red\">st</em>/"], ["environmentally friendly", "thân thiện môi trường", "Recycling is environmentally friendly.", "/enˌvaɪrənˈmentəli ˈfrendli/"], ["raise awareness", "nâng cao nhận thức", "Schools should raise awareness.", "/reɪ<em class=\"red\">z</em> ʌˈweənə<em class=\"red\">s</em>/"], ["throw away", "vứt bỏ", "People throw away too much food.", "/θrəʊ ʌˈweɪ/"]], "Politeness": [["show respect", "thể hiện sự tôn trọng", "Greeting elders shows respect.", "/ʃəʊ rɪˈspe<em class=\"red\">kt</em>/"], ["good manners", "cách cư xử tốt", "My parents taught me good manners.", "/ɡʊ<em class=\"red\">d</em> ˈmænə<em class=\"red\">z</em>/"], ["rude", "thô lỗ", "Interrupting people is rude.", "/ruː<em class=\"red\">d</em>/"], ["hold the door for", "giữ cửa cho ai", "He always holds the door for others.", "/həʊl<em class=\"red\">d</em> ðə dɔː fɔː/"], ["well-mannered", "lễ phép", "Children here are well-mannered.", "/ˌwelˈmænə<em class=\"red\">d</em>/"], ["say please and thank you", "nói \"làm ơn\" và \"cảm ơn\"", "It's important to say please and thank you.", "/seɪ pliː<em class=\"red\">z</em> æn<em class=\"red\">d</em> θæŋ<em class=\"red\">k</em> juː/"]]};
 var ALL = {};
-P1_DAY10.concat(COMMON).forEach(function(t){ ALL[t.topic]=t; });
+TOPICS.forEach(function(t){ ALL[t.topic]=t; });
 var PLAN = {
  d9:["Social media","Music","Websites","Headphones"],
  d10:["Computer/Tablets","Advertisements","Singing","Art","Films","Jokes","Shopping","Street market","Clothes","Shoes","Mirrors","Watches","Glasses","Cars","Collecting things","Lost and found"],
@@ -509,35 +496,57 @@ var DAYS = [
  {id:"d10", label:"10/10 – Part 1"},
  {id:"d11", label:"11/10 – Part 1"}
 ];
+var IDEA_LABELS = ["Trả lời","Thêm ý","Cảm xúc / ví dụ"];
 
 var store = {
  get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},
  set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 };
-var done = {};
-try{ done = JSON.parse(store.get("ielts-done2")||"{}")||{}; }catch(e){ done = {}; }
+function loadObj(k){ try{ return JSON.parse(store.get(k)||"{}")||{}; }catch(e){ return {}; } }
+var done = loadObj("ielts-done2"), notes = loadObj("ielts-notes"), subIdx = loadObj("ielts-sub");
 function saveDone(){ store.set("ielts-done2", JSON.stringify(done)); }
-var subIdx = {};
-try{ subIdx = JSON.parse(store.get("ielts-sub")||"{}")||{}; }catch(e){ subIdx = {}; }
+var noteTimer = null;
+function saveNotes(){ clearTimeout(noteTimer); noteTimer = setTimeout(function(){ store.set("ielts-notes", JSON.stringify(notes)); }, 300); }
 
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+var PAST_RE = /\b(was|were|wasn't|weren't|went|had|hadn't|did|didn't|couldn't|made|got|saw|bought|found|left|met|learnt|learned|sang|took|gave|kept|wore|taught|burst|asked|binge-watched|carried|encouraged|explained|handed|hated|helped|inspired|joined|liked|looked|loved|reminded|restored|returned|scored|screamed|splashed|started|swapped|visited|walked|wanted|watched|used(?= to))\b/gi;
+function pastMark(htmlText){ return htmlText.replace(PAST_RE,'<em class="red past">$1</em>'); }
 function fmt(s){
-  return esc(s)
-   .replace(/\[\[(.+?)\]\]/g,'<em class="red">$1</em>')
+  return String(s).split(/(\[\[.+?\]\])/).map(function(seg){
+     return /^\[\[/.test(seg) ? '<em class="red">'+esc(seg.slice(2,-2))+'</em>' : pastMark(esc(seg));
+   }).join("")
    .replace(/___/g,'<span class="blank" aria-label="chỗ trống"></span>');
 }
-function hintHTML(idea, kw, frame, note){
-  var h = '<div class="hint">';
-  h += '<div class="row"><span class="tag">Ý tưởng</span><span>'+fmt(idea)+'</span></div>';
-  h += '<div class="row"><span class="tag">Từ khóa</span><span class="chips">'+kw.map(function(k){return '<span class="chip">'+esc(k)+'</span>';}).join("")+'</span></div>';
-  h += '<div class="row"><span class="tag">Mẫu câu</span><span class="frame">'+fmt(frame)+'</span></div>';
-  if(note) h += '<div class="row"><span class="tag">Lưu ý</span><span class="note">'+fmt(note)+'</span></div>';
+function hintHTML(q){
+  var h = '<div class="hint"><div class="block"><span class="tag">Ý tưởng</span><ol class="idea">';
+  q.idea.forEach(function(x,i){ h += '<li><span class="lbl">'+IDEA_LABELS[i]+'</span><span lang="en" class="kwi">'+pastMark(esc(x))+'</span></li>'; });
+  h += '</ol></div>';
+  h += '<div class="block"><span class="tag">Từ vựng</span><span class="chips">'+q.kw.map(function(k){return '<span class="chip" lang="en">'+esc(k)+'</span>';}).join("")+'</span></div>';
+  h += '<div class="block"><span class="tag">Mẫu câu</span><span class="frame" lang="en">'+fmt(q.frame)+'</span></div>';
+  if(q.note) h += '<div class="block"><span class="tag">Lưu ý</span><span class="note">'+fmt(q.note)+'</span></div>';
   return h + '</div><button class="peek" type="button">Xem gợi ý</button>';
 }
-function qItem(key, num, text, hint){
-  var isDone = !!done[key];
-  return '<li class="q'+(isDone?' is-done':'')+'" data-key="'+esc(key)+'"><div class="qhead"><span class="qnum">'+num+'</span><span class="qtext">'+esc(text)+'</span>'+
-   '<label class="check"><input type="checkbox"'+(isDone?' checked':'')+'> Đã luyện</label></div>'+hint+'</li>';
+function rowHTML(key, num, q){
+  var isDone = !!done[key], note = notes[key] || "";
+  return '<tr class="q'+(isDone?' is-done':'')+'" data-key="'+esc(key)+'">'+
+   '<td class="qcol"><div class="qhead"><span class="qnum">'+num+'</span><span class="qtext" lang="en">'+esc(q.q)+'</span></div>'+
+   '<label class="check"><input type="checkbox"'+(isDone?' checked':'')+'> Đã luyện</label></td>'+
+   '<td class="hcol">'+hintHTML(q)+
+   '<label class="notewrap"><span class="tag">Ghi chú của bạn</span><textarea rows="2" data-note="'+esc(key)+'" placeholder="Câu trả lời của bạn, lỗi cần sửa, từ mới…">'+esc(note)+'</textarea></label></td></tr>';
+}
+function vocabHTML(name){
+  var list = VOCAB[name]; if(!list) return "";
+  function mark(ex, p){
+    var core = p.replace(/^(a|an|the|be) /i,"").replace(/ (someone|something) /i," ");
+    var i = ex.toLowerCase().indexOf(core.toLowerCase().split(" ")[0]);
+    var e = esc(ex);
+    if(i<0) return e;
+    var re = new RegExp("("+core.split(" ").map(function(w){return w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");}).join("\\w*[ ,]+")+"\\w*)","i");
+    return e.replace(re,'<b class="hl">$1</b>');
+  }
+  return '<h3 class="vh">Cụm từ cần học để đạt band 6</h3><p class="legend">Phiên âm: <em class="red">chữ đỏ</em> là âm cuối cần bật rõ (t, d, k, p, s, z, tʃ, dʒ…). Trong ví dụ và mẫu câu: <em class="red">chữ đỏ</em> là động từ quá khứ.</p><div class="scroll"><table class="vtable"><thead><tr><th scope="col">Cụm từ</th><th scope="col">Nghĩa</th><th scope="col">Ví dụ</th></tr></thead><tbody>'+
+    list.map(function(r){ return '<tr><td lang="en" class="vp">'+esc(r[0])+(r[3]?'<span class="ipa">'+r[3]+'</span>':'')+'</td><td>'+esc(r[1])+'</td><td lang="en" class="vex">'+pastMark(mark(r[2],r[0]))+'</td></tr>'; }).join("")+
+    '</tbody></table></div>';
 }
 function topicCount(name){
   var t = ALL[name], n=0;
@@ -545,12 +554,10 @@ function topicCount(name){
   return {n:n,total:t.qs.length};
 }
 function dayCount(id){
+  if(!PLAN[id]) return null;
   var n=0,total=0;
-  if(PLAN[id]){ PLAN[id].forEach(function(name){ var c=topicCount(name); n+=c.n; total+=c.total; }); return {n:n,total:total}; }
-  var size = {d12:8,d13:8,d14:8}[id];
-  if(!size) return null;
-  for(var k in done){ if(done[k] && k.indexOf(id+":")===0) n++; }
-  return {n:n,total:size};
+  PLAN[id].forEach(function(name){ var c=topicCount(name); n+=c.n; total+=c.total; });
+  return {n:n,total:total};
 }
 
 function dayPage(id){
@@ -563,86 +570,50 @@ function dayPage(id){
     var c = topicCount(nm), full = c.n===c.total;
     h += '<button type="button" role="tab" data-sub="'+i+'" aria-selected="'+(i===idx)+'" class="'+(full?'full':'')+'">'+esc(nm)+' <span class="cnt">'+c.n+'/'+c.total+'</span></button>';
   });
-  h += '</div>';
-  h += '<h2>'+(idx+1)+'. '+esc(name)+'</h2>';
+  h += '</div><h2>'+(idx+1)+'. '+esc(name)+'</h2>';
   if(t.common) h += '<p class="src">Câu hỏi thường gặp của chủ đề này. Nếu bảng tính của bạn có câu khác, ưu tiên câu trong bảng.</p>';
+  h += vocabHTML(name);
   if(t.phrases){
-    h += '<div class="scroll"><table class="kw-table"><tbody>'+t.phrases.map(function(p){return '<tr><td>'+esc(p[0])+'</td><td>'+esc(p[1])+'</td></tr>';}).join("")+'</tbody></table></div>';
+    h += '<p class="sheetp"><span class="tag">Cụm học trước (bảng tính)</span> '+t.phrases.map(function(p){return '<span class="chip" lang="en">'+esc(p[0])+'</span> <span class="pm">'+esc(p[1])+'</span>';}).join("")+'</p>';
   }
-  h += '<ol style="padding:0;margin:0">';
-  t.qs.forEach(function(q,qi){ h += qItem("t:"+name+":"+qi, qi+1, q.q, hintHTML(q.idea,q.kw,q.frame,q.note)); });
-  h += '</ol><div class="pager">';
+  h += '<h3 class="vh">Câu hỏi</h3><table class="qtable"><thead><tr><th scope="col">Câu hỏi</th><th scope="col">Gợi ý, mẫu câu & ghi chú</th></tr></thead><tbody>';
+  t.qs.forEach(function(q,qi){ h += rowHTML("t:"+name+":"+qi, qi+1, q); });
+  h += '</tbody></table><div class="pager">';
   if(idx>0) h += '<button type="button" data-sub="'+(idx-1)+'">‹ '+esc(list[idx-1])+'</button>'; else h += '<span></span>';
   if(idx<list.length-1) h += '<button type="button" data-sub="'+(idx+1)+'">'+esc(list[idx+1])+' ›</button>';
   return h + '</div>';
 }
 
-function p2Page(title, lead, key, cards, checks){
-  var h = '<h1>'+title+'</h1><p class="lead">'+lead+'</p>';
-  cards.forEach(function(c,ci){
-   h += '<h2>'+esc(c.title)+'</h2><p><b><i>'+esc(c.cue)+'</i></b><br><span style="color:var(--muted);font-size:14px">Dùng lại cho: '+esc(c.reuse)+'</span></p><ol style="padding:0;margin:0">';
-   c.steps.forEach(function(s,si){ h += qItem(key+":"+ci+":"+si, si+1, s[0], hintHTML(s[1],s[2],s[3])); });
-   h += '</ol>';
-  });
-  h += '<h2>Ngữ pháp cần soát</h2><ul class="errs">'+checks.map(function(x){return '<li>'+fmt(x)+'</li>';}).join("")+'</ul>';
-  return h;
-}
-
 var RENDER = {
  overview:function(){
-  var rows = [["d9","T6 9/10","Part 1: Social media, Music, Websites, Headphones (4 chủ đề)"],
-   ["d10","T7 10/10","Part 1: Computer/Tablets → Lost and found (16 chủ đề)"],
-   ["d11","CN 11/10","Part 1: Secondary school → Politeness (17 chủ đề) → <em class=\"red\">xong Part 1</em>"]];
+  var rows = [["d9","T6 9/10","Social media, Music, Websites, Headphones (4 chủ đề)"],
+   ["d10","T7 10/10","Computer/Tablets → Lost and found (16 chủ đề)"],
+   ["d11","CN 11/10","Secondary school → Politeness (17 chủ đề) → <em class=\"red\">xong Part 1</em>"]];
   var prog = ["d9","d10","d11"].map(function(id){ var c=dayCount(id), pct=Math.round(c.n/c.total*100);
     return '<p class="stat">'+DAYMETA[id].title.replace(" – Part 1","")+': <b>'+c.n+'/'+c.total+'</b> câu</p><div class="bar"><i style="width:'+pct+'%"></i></div>'; }).join("");
   return '<h1>Lộ trình IELTS Speaking Part 1</h1>'+
   '<p class="lead">Mục tiêu: nâng <em class="red">Grammar từ 5 lên 6</em> để overall đạt 5.5. Toàn bộ 37 chủ đề Part 1 phải <em class="red">xong hết trong ngày 11/10</em>.</p>'+
-  '<h2>Lịch từng ngày</h2><div class="scroll"><table class="plan"><thead><tr><th>Ngày</th><th>Nội dung</th></tr></thead><tbody>'+
+  '<h2>Lịch từng ngày</h2><div class="scroll"><table class="plan"><thead><tr><th>Ngày</th><th>Chủ đề</th></tr></thead><tbody>'+
   rows.map(function(r){ return '<tr><td>'+r[1]+'</td><td><button type="button" data-go="'+r[0]+'">'+r[2]+'</button></td></tr>'; }).join("")+'</tbody></table></div>'+
-  '<h2>Tiến độ Part 1</h2>'+prog+
+  '<h2>Tiến độ</h2>'+prog+
+  '<h2>Công thức trả lời</h2><ol class="idea formula"><li><span class="lbl">Trả lời</span>Trả lời thẳng vào câu hỏi.</li><li><span class="lbl">Thêm ý</span>Thêm một thông tin: lý do, thời gian, nơi chốn, ai.</li><li><span class="lbl">Cảm xúc / ví dụ</span>Nói cảm xúc của bạn hoặc một ví dụ cụ thể.</li></ol>'+
+  '<p>Ghép 3 ý thành 3–4 câu, trong đó có <em class="red">ít nhất 1 câu phức</em> theo mẫu câu. Mẫu câu chỉ là khung: tự điền vào chỗ trống, không học thuộc. Ghi câu trả lời hoặc lỗi của bạn vào ô ghi chú bên cạnh mỗi câu.</p>'+
+  '<h2>Màu đỏ trên trang</h2><p>Trong phiên âm, <em class="red">chữ đỏ</em> là <b>âm cuối</b> (t, d, k, p, s, z, tʃ, dʒ…): luyện bật rõ, không nuốt âm. Trong ý tưởng, mẫu câu và ví dụ, <em class="red">chữ đỏ</em> là <b>động từ quá khứ</b> hoặc từ nối tạo câu phức.</p>'+
   '<h2>Lỗi cần soát mỗi câu</h2><ul class="errs">'+
   ['Thiếu <em class="red">chủ ngữ</em> đầu câu: <i>Is my phone</i> → <i>It\'s my phone</i>',
    'Quên <em class="red">-s số nhiều</em>: <i>my friend</i> → <i>my friends</i>, <i>video</i> → <i>videos</i>',
    'Thêm <em class="red">is</em> trước động từ thường: <i>which is help</i> → <i>which helps</i>',
    'Bỏ <em class="red">am/is</em> trước danh từ, tính từ: <i>I big fan</i> → <i>I\'m a big fan</i>',
    'Dùng <em class="red">quá khứ cho thói quen</em>: <i>happy music made me</i> → <i>makes me</i>',
-   'Thiếu <em class="red">a/the/my</em> trước danh từ: <i>which is park</i> → <i>which is a park</i>'].map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul>'+
-  '<h2>Cách luyện mỗi câu</h2><p>Đọc <b>Ý tưởng</b> và <b>Từ khóa</b>, tự nói 3–4 câu theo khung <i>trả lời chính → lý do → chi tiết</i>. <b>Mẫu câu</b> chỉ là khung: tự điền vào chỗ trống, không học thuộc. Mỗi câu trả lời phải có <em class="red">ít nhất 1 câu phức</em>. Khi đã quen, bật “Ẩn gợi ý để tự kiểm tra”.</p>';
+   'Thiếu <em class="red">a/the/my</em> trước danh từ: <i>which is park</i> → <i>which is a park</i>'].map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul>';
  },
  d9:function(){ return dayPage("d9"); },
  d10:function(){ return dayPage("d10"); },
- d11:function(){ return dayPage("d11"); },
- d12:function(){ return p2Page("Ngày 12/10 – Part 2","Chuẩn bị 2 “câu chuyện gốc” dùng được cho nhiều đề. Mỗi đề: 1 phút ghi chú, nói 2 phút, ghi âm, sửa lỗi rồi nói lại lần 2.","d12",P2.d12,P2.d12check); },
- d13:function(){ return p2Page("Ngày 13/10 – Part 2","Thêm 2 câu chuyện gốc. Cuối buổi, kể lại cả 2 đề của ngày 12/10 mà không nhìn gợi ý.","d13",P2.d13,P2.d13check); },
- d14:function(){
-  var h = '<h1>Ngày 14–15/10 – Part 3</h1><p class="lead">Part 3 hỏi ý kiến chung, không hỏi về bản thân. Đây là phần mà <em class="red">câu điều kiện, tương phản, so sánh</em> ghi điểm nhiều nhất.</p>';
-  h += '<h2>Khung trả lời</h2><ol>'+
-   ['<span class="step-label">Ý kiến:</span> <i>I think that …</i>','<span class="step-label">Lý do:</span> <i>… <em class="red">because</em> …</i>','<span class="step-label">Ví dụ:</span> <i>For example, …</i>','<span class="step-label">Mặt kia:</span> <i><em class="red">However</em>, …</i> / <i><em class="red">Although</em> …</i>'].map(function(x){return '<li>'+x+'</li>';}).join("")+'</ol>';
-  P3.forEach(function(g,gi){
-   h += '<h2>'+esc(g.day)+'</h2><ol style="padding:0;margin:0">';
-   g.qs.forEach(function(q,qi){ h += qItem("d14:"+gi+":"+qi, qi+1, q.q, hintHTML(q.idea,q.kw,q.frame,q.note)); });
-   h += '</ol>';
-  });
-  return h;
- },
- d16:function(){
-  var rows=[["T6 16/10","Chọn 10 chủ đề Part 1 còn yếu nhất, nói lại 2 câu mỗi chủ đề <em class=\"red\">không nhìn gợi ý</em>. Kể lại Đề 1 và Đề 2."],
-   ["T7 17/10","10 chủ đề yếu tiếp theo. Kể lại Đề 3 và Đề 4, thử áp 4 câu chuyện vào đề lạ."],
-   ["CN 18/10","<em class=\"red\">Thi thử đủ 3 part</em> (11–14 phút), ghi âm, so lại với danh sách lỗi."],
-   ["T2 19/10","Ôn nhẹ: đọc lại danh sách lỗi và mẫu câu, ngủ sớm."],
-   ["T3 20/10","<em class=\"red\">Thi.</em> Khởi động bằng 5 phút nói tiếng Anh trước giờ thi."]];
-  return '<h1>Ngày 16–20/10 – Ôn & thi</h1><p class="lead">Không học thêm cấu trúc mới. Những ngày này dành để biến những gì đã luyện thành phản xạ.</p>'+
-  '<div class="scroll"><table class="plan"><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join("")+'</tbody></table></div>'+
-  '<h2>Lưu ý khi thi</h2><ul class="errs">'+
-  ['Nói chậm hơn một chút, <em class="red">đủ âm cuối</em> và có câu phức sẽ được điểm cao hơn nói nhanh mà nuốt chữ.',
-   'Câu đầu tiên luôn có <em class="red">chủ ngữ</em>: <i>It\'s …</i> / <i>I think …</i>',
-   'Nói sai thì tự sửa ngay, không bị trừ điểm.',
-   'Không hiểu câu hỏi thì hỏi lại: <i>Could you repeat the question, please?</i>'].map(function(x){return '<li>'+x+'</li>';}).join("")+'</ul>';
- }
+ d11:function(){ return dayPage("d11"); }
 };
 
 var current = store.get("ielts-tab2") || "d9";
-if(!RENDER[current] || !DAYS.some(function(d){return d.id===current;})) current = "d9";
+if(!RENDER[current]) current = "d9";
 
 function renderNav(){
   document.getElementById("navlist").innerHTML = DAYS.map(function(d){
@@ -650,9 +621,11 @@ function renderNav(){
     return '<li><button type="button" data-go="'+d.id+'"'+(d.id===current?' aria-current="true"':'')+'>'+esc(d.label)+prog+'</button></li>';
   }).join("");
 }
+function sizeAll(){ document.querySelectorAll("textarea[data-note]").forEach(autosize); }
+function autosize(el){ el.style.height="auto"; el.style.height=(el.scrollHeight+2)+"px"; }
 function render(){
-  document.getElementById("sheet").innerHTML = RENDER[current]() + '<footer>Đánh dấu “Đã luyện” được lưu trên trình duyệt này.</footer>';
-  renderNav();
+  document.getElementById("sheet").innerHTML = RENDER[current]() + '<footer>Đánh dấu “Đã luyện” và ghi chú được lưu trên trình duyệt này.</footer>';
+  renderNav(); sizeAll();
 }
 function goTop(){ window.scrollTo(0,0); }
 function go(id){
@@ -670,17 +643,26 @@ document.addEventListener("click", function(e){
   var s = e.target.closest("[data-sub]"); if(s){ setSub(parseInt(s.getAttribute("data-sub"),10)); return; }
   var p = e.target.closest(".peek"); if(p){ p.closest(".q").classList.add("open"); return; }
 });
+document.addEventListener("input", function(e){
+  var k = e.target.getAttribute && e.target.getAttribute("data-note");
+  if(k !== null && k !== undefined){
+    var v = e.target.value;
+    if(v.trim()) notes[k] = v; else delete notes[k];
+    saveNotes(); autosize(e.target);
+  }
+});
 document.addEventListener("change", function(e){
   if(e.target.matches(".check input")){
-    var li = e.target.closest(".q"), key = li.getAttribute("data-key");
+    var row = e.target.closest(".q"), key = row.getAttribute("data-key");
     if(e.target.checked) done[key]=1; else delete done[key];
-    li.classList.toggle("is-done", e.target.checked);
+    row.classList.toggle("is-done", e.target.checked);
     saveDone(); renderNav();
     var sel = document.querySelector('.subtabs [aria-selected="true"]');
     if(sel && PLAN[current]){ var nm = PLAN[current][subIdx[current]||0], c = topicCount(nm);
       sel.querySelector(".cnt").textContent = c.n+"/"+c.total; sel.classList.toggle("full", c.n===c.total); }
   }
 });
+window.addEventListener("pagehide", function(){ store.set("ielts-notes", JSON.stringify(notes)); });
 var hideBtn = document.getElementById("hideToggle");
 function setHide(on){
   document.body.classList.toggle("hide-hints", on);
