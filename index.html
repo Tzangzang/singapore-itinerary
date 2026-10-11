@@ -138,6 +138,10 @@ ul.errs li::before{content:"✗";position:absolute;left:4px;color:var(--red);fon
 .qtable .hint{margin:0;border-left:0;padding:0;gap:10px}
 .qtable .peek{margin:0}
 .block{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:baseline}
+.qtable .idea-left{margin:12px 0 0 calc(1.6em + 8px);padding:8px 10px;background:var(--chip);border-radius:6px;display:block}
+.qtable .idea-left .tag{display:block;margin-bottom:4px}
+.qtable .idea-left ol.idea li{grid-template-columns:auto 1fr;gap:8px}
+.qtable .idea-left ol.idea .lbl{min-width:6.5em}
 ol.idea{list-style:none;margin:0;padding:0;display:grid;gap:3px}
 ol.idea li{display:grid;grid-template-columns:118px 1fr;gap:8px}
 ol.idea .kwi{font-weight:600;color:var(--ink)}
@@ -524,18 +528,22 @@ function fmt(s){
    .replace(/___/g,'<span class="blank" aria-label="chỗ trống"></span>');
 }
 function hintHTML(q){
-  var h = '<div class="hint"><div class="block"><span class="tag">Ý tưởng</span><ol class="idea">';
-  q.idea.forEach(function(x,i){ h += '<li><span class="lbl">'+IDEA_LABELS[i]+'</span><span lang="en" class="kwi">'+pastMark(esc(x))+'</span></li>'; });
-  h += '</ol></div>';
+  var h = '<div class="hint">';
   h += '<div class="block"><span class="tag">Từ vựng</span><span class="chips">'+q.kw.map(function(k){return '<span class="chip" lang="en">'+esc(k)+'</span>';}).join("")+'</span></div>';
   h += '<div class="block"><span class="tag">Mẫu câu</span><span class="frame" lang="en">'+fmt(q.frame)+'</span></div>';
   if(q.note) h += '<div class="block"><span class="tag">Lưu ý</span><span class="note">'+fmt(q.note)+'</span></div>';
   return h + '</div><button class="peek" type="button">Xem gợi ý</button>';
 }
+function ideaHTML(q){
+  var h = '<div class="hint idea-left"><span class="tag">Ý tưởng</span><ol class="idea">';
+  q.idea.forEach(function(x,i){ h += '<li><span class="lbl">'+IDEA_LABELS[i]+'</span><span lang="en" class="kwi">'+pastMark(esc(x))+'</span></li>'; });
+  return h + '</ol></div>';
+}
 function rowHTML(key, num, q){
   var isDone = !!done[key], note = notes[key] || "";
   return '<tr class="q'+(isDone?' is-done':'')+'" data-key="'+esc(key)+'">'+
    '<td class="qcol"><div class="qhead"><span class="qnum">'+num+'</span><span class="qtext" lang="en">'+esc(q.q)+'</span></div>'+
+   ideaHTML(q)+
    '<label class="check"><input type="checkbox"'+(isDone?' checked':'')+'> Đã luyện</label></td>'+
    '<td class="hcol">'+hintHTML(q)+
    '<label class="notewrap"><span class="tag">Ghi chú của bạn</span><textarea rows="2" data-note="'+esc(key)+'" placeholder="Câu trả lời của bạn, lỗi cần sửa, từ mới…">'+esc(note)+'</textarea></label></td></tr>';
