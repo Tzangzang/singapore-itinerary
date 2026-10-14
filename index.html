@@ -767,11 +767,12 @@ rowHTML = function(){ var h=_rowP1.apply(this,arguments); if(!/^p3_/.test(curren
 var _ideaP1 = ideaHTML, _hintP1 = hintHTML;
 ideaHTML = function(q){
   if(!/^p3_/.test(current)) return _ideaP1(q);
-  return '<div class="hint idea-left"><span class="tag">Gợi ý tiếng Việt</span><p class="p3vi">'+fmt(q.idea[0])+'</p></div>';
+  return '';
 };
 hintHTML = function(q){
   if(!/^p3_/.test(current)) return _hintP1(q);
   var h = '<div class="hint">';
+  h += '<div class="block"><span class="tag">Gợi ý tiếng Việt</span><span class="p3vi">'+fmt(q.idea[0])+'</span></div>';
   h += '<div class="block"><span class="tag">Câu mẫu</span><span class="p3en" lang="en">'+fmt(q.idea[1])+'</span></div>';
   h += '<div class="block"><span class="tag">Từ vựng</span><span class="chips">'+q.kw.map(function(k){ return '<span class="chip" lang="en">'+esc(k)+'</span>'; }).join("")+'</span></div>';
   if(q.note) h += '<div class="block"><span class="tag">Lưu ý</span><span class="note">'+fmt(q.note)+'</span></div>';
